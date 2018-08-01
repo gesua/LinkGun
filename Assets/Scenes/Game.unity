@@ -280,6 +280,7 @@ MonoBehaviour:
   bulletFactory: {fileID: 1872174724196656, guid: 6cf9f3646ed82a34b8f78dbdc0174d1c,
     type: 2}
   b_spawnTime: 0.3
+  target: {fileID: 188518}
   bulletState: 0
   bulletCount: 3
   bulletDegree: 10
@@ -298,7 +299,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1071055779
 Transform:
   m_ObjectHideFlags: 0
