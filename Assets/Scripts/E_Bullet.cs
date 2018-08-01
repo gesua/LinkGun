@@ -6,7 +6,7 @@ public class E_Bullet : MonoBehaviour {
     //총알스피드
     public float bulletSpeed = 1f;
     //타겟위치 ->동적으로변경(프리팹)
-    Transform target;
+    //Transform target;
     //위치계산
     Vector3 dir;
 
@@ -14,10 +14,10 @@ public class E_Bullet : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //동적할당
-        target = GameObject.Find("Player").GetComponent<Transform>();
+
         //방향계산
-        dir = target.position - this.transform.position;
-        dir.Normalize();
+        dir = this.transform.forward;
+        //dir.Normalize();
         //총알방향전환 //전환필요없어짐(스폰에넘김)
         //this.transform.LookAt(target);
 	}
