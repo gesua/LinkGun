@@ -7,12 +7,44 @@ public class Player : MonoBehaviour
     // 이동속도
     public float speed = 3f;
 
-    void Update()
+    // 애니메이션 상태
+    enum ANI_STATE
     {
-        Move();
+        Idle,
+        Move
+    }
+    ANI_STATE PrevState = ANI_STATE.Idle; // 이전 상태
+    ANI_STATE NextState = ANI_STATE.Idle; // 다음 상태
+
+    Animator PlayerAnimator;
+
+    private void Start()
+    {
+        PlayerAnimator = GetComponentInChildren<Animator>();
+        if (PlayerAnimator == null)
+        {
+            Debug.LogError("animator 못 찾음");
+            return;
+        }
     }
 
-    // 플레이어 이동(WASD)
+    void Update()
+    {
+        // 이동중
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            NextState = ANI_STATE.Move;
+            Move();
+        }
+        else
+        {
+            NextState = ANI_STATE.Idle;
+        }
+
+        PlayAnimator();
+    }
+
+    // 이동(WASD)
     void Move()
     {
         Vector3 moveVector = Vector3.zero;
@@ -35,5 +67,15 @@ public class Player : MonoBehaviour
         }
 
         transform.position += moveVector;
+    }
+
+    // 애니메이터 재생
+    void PlayAnimator()
+    {
+        if (PrevState != NextState)
+        {
+            PrevState = NextState;
+            PlayerAnimator.SetInteger("State", (int)PrevState);
+        }
     }
 }
