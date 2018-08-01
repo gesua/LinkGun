@@ -18,8 +18,8 @@ public class E_Bullet : MonoBehaviour {
         //방향계산
         dir = target.position - this.transform.position;
         dir.Normalize();
-        //총알방향전환
-        this.transform.LookAt(target);
+        //총알방향전환 //전환필요없어짐(스폰에넘김)
+        //this.transform.LookAt(target);
 	}
 	
 	// Update is called once per frame

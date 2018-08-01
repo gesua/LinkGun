@@ -9,6 +9,8 @@ public class BulletSpawner : MonoBehaviour {
     public float b_spawnTime = 0.3f;
     //현재시간
     float currTime = 0f;
+    //타겟의위치
+    public GameObject target;
 
     //(임시) 총알모드지정
     public int bulletState = 0;
@@ -40,12 +42,14 @@ public class BulletSpawner : MonoBehaviour {
             switch (bulletState) {
                 case 0:
                     //직선일때
-                    GameObject bullet = Instantiate(bulletFactory, this.transform.position, Quaternion.identity);
+                    GameObject bullet = Instantiate(bulletFactory);
+                    bullet.transform.position = this.transform.position;
+                    bullet.transform.LookAt(target.transform);
                     break;
                 case 1:
                     //부채꼴일때
-                    for (int i = 0;  i < bulletCount; i++) {
-                        
+                    for (int i = 0; i < bulletCount; i++) {
+
                     }
                     break;
 
