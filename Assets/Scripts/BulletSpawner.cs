@@ -42,9 +42,9 @@ public class BulletSpawner : MonoBehaviour {
             switch (bulletState) {
                 case 0:
                     //직선일때
-                    GameObject bullet = Instantiate(bulletFactory);
-                    bullet.transform.position = this.transform.position;
-                    bullet.transform.LookAt(target.transform);
+                    GameObject bullet = Instantiate(bulletFactory,this.transform.position,Quaternion.Euler(target.transform.position-this.transform.position));
+                    //bullet.transform.position = this.transform.position;
+                    //bullet.transform.LookAt(target.transform);
                     break;
                 case 1:
                     //부채꼴일때
