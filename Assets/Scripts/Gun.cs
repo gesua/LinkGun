@@ -9,7 +9,7 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
-        BulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet");
+        BulletPrefab = Resources.Load<GameObject>("Prefabs/P_Bullet");
         if (BulletPrefab == null)
         {
             Debug.LogError("BulletPrefab 못 찾음");

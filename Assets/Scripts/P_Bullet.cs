@@ -9,10 +9,8 @@ public class P_Bullet : MonoBehaviour
 
     private void Start()
     {
-        speed = Random.Range(3f, 10f);
-
-        // 사라짐
-        Destroy(gameObject, Random.Range(3f, 10f));
+        // 3초 뒤 사라짐
+        Destroy(gameObject, 3f);
     }
 
     private void Update()
