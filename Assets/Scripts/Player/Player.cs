@@ -115,7 +115,11 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             moveVector.x -= speed * Time.deltaTime;
-            way = 4;
+
+            // 대각선 이동인지 판별(6과 같은 스프라이트)
+            if (Input.GetKey(KeyCode.W)) way = 9;
+            else if (Input.GetKey(KeyCode.S)) way = 3;
+            else way = 6;
 
             // 이미지 좌우반전
             if (ImageTF.localScale.x > 0)
@@ -128,7 +132,11 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             moveVector.x += speed * Time.deltaTime;
-            way = 6;
+
+            // 대각선 이동인지 판별
+            if (Input.GetKey(KeyCode.W)) way = 9;
+            else if (Input.GetKey(KeyCode.S)) way = 3;
+            else way = 6;
 
             // 이미지 좌우반전
             if (ImageTF.localScale.x < 0)
@@ -162,9 +170,6 @@ public class Player : MonoBehaviour
                 case 2: // 하
                     PlayerAnimator.Play("Idle", -1, 0f);
                     break;
-                case 4: // 좌
-                    PlayerAnimator.Play("Idle", -1, 0.4f);
-                    break;
                 case 6: // 우
                     PlayerAnimator.Play("Idle", -1, 0.4f);
                     break;
@@ -172,7 +177,6 @@ public class Player : MonoBehaviour
         }
         else if (PrevState == ANI_STATE.Move) // 이동이면 방향값 전달
         {
-            if (way == 4) way = 6; // 왼쪽, 오른쪽 똑같으니 오른쪽으로 통일
             PlayerAnimator.SetInteger("way", way);
         }
     }
