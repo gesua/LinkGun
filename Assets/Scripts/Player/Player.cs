@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     // 체력
     int HP = 3; // 잔기
-    Sprite[] HP_Sprite; // HP 이미지
+    Image[] HP_Sprite; // HP 이미지
+    Sprite DamageHPSprite; // 데미지 입은 HP 이미지
 
     // 이동속도
     public float Speed = 3f;
@@ -21,8 +23,6 @@ public class Player : MonoBehaviour
     ANI_STATE NextState = ANI_STATE.Idle; // 다음 상태
     Animator PlayerAnimator;
 
-    Sprite[] IdleSprite; // 기본(상하우)
-    SpriteRenderer PlayerSprite;
     Transform ImageTF; // 이미지 위치
 
     int Way = 0; // 어디 바라보고 있는지(1~9 키패드)
@@ -38,44 +38,6 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // 기본 상태 이미지
-        Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/LinkImage");
-        IdleSprite = new Sprite[3];
-        for (int i = 0; i < tempSprite.Length; i++)
-        {
-            // 위
-            if (tempSprite[i].name.Equals("Link_IU"))
-            {
-                IdleSprite[0] = tempSprite[i];
-            }
-            // 아래
-            else if (tempSprite[i].name.Equals("Link_ID"))
-            {
-                IdleSprite[1] = tempSprite[i];
-            }
-            // 오른쪽
-            else if (tempSprite[i].name.Equals("Link_IR"))
-            {
-                IdleSprite[2] = tempSprite[i];
-            }
-        }
-        // 오류 체크
-        for (int i = 0; i < IdleSprite.Length; i++)
-        {
-            if (IdleSprite[i] == null)
-            {
-                Debug.LogError(IdleSprite[i].ToString() + " 못 찾음");
-                return;
-            }
-        }
-
-        PlayerSprite = GetComponentInChildren<SpriteRenderer>();
-        if (PlayerSprite == null)
-        {
-            Debug.LogError("PlayerSprite 못 찾음");
-            return;
-        }
-
         ImageTF = transform.Find("Image");
         if (ImageTF == null)
         {
@@ -84,9 +46,38 @@ public class Player : MonoBehaviour
         }
 
         GunScript = GetComponentInChildren<Gun>();
-        if(GunScript == null)
+        if (GunScript == null)
         {
             Debug.LogError("GunScript 못 찾음");
+            return;
+        }
+
+        // HP 이미지 찾기
+        Transform tempTF = GameObject.Find("PlayerHP").transform;
+        HP_Sprite = tempTF.GetComponentsInChildren<Image>();
+        for (int i = 0; i < HP_Sprite.Length; i++)
+        {
+            if (HP_Sprite[i] == null)
+            {
+                Debug.Log(HP_Sprite[i].name + " 못 찾음");
+                return;
+            }
+        }
+
+        // 데미지 입은 HP 찾기
+        Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/PokemonUI");
+        for (int i = 0; i < tempSprite.Length; i++)
+        {
+            // 데미지 입은 HP
+            if (tempSprite[i].name.Equals("HP_OFF"))
+            {
+                DamageHPSprite = tempSprite[i];
+                break; // 1개만 찾으면 되니 바로 나옴
+            }
+        }
+        if (DamageHPSprite == null)
+        {
+            Debug.Log("DamageHPImage 못 찾음");
             return;
         }
     }
@@ -207,7 +198,7 @@ public class Player : MonoBehaviour
                     PlayerAnimator.Play("Idle", -1, 0.2f);
                     break;
                 case 3:// ↘
-                case 1: 
+                case 1:
                     PlayerAnimator.Play("Idle", -1, 0.6f);
                     break;
                 case 2: // ↓
@@ -226,11 +217,16 @@ public class Player : MonoBehaviour
     // 피격
     private void OnTriggerEnter(Collider other)
     {
+        if (HP <= 0) return;
+
         // 적 총알일 경우
         if (other.tag.Equals("E_Bullet"))
         {
             // 체력 깎임
             HP -= other.GetComponent<E_Bullet>().power;
+
+            // 이미지 변경
+            HP_Sprite[HP].sprite = DamageHPSprite;
 
             // 총알 삭제
             Destroy(other.gameObject);

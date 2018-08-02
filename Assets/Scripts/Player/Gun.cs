@@ -74,35 +74,35 @@ public class Gun : MonoBehaviour
     {
         switch (way)
         {
-            case 1:
+            case 1: // ↙
                 transform.localPosition = new Vector3(-0.195f, 0, -0.12f);
                 GunImage.sortingOrder = 3;
                 break;
-            case 2: // 아래
+            case 2: // ↓
                 transform.localPosition = new Vector3(-0.18f, 0, -0.15f);
                 GunImage.sortingOrder = 3;
                 break;
-            case 3:
+            case 3: // ↘
                 transform.localPosition = new Vector3(-0.09f, 0, -0.2f);
                 GunImage.sortingOrder = 3;
                 break;
-            case 4:
+            case 4: // ←
                 transform.localPosition = new Vector3(-0.2f, 0, -0.04f);
                 GunImage.sortingOrder = 1;
                 break;
-            case 6:
+            case 6: // →
                 transform.localPosition = new Vector3(0.03f, 0, -0.2f);
                 GunImage.sortingOrder = 3;
                 break;
-            case 7:
+            case 7: // ↖
                 transform.localPosition = new Vector3(0, 0, 0);
                 GunImage.sortingOrder = 1;
                 break;
-            case 8:// 위
+            case 8: // ↑
                 transform.localPosition = new Vector3(0.2f, 0, -0.038f);
                 GunImage.sortingOrder = 1;
                 break;
-            case 9: 
+            case 9: // ↗
                 transform.localPosition = new Vector3(0.1f, 0, -0.2f);
                 GunImage.sortingOrder = 1;
                 break;

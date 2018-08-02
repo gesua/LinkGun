@@ -157,7 +157,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae083d35bb273f45b29708230b0d3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
   Speed: 3
 --- !u!135 &188521
 SphereCollider:
@@ -1785,7 +1784,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1918289999
 Transform:
   m_ObjectHideFlags: 0
