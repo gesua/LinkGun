@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // 체력
+    public int HP = 100;
+
     // 이동속도
     public float speed = 3f;
 
@@ -171,6 +174,16 @@ public class Player : MonoBehaviour
         {
             if (way == 4) way = 6; // 왼쪽, 오른쪽 똑같으니 오른쪽으로 통일
             PlayerAnimator.SetInteger("way", way);
+        }
+    }
+
+    // 피격
+    private void OnTriggerEnter(Collider other)
+    {
+        // 적 총알일 경우
+        if (other.tag.Equals("E_Bullet"))
+        {
+
         }
     }
 }

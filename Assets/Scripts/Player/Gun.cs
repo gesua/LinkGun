@@ -38,5 +38,10 @@ public class Gun : MonoBehaviour
         GameObject tempBullet = Instantiate(BulletPrefab);
         tempBullet.transform.position = transform.position;
         tempBullet.transform.LookAt(Target);
+
+        // x축 회전 없앰
+        Vector3 tempAngle = tempBullet.transform.eulerAngles;
+        tempAngle.x = 0;
+        tempBullet.transform.eulerAngles = tempAngle;
     }
 }
