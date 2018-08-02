@@ -297,6 +297,7 @@ MonoBehaviour:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 7f1380b... Merge branch 'master' of https://github.com/gesua/LinkGun
   bulletCount1: 7
@@ -305,6 +306,10 @@ MonoBehaviour:
   bulletDegree2: 20
   startDegree3: 0
   bulletDegree3: 0.5
+=======
+  bulletCount: 3
+  bulletDegree: 10
+>>>>>>> parent of 1dd67ff... 카메라?
 =======
   bulletCount: 3
   bulletDegree: 10
