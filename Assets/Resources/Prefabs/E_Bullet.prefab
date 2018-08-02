@@ -36,6 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4863618981568718}
   - component: {fileID: 114448967753674740}
+  - component: {fileID: 65705961861911680}
   m_Layer: 0
   m_Name: E_Bullet
   m_TagString: Untagged
@@ -50,7 +51,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1872174724196656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.38, y: -10, z: -0.62}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4983810940936676}
@@ -70,6 +71,18 @@ Transform:
   m_Father: {fileID: 4863618981568718}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!65 &65705961861911680
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872174724196656}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 1, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114448967753674740
 MonoBehaviour:
   m_ObjectHideFlags: 1

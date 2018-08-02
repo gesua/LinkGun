@@ -5,7 +5,7 @@ using UnityEngine;
 public class P_Bullet : MonoBehaviour
 {
     // 속도
-    public float speed = 3f;
+    public float speed = 10f;
 
     private void Start()
     {
