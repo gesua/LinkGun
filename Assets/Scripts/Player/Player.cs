@@ -183,7 +183,11 @@ public class Player : MonoBehaviour
         // 적 총알일 경우
         if (other.tag.Equals("E_Bullet"))
         {
+            // 체력 깎임
+            HP -= other.GetComponent<E_Bullet>().power;
 
+            // 총알 삭제
+            Destroy(other.gameObject);
         }
     }
 }

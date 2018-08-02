@@ -7,6 +7,9 @@ public class P_Bullet : MonoBehaviour
     // 속도
     public float speed = 10f;
 
+    // 파워
+    public float power = 1f;
+
     private void Start()
     {
         // 3초 뒤 사라짐
