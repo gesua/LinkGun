@@ -239,15 +239,15 @@ TextureImporter:
     21300464: LinkImage_232
     21300466: LinkImage_233
     21300468: LinkImage_234
-    21300470: LinkImage_235
-    21300472: LinkImage_236
-    21300474: LinkImage_237
+    21300470: Link_MUR_1
+    21300472: Link_MUR_2
+    21300474: Link_MUR_3
     21300476: LinkImage_238
     21300478: LinkImage_239
     21300480: LinkImage_240
-    21300482: LinkImage_241
-    21300484: LinkImage_242
-    21300486: LinkImage_243
+    21300482: Link_MDR_1
+    21300484: Link_MDR_2
+    21300486: Link_MDR_3
     21300488: LinkImage_244
     21300490: LinkImage_245
     21300492: LinkImage_246
@@ -3888,7 +3888,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_235
+      name: Link_MUR_1
       rect:
         serializedVersion: 2
         x: 102
@@ -3902,7 +3902,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_236
+      name: Link_MUR_2
       rect:
         serializedVersion: 2
         x: 120
@@ -3916,7 +3916,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_237
+      name: Link_MUR_3
       rect:
         serializedVersion: 2
         x: 137
@@ -3972,7 +3972,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_241
+      name: Link_MDR_1
       rect:
         serializedVersion: 2
         x: 208
@@ -3986,7 +3986,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_242
+      name: Link_MDR_2
       rect:
         serializedVersion: 2
         x: 225
@@ -4000,7 +4000,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_243
+      name: Link_MDR_3
       rect:
         serializedVersion: 2
         x: 242
