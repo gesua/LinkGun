@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public int HP = 100;
 
     // 이동속도
-    public float speed = 3f;
+    public float Speed = 3f;
 
     // 애니메이션 상태
     enum ANI_STATE
@@ -24,7 +24,9 @@ public class Player : MonoBehaviour
     SpriteRenderer PlayerSprite;
     Transform ImageTF; // 이미지 위치
 
-    int way = 0; // 어디 바라보고 있는지(1~9 키패드)
+    int Way = 0; // 어디 바라보고 있는지(1~9 키패드)
+
+    Gun GunScript;
 
     private void Start()
     {
@@ -76,7 +78,14 @@ public class Player : MonoBehaviour
         ImageTF = transform.Find("Image");
         if (ImageTF == null)
         {
-            Debug.LogError("Image 못 찾음");
+            Debug.LogError("ImageTF 못 찾음");
+            return;
+        }
+
+        GunScript = GetComponentInChildren<Gun>();
+        if(GunScript == null)
+        {
+            Debug.LogError("GunScript 못 찾음");
             return;
         }
     }
@@ -104,22 +113,40 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            moveVector.z += speed * Time.deltaTime;
-            way = 8;
+            moveVector.z += Speed * Time.deltaTime;
+            Way = 8;
+
+            // 이미지 좌우반전
+            if (ImageTF.localScale.x < 0)
+            {
+                Vector3 temp = ImageTF.localScale;
+                temp.x *= -1;
+                ImageTF.localScale = temp;
+            }
         }
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
-            moveVector.z -= speed * Time.deltaTime;
-            way = 2;
+            moveVector.z -= Speed * Time.deltaTime;
+            Way = 2;
+
+            // 이미지 좌우반전
+            if (ImageTF.localScale.x < 0)
+            {
+                Vector3 temp = ImageTF.localScale;
+                temp.x *= -1;
+                ImageTF.localScale = temp;
+            }
         }
+
+
         if (Input.GetKey(KeyCode.A))
         {
-            moveVector.x -= speed * Time.deltaTime;
+            moveVector.x -= Speed * Time.deltaTime;
 
             // 대각선 이동인지 판별(6과 같은 스프라이트)
-            if (Input.GetKey(KeyCode.W)) way = 9;
-            else if (Input.GetKey(KeyCode.S)) way = 3;
-            else way = 6;
+            if (Input.GetKey(KeyCode.W)) Way = 9;
+            else if (Input.GetKey(KeyCode.S)) Way = 3;
+            else Way = 6;
 
             // 이미지 좌우반전
             if (ImageTF.localScale.x > 0)
@@ -129,14 +156,14 @@ public class Player : MonoBehaviour
                 ImageTF.localScale = temp;
             }
         }
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
-            moveVector.x += speed * Time.deltaTime;
+            moveVector.x += Speed * Time.deltaTime;
 
             // 대각선 이동인지 판별
-            if (Input.GetKey(KeyCode.W)) way = 9;
-            else if (Input.GetKey(KeyCode.S)) way = 3;
-            else way = 6;
+            if (Input.GetKey(KeyCode.W)) Way = 9;
+            else if (Input.GetKey(KeyCode.S)) Way = 3;
+            else Way = 6;
 
             // 이미지 좌우반전
             if (ImageTF.localScale.x < 0)
@@ -148,6 +175,9 @@ public class Player : MonoBehaviour
         }
 
         transform.position += moveVector;
+
+        // 총 위치 변경
+        GunScript.SetPosition(Way);
     }
 
     // 애니메이터 재생
@@ -162,7 +192,7 @@ public class Player : MonoBehaviour
 
         if (PrevState == ANI_STATE.Idle) // 멈춰있는 상태
         {
-            switch (way)
+            switch (Way)
             {
                 case 8: // 상
                     PlayerAnimator.Play("Idle", -1, 0.9f);
@@ -177,7 +207,7 @@ public class Player : MonoBehaviour
         }
         else if (PrevState == ANI_STATE.Move) // 이동이면 방향값 전달
         {
-            PlayerAnimator.SetInteger("way", way);
+            PlayerAnimator.SetInteger("way", Way);
         }
     }
 
