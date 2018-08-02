@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour {
     ////////////////패턴1 -> 플레이어의 위치를 지정시간마다 따라감
     public float maxTime = 2f;
     float currTime = 0f;
+    Vector3 tempDir;
+    Vector3 tempPos;
 
     // Use this for initialization
     void Start () {
@@ -39,18 +41,19 @@ public class Enemy : MonoBehaviour {
                 break;
             case 1:
                 //임시방향
-                Vector3 tempDir;
-                Transform tempTransform;
+       
                 //패턴1의 시간 계산
                 currTime += Time.deltaTime;
                 //시간이 0일때만 dir의 방향을 받음
-                if(currTime == 0) {
-                    tempDir = dir;
+                if(currTime <= 0.5) {
+                    tempPos = target.transform.position;
+                    tempDir = tempPos - this.transform.position;
                 }
                 if(currTime > maxTime) {
-                    this.transform.position += dir * moveSpeed * Time.deltaTime;
-                    if (this.transform.position == null) {
-
+                    this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
+                    if ((this.transform.position.x-1 < tempPos.x && this.transform.position.x + 1 >tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
+                        currTime = 0;
+                        Debug.Log("위치재선정");
                     }
 
                 }
