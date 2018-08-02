@@ -387,7 +387,7 @@ TextureImporter:
     21300760: LinkImage_380
     21300762: LinkImage_381
     21300764: LinkImage_382
-    21300766: LinkImage_383
+    21300766: BlueWand
     21300768: LinkImage_384
     21300770: LinkImage_385
     21300772: LinkImage_386
@@ -5960,7 +5960,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_383
+      name: BlueWand
       rect:
         serializedVersion: 2
         x: 0
