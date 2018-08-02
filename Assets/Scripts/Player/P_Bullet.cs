@@ -8,7 +8,7 @@ public class P_Bullet : MonoBehaviour
     public float speed = 10f;
 
     // 파워
-    public float power = 1f;
+    public int power = 1;
 
     private void Start()
     {
