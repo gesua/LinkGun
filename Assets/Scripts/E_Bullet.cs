@@ -9,6 +9,8 @@ public class E_Bullet : MonoBehaviour {
     //Transform target;
     //위치계산
     Vector3 dir;
+    //총알공격력
+    public int power = 1;
 
     //총알은 앞으로 날아감
 	// Use this for initialization
