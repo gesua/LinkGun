@@ -26,6 +26,10 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+        // 마우스 포인터 바라봄
+        LookTarget();
+
+        // 총알 발사
         if (Input.GetMouseButtonDown(0))
         {
             Shoot();
@@ -36,12 +40,23 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         GameObject tempBullet = Instantiate(BulletPrefab);
-        tempBullet.transform.position = transform.position;
+        tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
         tempBullet.transform.LookAt(Target);
 
         // x축 회전 없앰
         Vector3 tempAngle = tempBullet.transform.eulerAngles;
         tempAngle.x = 0;
         tempBullet.transform.eulerAngles = tempAngle;
+    }
+
+    // 마우스 포인터 바라봄
+    void LookTarget()
+    {
+        transform.LookAt(Target);
+
+        // x축 회전 없앰
+        Vector3 tempAngle = transform.eulerAngles;
+        tempAngle.x = 0;
+        transform.eulerAngles = tempAngle;
     }
 }
