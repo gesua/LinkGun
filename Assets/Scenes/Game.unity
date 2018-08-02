@@ -167,7 +167,6 @@ GameObject:
   - component: {fileID: 274420707}
   - component: {fileID: 274420706}
   - component: {fileID: 274420705}
-  - component: {fileID: 274420709}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -238,17 +237,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &274420709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 274420704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df1a5a9e5754e6649882412a2c8fb154, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &964333906
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,23 +283,36 @@ MonoBehaviour:
   target: {fileID: 188518}
   bulletState: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   bulletCount: 3
   bulletDegree: 10
 =======
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 7f1380b... Merge branch 'master' of https://github.com/gesua/LinkGun
+>>>>>>> 095d68b16e19f655b3ce9cddb1c3fc2bb90c9d7e
   bulletCount1: 7
   bulletDegree1: 15
   bulletCount2: 18
   bulletDegree2: 20
-=======
-  bulletCount1: 3
-  bulletDegree1: 10
-  bulletCount2: 36
-  bulletDegree2: 10
->>>>>>> 1dd67ff2fefcb68b3f5208b943f3dc7d973510bc
   startDegree3: 0
   bulletDegree3: 0.5
+<<<<<<< HEAD
 >>>>>>> parent of 17fdc18... Revert "Merge branch 'master' of https://github.com/gesua/LinkGun"
+=======
+=======
+  bulletCount: 3
+  bulletDegree: 10
+>>>>>>> parent of 1dd67ff... 카메라?
+=======
+  bulletCount: 3
+  bulletDegree: 10
+>>>>>>> parent of 1dd67ff... 카메라?
+>>>>>>> 095d68b16e19f655b3ce9cddb1c3fc2bb90c9d7e
 --- !u!1 &1071055778
 GameObject:
   m_ObjectHideFlags: 0
