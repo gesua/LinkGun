@@ -244,7 +244,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 274420704}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df1a5a9e5754e6649882412a2c8fb154, type: 3}
   m_Name: 
@@ -294,8 +294,12 @@ MonoBehaviour:
   b_spawnTime: 0.3
   target: {fileID: 188518}
   bulletState: 0
-  bulletCount: 3
-  bulletDegree: 10
+  bulletCount1: 3
+  bulletDegree1: 10
+  bulletCount2: 36
+  bulletDegree2: 10
+  startDegree3: 0
+  bulletDegree3: 0.5
 --- !u!1 &1071055778
 GameObject:
   m_ObjectHideFlags: 0
