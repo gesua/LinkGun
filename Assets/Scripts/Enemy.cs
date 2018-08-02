@@ -15,13 +15,17 @@ public class Enemy : MonoBehaviour {
     //플레이어의방향계산
     Vector3 dir;
     //패턴시간을추가해야함
+    //사용시간
+    float currTime = 0f;
+    //패턴종류
     public int moveState = 1;
     ////////////////패턴1 -> 플레이어의 위치를 지정시간마다 따라감
-    public float maxTime = 2f;
-    float currTime = 0f;
+    public float maxTime1 = 2f;
     Vector3 tempDir;
     Vector3 tempPos;
 
+    ////////////////패턴2 ->지정방향으로 순간이동,순간이동지정시에 플레이어 위치 주변반경 일정범위 내에 랜덤으로 나옴
+    public float maxTime2 = 1.5f;
     // Use this for initialization
     void Start () {
 		
@@ -49,7 +53,7 @@ public class Enemy : MonoBehaviour {
                     tempPos = target.transform.position;
                     tempDir = tempPos - this.transform.position;
                 }
-                if(currTime > maxTime) {
+                if(currTime > maxTime1) {
                     this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
                     if ((this.transform.position.x-1 < tempPos.x && this.transform.position.x + 1 >tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
                         currTime = 0;
@@ -59,10 +63,28 @@ public class Enemy : MonoBehaviour {
                 }
                 break;
 
+            case 2:
+                //텔레포트
+                //임시지정
+                //애니메이션 필요(방향지정,슈웅사라짐)
+                currTime += Time.deltaTime;
+                if(currTime > maxTime2) {
+                    this.transform.position = new Vector3(target.position.x + Random.Range(-2, 2), -10, target.position.z + Random.Range(-2, 2));
+                    currTime = 0;
+                }
+                
+                break;
+
                 
         }
         
 
+    }
+    private void OnTriggerEnter(Collider other) {
+        if(other.tag.Equals("P_Bullet")) {
+            Damage(other.GetComponent<P_Bullet>().power);
+            Destroy(other.gameObject);
+        }
     }
 
     //데미지받는것
