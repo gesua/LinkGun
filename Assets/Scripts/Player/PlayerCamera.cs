@@ -12,6 +12,7 @@ public class PlayerCamera : MonoBehaviour
 
     Transform target; // 플레이어 위치
 
+    // Use this for initialization
     void Start()
     {
         target = GameObject.Find("Player").transform;
@@ -22,42 +23,32 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
+    // Update is called once per frame
     void Update()
     {
-        CameraWork();
-    }
+        Vector3 myPos = transform.position;
+        Vector3 targetPos = target.position;
+        Vector3 tempPos = Vector3.zero;
 
-    // 카메라가 따라다니는 거
-    void CameraWork()
-    {
-        Vector3 myPos = transform.position; // 카메라 위치
-        Vector3 targetPos = target.position; // 플레이어 위치
-        Vector3 tempPos = Vector3.zero; // 계산 값
+        float tempX = myPos.x - targetPos.x;
+        float tempZ = myPos.z - targetPos.z;
 
-        float tempX = targetPos.x - myPos.x; // X좌표 계산
-        float tempZ = targetPos.z - myPos.z; // Z좌표 계산
+        Debug.Log(tempX + ", " + tempZ);
 
-        // X
-        if (tempX < MinX)
+        if(tempX < -MinX)
         {
-            tempPos.x = targetPos.x - (myPos.x + MinX);
-        }
-        else if (tempX > MaxX)
-        {
-            tempPos.x = targetPos.x - (myPos.x + MaxX);
+            tempPos.x = targetPos.x - (myPos.x + Mathf.Abs(MinX));
         }
 
-        // Z
-        if (tempZ < MinZ)
-        {
-            tempPos.z = targetPos.z - (myPos.z + MinZ);
-        }
-        else if (tempZ > MaxZ)
-        {
-            tempPos.z = targetPos.z - (myPos.z + MaxZ);
-        }
+        //if (tempX > MaxX || tempX < MinX)
+        //{
+        //    tempPos.x = myPos.x - targetPos.x;
+        //}
+        //if(tempZ > MaxZ || tempZ < MinZ)
+        //{
+        //    tempPos.z = myPos.z - targetPos.z;
+        //}
 
-        // 값 더함
         transform.position += tempPos;
     }
 }
