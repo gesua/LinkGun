@@ -5,7 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // 체력
-    public int HP = 100;
+    int HP = 3; // 잔기
+    Sprite[] HP_Sprite; // HP 이미지
 
     // 이동속도
     public float Speed = 3f;
@@ -143,10 +144,10 @@ public class Player : MonoBehaviour
         {
             moveVector.x -= Speed * Time.deltaTime;
 
-            // 대각선 이동인지 판별(6과 같은 스프라이트)
-            if (Input.GetKey(KeyCode.W)) Way = 9;
-            else if (Input.GetKey(KeyCode.S)) Way = 3;
-            else Way = 6;
+            // 대각선 이동인지 판별
+            if (Input.GetKey(KeyCode.W)) Way = 7;
+            else if (Input.GetKey(KeyCode.S)) Way = 1;
+            else Way = 4;
 
             // 이미지 좌우반전
             if (ImageTF.localScale.x > 0)
@@ -194,19 +195,30 @@ public class Player : MonoBehaviour
         {
             switch (Way)
             {
-                case 8: // 상
-                    PlayerAnimator.Play("Idle", -1, 0.9f);
-                    break;
-                case 2: // 하
-                    PlayerAnimator.Play("Idle", -1, 0f);
-                    break;
-                case 6: // 우
+                case 8: // ↑
                     PlayerAnimator.Play("Idle", -1, 0.4f);
+                    break;
+                case 9: // ↗
+                case 7:
+                    PlayerAnimator.Play("Idle", -1, 0.8f);
+                    break;
+                case 6: // →
+                case 4:
+                    PlayerAnimator.Play("Idle", -1, 0.2f);
+                    break;
+                case 3:// ↘
+                case 1: 
+                    PlayerAnimator.Play("Idle", -1, 0.6f);
+                    break;
+                case 2: // ↓
+                    PlayerAnimator.Play("Idle", -1, 0f);
                     break;
             }
         }
         else if (PrevState == ANI_STATE.Move) // 이동이면 방향값 전달
         {
+            if (Way == 1 || Way == 4 || Way == 7) Way += 2; // 오른쪽 보는 값
+
             PlayerAnimator.SetInteger("way", Way);
         }
     }
