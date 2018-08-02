@@ -23,14 +23,16 @@ public class Player : MonoBehaviour
     ANI_STATE NextState = ANI_STATE.Idle; // 다음 상태
     Animator PlayerAnimator;
 
-    Transform ImageTF; // 이미지 위치
+    Transform ImageTF; // 이미지 위치(좌우반전)
+    SpriteRenderer PlayerImage; // 플레이어 이미지
 
-    int Way = 0; // 어디 바라보고 있는지(1~9 키패드)
+    int Way = 0; // 어디 바라보고 있는지(1~9 키패드, 5는 안 씀)
 
     Gun GunScript;
 
     private void Start()
     {
+        // 애니메이터
         PlayerAnimator = GetComponentInChildren<Animator>();
         if (PlayerAnimator == null)
         {
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // 이미지 위치(좌우반전)
         ImageTF = transform.Find("Image");
         if (ImageTF == null)
         {
@@ -45,6 +48,15 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // 플레이어 이미지
+        PlayerImage = ImageTF.GetComponent<SpriteRenderer>();
+        if (PlayerImage == null)
+        {
+            Debug.Log("PlayerImage 못 찾음");
+            return;
+        }
+
+        // Gun스크립트
         GunScript = GetComponentInChildren<Gun>();
         if (GunScript == null)
         {
@@ -224,6 +236,10 @@ public class Player : MonoBehaviour
         {
             // 체력 깎임
             HP -= other.GetComponent<E_Bullet>().power;
+
+            // 넉백
+            Vector3 dir = transform.position - other.transform.position;
+            transform.position += dir.normalized;
 
             // 이미지 변경
             HP_Sprite[HP].sprite = DamageHPSprite;
