@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour {
         E_MD,
         E_ML
     }
+    RedBlink blink;
     ANI_STATE aniState = ANI_STATE.E_IDLE;
     //애니메이터
     Animator EnemyAnimator;
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour {
     void Start() {
         //할당
         EnemyAnimator = gameObject.GetComponentInChildren<Animator>();
+        blink = gameObject.GetComponent<RedBlink>();
     }
 
     // Update is called once per frame
@@ -178,5 +180,6 @@ public class Enemy : MonoBehaviour {
     //데미지받는것
     public void Damage(int power) {
         this.HP -= power;
+        blink.BlinkStart();
     }
 }
