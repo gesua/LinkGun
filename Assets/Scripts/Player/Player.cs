@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     float InvincibleTimeCount = 0; // 세는거
 
     Gun GunScript;
-    RedBlink Blink;
+    DamagedBlink Blink;
 
     private void Start()
     {
@@ -90,7 +90,7 @@ public class Player : MonoBehaviour
         }
 
         // 깜빡이는 스크립트
-        Blink = GetComponent<RedBlink>();
+        Blink = GetComponent<DamagedBlink>();
         if (Blink == null)
         {
             Debug.Log("Blink 못 찾음");

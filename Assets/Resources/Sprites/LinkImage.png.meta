@@ -210,7 +210,7 @@ TextureImporter:
     21300406: LinkImage_203
     21300408: LinkImage_204
     21300410: LinkImage_205
-    21300412: LinkImage_206
+    21300412: test
     21300414: LinkImage_207
     21300416: LinkImage_208
     21300418: LinkImage_209
@@ -3482,7 +3482,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_206
+      name: test
       rect:
         serializedVersion: 2
         x: 176

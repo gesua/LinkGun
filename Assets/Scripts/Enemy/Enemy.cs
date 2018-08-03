@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour {
     public float respawnTime = 4.0f;
 
     //보스깜빡임데미지표현
-    RedBlink blink;
+    DamagedBlink blink;
 
     //보스HP바계산
     Image BossHp;
@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour {
     void Start() {
         //할당
         EnemyAnimator = gameObject.GetComponentInChildren<Animator>();
-        blink = gameObject.GetComponent<RedBlink>();
+        blink = gameObject.GetComponent<DamagedBlink>();
         BossHp = GameObject.Find("Bar").GetComponentInChildren<Image>();
     }
 
