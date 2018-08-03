@@ -217,8 +217,8 @@ public class Player : MonoBehaviour
             }
         }
 
-        // 물리적인 움직임을 사용(벽 못 뚫게)
-        transform.Translate(moveVector);
+        // 움직임 계산
+        transform.position += moveVector;
 
         // 총 위치 변경
         GunScript.SetPosition(Way);
@@ -347,7 +347,7 @@ public class Player : MonoBehaviour
         // 블링크 사용
         if (dir != Vector3.zero)
         {
-            transform.Translate(dir);
+            transform.position += dir;
 
             // 블링크 잔상 생성
             CreateBlinkAfterimage(dir);
