@@ -26,36 +26,40 @@ public class Enemy : MonoBehaviour {
 
     ////////////////패턴2 ->지정방향으로 순간이동,순간이동지정시에 플레이어 위치 주변반경 일정범위 내에 랜덤으로 나옴
     public float maxTime2 = 1.5f;
+    //사라졌다가 다시 나오는대기시간
+    public float respawnTime = 4.0f;
+
+
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {   
+    void Start() {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
         //방향계산
         dir = target.position - this.transform.position;
         dir.Normalize();
         //보스의이동
         //this.transform.position += new Vector3(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime,0 , Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime);
-        switch(moveState) {
+        switch (moveState) {
             case 0:
                 //플레이어따라감
                 this.transform.position += dir * moveSpeed * Time.deltaTime;
                 break;
             case 1:
                 //임시방향
-       
+
                 //패턴1의 시간 계산
                 currTime += Time.deltaTime;
                 //시간이 0일때만 dir의 방향을 받음
-                if(currTime <= 0.5) {
+                if (currTime <= 0.5) {
                     tempPos = target.transform.position;
                     tempDir = tempPos - this.transform.position;
                 }
-                if(currTime > maxTime1) {
+                if (currTime > maxTime1) {
                     this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
-                    if ((this.transform.position.x-1 < tempPos.x && this.transform.position.x + 1 >tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
+                    if ((this.transform.position.x - 1 < tempPos.x && this.transform.position.x + 1 > tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
                         currTime = 0;
                         Debug.Log("위치재선정");
                     }
@@ -68,20 +72,25 @@ public class Enemy : MonoBehaviour {
                 //임시지정
                 //애니메이션 필요(방향지정,슈웅사라짐)
                 currTime += Time.deltaTime;
-                if(currTime > maxTime2) {
-                    this.transform.position = new Vector3(target.position.x + Random.Range(-2, 2), -10, target.position.z + Random.Range(-2, 2));
-                    currTime = 0;
+                if (currTime > maxTime2) {
+                    //해당위치에 나올지점 이펙트 찍어주기
+                    Debug.Log("순간이동시전");
+                    if (currTime > respawnTime) {
+                        Debug.Log("순간이동대기시간끝,완료");
+                        this.transform.position = new Vector3(target.position.x + Random.Range(-2, 2), -10, target.position.z + Random.Range(-2, 2));
+                        currTime = 0;
+                    }
                 }
-                
+
                 break;
 
-                
+
         }
-        
+
 
     }
     private void OnTriggerEnter(Collider other) {
-        if(other.tag.Equals("P_Bullet")) {
+        if (other.tag.Equals("P_Bullet")) {
             Damage(other.GetComponent<P_Bullet>().power);
             Destroy(other.gameObject);
         }
