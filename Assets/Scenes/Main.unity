@@ -1329,6 +1329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1752647024}
   - component: {fileID: 1752647025}
+  - component: {fileID: 1752647026}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -1393,6 +1394,23 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!95 &1752647026
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1752647023}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b318925de11735c4a8ceeb6a2535581c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1771097545
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,7 +1750,7 @@ MonoBehaviour:
   moveSpeed: 1
   HP: 100
   target: {fileID: 188519}
-  moveState: 1
+  moveState: 0
   maxTime1: 2
   maxTime2: 1.5
   respawnTime: 4
