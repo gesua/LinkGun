@@ -9,6 +9,11 @@ public class Gun : MonoBehaviour
 
     SpriteRenderer GunImage;
 
+    Transform BulletBox; // 총알 모아놓는 곳
+
+    float Cooldown = 0.2f; // 연사속도
+    float CooldownCount = 0f; // 연사속도 세는거
+
     private void Start()
     {
         BulletPrefab = Resources.Load<GameObject>("Prefabs/P_Bullet");
@@ -31,6 +36,13 @@ public class Gun : MonoBehaviour
             Debug.LogError("GunImage 못 찾음");
             return;
         }
+
+        BulletBox = GameObject.Find("P_Bullet").transform;
+        if (BulletBox == null)
+        {
+            Debug.LogError("BulletBox 못 찾음");
+            return;
+        }
     }
 
     void Update()
@@ -38,8 +50,14 @@ public class Gun : MonoBehaviour
         // 마우스 포인터 바라봄
         LookTarget();
 
+        // 쿨다운 증가
+        if(CooldownCount != 0)
+        {
+            CooldownUpdate();
+        }
+
         // 총알 발사
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) && CooldownCount == 0)
         {
             Shoot();
         }
@@ -49,6 +67,8 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         GameObject tempBullet = Instantiate(BulletPrefab);
+        tempBullet.transform.parent = BulletBox; // 한 곳에 모아둠
+
         tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
         tempBullet.transform.LookAt(Target);
 
@@ -56,6 +76,9 @@ public class Gun : MonoBehaviour
         Vector3 tempAngle = tempBullet.transform.eulerAngles;
         tempAngle.x = 0;
         tempBullet.transform.eulerAngles = tempAngle;
+
+        // 쿨다운 시작
+        CooldownCount += Time.deltaTime;
     }
 
     // 마우스 포인터 바라봄
@@ -106,6 +129,18 @@ public class Gun : MonoBehaviour
                 transform.localPosition = new Vector3(0.1f, 0, -0.2f);
                 GunImage.sortingOrder = 1;
                 break;
+        }
+    }
+
+    // 쿨다운 증가
+    void CooldownUpdate()
+    {
+        CooldownCount += Time.deltaTime;
+
+        // 다 셌음
+        if(CooldownCount >= Cooldown)
+        {
+            CooldownCount = 0;
         }
     }
 }
