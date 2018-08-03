@@ -31,8 +31,12 @@ public class Player : MonoBehaviour
     float InvincibleTime = 1f; // 무적 시간
     float InvincibleTimeCount = 0; // 세는거
 
+    // 점멸(블링크)
+    bool IsBlinked = false; // 블링크 중인지
+    float BlinkDelay = 0.5f; // 후 딜레이
+
     Gun GunScript;
-    DamagedBlink Blink;
+    DamagedBlink DamageBlink;
 
     private void Start()
     {
@@ -90,8 +94,8 @@ public class Player : MonoBehaviour
         }
 
         // 깜빡이는 스크립트
-        Blink = GetComponent<DamagedBlink>();
-        if (Blink == null)
+        DamageBlink = GetComponent<DamagedBlink>();
+        if (DamageBlink == null)
         {
             Debug.Log("Blink 못 찾음");
             return;
@@ -189,7 +193,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        transform.position += moveVector;
+        transform.Translate(moveVector);
 
         // 총 위치 변경
         GunScript.SetPosition(Way);
@@ -254,7 +258,7 @@ public class Player : MonoBehaviour
             //transform.position += dir.normalized;
 
             // 깜빡임
-            Blink.BlinkStart();
+            DamageBlink.BlinkStart();
 
             // 무적 시간 시작
             InvincibleTimeCount += Time.deltaTime;
