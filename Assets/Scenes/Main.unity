@@ -159,7 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 3
-  BlinkDistance: 1.5
+  BlinkDelayTime: 0.5
+  BlinkDistance: 1
 --- !u!135 &188521
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1044,6 +1045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9c43028ac09004b8a2f90cacad94d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CooldownTime: 0.2
 --- !u!1 &1152989407
 GameObject:
   m_ObjectHideFlags: 0
@@ -1754,13 +1756,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82524eab27a883547b7006ab356e1292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0
+  moveSpeed: 1
   HP: 100
+  attackDelay: 2
+  attackContinuousTime: 4
   target: {fileID: 188519}
-  moveState: 0
-  maxTime1: 2
+  movePattern: 0
   maxTime2: 1.5
-  respawnTime: 4
+  respawnTime: 2
+  currPatCheck: 0
+  atPat1Check: 1.5
+  CheckPat1Dam: 5
+  atPat2Check: 1.5
+  CheckPat2Dam: 5
 --- !u!54 &1918290002
 Rigidbody:
   m_ObjectHideFlags: 0

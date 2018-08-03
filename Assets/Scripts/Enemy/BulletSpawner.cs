@@ -15,6 +15,9 @@ public class BulletSpawner : MonoBehaviour {
     //(임시) 총알모드지정
     public int bulletState = 0;
 
+    //공격상태판단
+    //public bool attackState = false;
+
     //////////////////탄막 0번 직선
 
 
@@ -42,40 +45,42 @@ public class BulletSpawner : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         //시간 증가
+        //if(attackState) { 
         currTime += Time.deltaTime;
-        //시간이 증가할때마다 총알을생성
-        //1.시간체크
-        if (currTime > b_spawnTime) {
+            //시간이 증가할때마다 총알을생성
+            //1.시간체크
+            if (currTime > b_spawnTime) {
 
-            //2.총알을생성
-            //조건분기
-            switch (bulletState) {
-                case 0:
-                    //직선일때
-                    
-                    ShootMode0();
-                    break;
-                case 1:
-                    //부채꼴일때
-                    ShootMode1();
-                    break;
-                case 2:
-                    //전방향발사(기본)
-                    ShootMode2();
-                    break;
-                case 3:
-                    //회전샷(방향forWard)
-                    //자연스러운 발사시간전환
-                    ShootMode3();
-                    break;
-                default:
-                    break;
+                //2.총알을생성
+                //조건분기
+                switch (bulletState) {
+                    case 0:
+                        //직선일때
 
+                        ShootMode0();
+                        break;
+                    case 1:
+                        //부채꼴일때
+                        ShootMode1();
+                        break;
+                    case 2:
+                        //전방향발사(기본)
+                        ShootMode2();
+                        break;
+                    case 3:
+                        //회전샷(방향forWard)
+                        //자연스러운 발사시간전환
+                        ShootMode3();
+                        break;
+                    default:
+                        break;
+
+                }
+
+                //3.시간을초기화
+                currTime = 0f;
             }
-
-            //3.시간을초기화
-            currTime = 0f;
-        }
+        //}
 
 
 

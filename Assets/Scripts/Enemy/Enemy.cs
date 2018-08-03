@@ -9,32 +9,46 @@ using UnityEngine.UI;
 
 
 public class Enemy : MonoBehaviour {
+    //이동속도및체력
+    public float moveSpeed = 1f;
+    public int HP = 100;
+
     //이동애니메이션표현
     enum ANI_STATE {
         E_IDLE,
         E_MU,
         E_MD,
-        E_ML
+        E_ML,
+        E_AP1,
+        E_AP2
     }
     ANI_STATE aniState = ANI_STATE.E_IDLE;
     //애니메이터
     Animator EnemyAnimator;
+    //플레이어의 공격 시간 체크
+    public float attackDelay = 1.5f;
+    //공격지속시간(attakDelay뺀시간)
+    public float attackContinuousTime = 6f;
+    float currADTime = 0f;
+    //공격상태체크
+    bool attackState = false;
+    //이동상태체크
+    bool moveState = true;
+    BulletSpawner bulletSpawner;
     //캐릭터의 방향을 체크해줄 값
     bool checkRight = false;
-
-    public float moveSpeed = 1f;
-    public int HP = 100;
     //플레이어의 위치를 받을값
     public Transform target;
     //플레이어의방향계산
     Vector3 dir;
-    //패턴시간을추가해야함
     //사용시간
     float currTime = 0f;
     //패턴종류
-    public int moveState = 1;
+    //패턴종류랜덤지정
+    int setRandomMove = 0;
+    public int movePattern = 0;
     ////////////////패턴1 -> 플레이어의 위치를 지정시간마다 따라감
-    public float maxTime1 = 2f;
+    //public float maxTime1 = 2f;
     Vector3 tempDir;
     Vector3 tempPos;
 
@@ -48,35 +62,114 @@ public class Enemy : MonoBehaviour {
 
     //보스HP바계산
     Image BossHp;
+
+    ////////////////공격패턴위한 수치값
+    public float currPatCheck = 0f;
+    int onDamagedCount = 0;
+    //공격패턴1(부채꼴) 발사조건 -> ~ 초내에 5이상을 맞았을경우
+    public float atPat1Check = 1.5f;
+    public int CheckPat1Dam = 5;
+    //공격패턴2(원형) 발사조건 -> ~ 초내에 5발 이상 맞았을경우(체력50퍼센트이하)
+    //50퍼센트 이하일땐 기본 공격이 부채꼴로 바뀜
+    public float atPat2Check = 1.5f;
+    public int CheckPat2Dam = 5;
+    //공격패턴3 베지어곡선
+
+    //공격패턴4(돌리기) 발사조건 -> 체력%이하
+
     // Use this for initialization
     void Start() {
         //할당
         EnemyAnimator = gameObject.GetComponentInChildren<Animator>();
         blink = gameObject.GetComponent<DamagedBlink>();
         BossHp = GameObject.Find("Bar").GetComponentInChildren<Image>();
+        bulletSpawner = transform.GetComponentInChildren<BulletSpawner>();
     }
 
     // Update is called once per frame
     void Update() {
-        //무브상태체크
-        Move();
-        //보스의이동
-        switch (moveState) {
-            case 0:
-                //플레이어따라감
-                this.transform.position += dir * moveSpeed * Time.deltaTime;
-                break;
-            case 1:
-                MovePattern1();
-                break;
 
-            case 2:
-                MovePattern2();
-                break;
+        //행동지정
+        SetEnemyBehavState();
+        //공격패턴지정
+        SetAttackPattern();
+        //무브패턴지정
+        SetMovePattern();
 
-        }
+
         //애니메이터
         PlayAnimator();
+    }
+
+    void SetEnemyBehavState() {
+        //무브상태체크
+        if (currADTime > attackDelay) {
+            //공격시간재기
+            currADTime += Time.deltaTime;
+            //상태변경
+            attackState = true;
+            moveState = false;
+            if (attackState) {
+                aniState = ANI_STATE.E_AP1;
+                //bulletSpawner.attackState = this.attackState;
+            }
+            if (currADTime > attackContinuousTime) {
+                //시간끝 공격중지
+                currADTime = 0;
+                attackState = false;
+                moveState = true;
+                currTime = 0;
+                Debug.Log("위치재선정1");
+                setRandomMove = Random.Range(0, 100);
+                //bulletSpawner.attackState = this.attackState;
+
+                //공격패턴0초기화
+                if (HP > 50) {
+                    bulletSpawner.bulletState = 0;
+                }
+                else if (HP <= 50) {
+                    bulletSpawner.bulletState = 1;
+                }
+            }
+        }
+
+    }
+
+    void SetMovePattern() {
+        if (HP > 12) {
+            if (setRandomMove > 50) {
+                movePattern = 0;
+            }
+            else {
+                //위치재선정재필요
+
+                movePattern = 1;
+            }
+        }
+        else {
+            movePattern = 2;
+        }
+
+
+        if (moveState) {
+            currADTime += Time.deltaTime;
+            Move();
+            //보스의이동
+            switch (movePattern) {
+                case 0:
+                    //플레이어따라감
+                    this.transform.position += dir * moveSpeed * Time.deltaTime;
+                    break;
+                case 1:
+                    MovePattern1();
+                    break;
+
+                case 2:
+                    MovePattern2();
+                    break;
+
+            }
+        }
     }
     void Move() {
         //방향계산
@@ -106,11 +199,40 @@ public class Enemy : MonoBehaviour {
                 aniState = ANI_STATE.E_MD;
             }
         }
-        //방향계산후 보스의 애니메이션 지정
+    }
+
+    void SetAttackPattern() {
+        currPatCheck += Time.deltaTime;
+        //공격패턴판단(데미지받은것기준)
+        //패턴1기준
+        if (HP > 50) {
+            if (currPatCheck < atPat1Check) {
+                if (onDamagedCount > CheckPat1Dam) {
+                    bulletSpawner.bulletState = 1;
+                }
+            }
+            else {
+                onDamagedCount = 0;
+                currPatCheck = 0;
+            }
+        }
+        else if (HP <= 50) {
+            if (currPatCheck < atPat2Check) {
+                if (onDamagedCount > CheckPat2Dam) {
+                    bulletSpawner.bulletState = 2;
+                }
+            }
+            else {
+                onDamagedCount = 0;
+                currPatCheck = 0;
+            }
+        }
+        else {
+            //공격패턴3,4짬뽕
+
+        }
     }
     void MovePattern1() {
-        //임시방향
-
         //패턴1의 시간 계산
         currTime += Time.deltaTime;
         //시간이 0일때만 dir의 방향을 받음
@@ -118,14 +240,13 @@ public class Enemy : MonoBehaviour {
             tempPos = target.transform.position;
             tempDir = tempPos - this.transform.position;
         }
-        if (currTime > maxTime1) {
-            this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
-            if ((this.transform.position.x - 1 < tempPos.x && this.transform.position.x + 1 > tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
-                currTime = 0;
-                Debug.Log("위치재선정");
-            }
 
+        this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
+        if ((this.transform.position.x - 1 < tempPos.x && this.transform.position.x + 1 > tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
+            currTime = 0;
+            Debug.Log("위치재선정");
         }
+
     }
     void MovePattern2() {
         //텔레포트
@@ -170,6 +291,9 @@ public class Enemy : MonoBehaviour {
                     }
                 }
                 break;
+            case ANI_STATE.E_AP1:
+                EnemyAnimator.SetInteger("State", 4);
+                break;
 
         }
 
@@ -181,9 +305,9 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-   
     //데미지받는것
     public void Damage(int power) {
+        onDamagedCount += power;
         this.HP -= power;
         BossHp.fillAmount = this.HP / 100f;
         blink.BlinkStart();
