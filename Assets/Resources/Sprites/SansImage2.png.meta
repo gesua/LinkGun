@@ -19,9 +19,9 @@ TextureImporter:
     21300024: Sans_MoveLeft1
     21300026: Sans_MoveLeft2
     21300028: Sans_MoveLeft3
-    21300030: SansImage2_15
-    21300032: SansImage2_16
-    21300034: SansImage2_17
+    21300030: Sans_Ap2_1
+    21300032: Sans_Ap2_2
+    21300034: Sans_Ap2_3
     21300036: SansImage2_18
     21300038: SansImage2_19
     21300040: SansImage2_20
@@ -46,9 +46,9 @@ TextureImporter:
     21300078: SansImage2_39
     21300080: SansImage2_40
     21300082: SansImage2_41
-    21300084: SansImage2_42
-    21300086: SansImage2_43
-    21300088: SansImage2_44
+    21300084: Sans_Ap1_1
+    21300086: Sans_Ap1_2
+    21300088: Sans_Ap1_3
     21300090: SansImage2_45
     21300092: SansImage2_46
     21300094: SansImage2_47
@@ -386,7 +386,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_15
+      name: Sans_Ap2_1
       rect:
         serializedVersion: 2
         x: 97
@@ -400,7 +400,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_16
+      name: Sans_Ap2_2
       rect:
         serializedVersion: 2
         x: 129
@@ -414,7 +414,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_17
+      name: Sans_Ap2_3
       rect:
         serializedVersion: 2
         x: 161
@@ -764,7 +764,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_42
+      name: Sans_Ap1_1
       rect:
         serializedVersion: 2
         x: 5
@@ -778,7 +778,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_43
+      name: Sans_Ap1_2
       rect:
         serializedVersion: 2
         x: 37
@@ -792,7 +792,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_44
+      name: Sans_Ap1_3
       rect:
         serializedVersion: 2
         x: 69
@@ -1360,7 +1360,7 @@ TextureImporter:
         width: 23
         height: 30
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

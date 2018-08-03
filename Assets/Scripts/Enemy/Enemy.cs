@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //보스의 이동경로지정
 //기본으로 키입력을 받아서 이동하기
@@ -15,7 +16,6 @@ public class Enemy : MonoBehaviour {
         E_MD,
         E_ML
     }
-    RedBlink blink;
     ANI_STATE aniState = ANI_STATE.E_IDLE;
     //애니메이터
     Animator EnemyAnimator;
@@ -43,12 +43,17 @@ public class Enemy : MonoBehaviour {
     //사라졌다가 다시 나오는대기시간
     public float respawnTime = 4.0f;
 
+    //보스깜빡임데미지표현
+    RedBlink blink;
 
+    //보스HP바계산
+    Image BossHp;
     // Use this for initialization
     void Start() {
         //할당
         EnemyAnimator = gameObject.GetComponentInChildren<Animator>();
         blink = gameObject.GetComponent<RedBlink>();
+        BossHp = GameObject.Find("Bar").GetComponentInChildren<Image>();
     }
 
     // Update is called once per frame
@@ -77,9 +82,9 @@ public class Enemy : MonoBehaviour {
         //방향계산
         dir = target.position - this.transform.position;
         dir.Normalize();
-        Debug.Log(dir);
+        //Debug.Log(dir);
         if (dir.x >= 0.9f || dir.x <= -0.9f) {
-            Debug.Log("이런");
+            //Debug.Log("이런");
             //오른쪽인경우
             if (dir.x >= 0) {
                 aniState = ANI_STATE.E_ML;
@@ -180,6 +185,7 @@ public class Enemy : MonoBehaviour {
     //데미지받는것
     public void Damage(int power) {
         this.HP -= power;
+        BossHp.fillAmount = this.HP / 100f;
         blink.BlinkStart();
     }
 }
