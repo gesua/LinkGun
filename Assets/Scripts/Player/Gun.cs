@@ -11,7 +11,7 @@ public class Gun : MonoBehaviour
 
     Transform BulletBox; // 총알 모아놓는 곳
 
-    float Cooldown = 0.2f; // 연사속도
+    float CooldownTime = 0.2f; // 연사속도
     float CooldownCount = 0f; // 연사속도 세는거
 
     private void Start()
@@ -53,7 +53,7 @@ public class Gun : MonoBehaviour
         // 쿨다운 증가
         if(CooldownCount != 0)
         {
-            CooldownUpdate();
+            Cooldown();
         }
 
         // 총알 발사
@@ -133,12 +133,12 @@ public class Gun : MonoBehaviour
     }
 
     // 쿨다운 증가
-    void CooldownUpdate()
+    void Cooldown()
     {
         CooldownCount += Time.deltaTime;
 
         // 다 셌음
-        if(CooldownCount >= Cooldown)
+        if(CooldownCount >= CooldownTime)
         {
             CooldownCount = 0;
         }

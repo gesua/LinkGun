@@ -27,6 +27,10 @@ public class Player : MonoBehaviour
 
     int Way = 0; // 어디 바라보고 있는지(1~9 키패드, 5는 안 씀)
 
+    // 공격당한 뒤 무적 시간
+    float InvincibleTime = 1f; // 무적 시간
+    float InvincibleTimeCount = 0; // 세는거
+
     Gun GunScript;
     RedBlink Blink;
 
@@ -229,7 +233,8 @@ public class Player : MonoBehaviour
     // 피격
     private void OnTriggerEnter(Collider other)
     {
-        if (HP <= 0) return;
+        if (HP <= 0) return; // 이미 죽음
+        //if (InvincibleTimeCount != 0) return; // 무적시간
 
         // 적 총알일 경우
         if (other.tag.Equals("E_Bullet"))
@@ -243,6 +248,9 @@ public class Player : MonoBehaviour
 
             // 깜빡임
             Blink.BlinkStart();
+
+            // 무적 시간 시작
+            InvincibleTimeCount += Time.deltaTime;
 
             // 이미지 변경
             HP_Sprite[HP].sprite = DamageHPSprite;
