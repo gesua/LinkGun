@@ -6,8 +6,8 @@ public class RedBlink : MonoBehaviour
 {
     bool IsBlinkStart = false;
 
-    float DamageTime = 0.2f; // 깜빡이는 시간
-    int BlinkNumber = 3; // 깜빡이는 횟수
+    public float DamageTime = 0.2f; // 깜빡이는 시간
+    public int BlinkNumber = 3; // 깜빡이는 횟수
     int BlinkCount = 0; // 횟수 세는거
     float CurrentTime = 0f; // 경과 시간
 
