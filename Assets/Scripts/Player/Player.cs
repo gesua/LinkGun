@@ -111,7 +111,14 @@ public class Player : MonoBehaviour
             NextState = ANI_STATE.Idle;
         }
 
+        // 애니메이터
         PlayAnimator();
+
+        // 무적시간 계산
+        if (InvincibleTimeCount != 0)
+        {
+            Invincible();
+        }
     }
 
     // 이동(WASD)
@@ -234,7 +241,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (HP <= 0) return; // 이미 죽음
-        //if (InvincibleTimeCount != 0) return; // 무적시간
+        if (InvincibleTimeCount != 0) return; // 무적시간
 
         // 적 총알일 경우
         if (other.tag.Equals("E_Bullet"))
@@ -257,6 +264,18 @@ public class Player : MonoBehaviour
 
             // 총알 삭제
             Destroy(other.gameObject);
+        }
+    }
+
+    // 무적 시간 세기
+    void Invincible()
+    {
+        InvincibleTimeCount += Time.deltaTime;
+
+        // 다 셌음
+        if (InvincibleTimeCount >= InvincibleTime)
+        {
+            InvincibleTimeCount = 0;
         }
     }
 }

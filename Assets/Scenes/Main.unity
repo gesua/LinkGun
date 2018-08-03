@@ -1855,7 +1855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e45f35c33939c942b458054fe90b25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageTime: 0.2
+  DamageTime: 0.1
   BlinkNumber: 1
 --- !u!1 &2090577084
 GameObject:
