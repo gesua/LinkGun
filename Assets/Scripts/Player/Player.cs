@@ -31,9 +31,14 @@ public class Player : MonoBehaviour
     float InvincibleTime = 1f; // 무적 시간
     float InvincibleTimeCount = 0; // 세는거
 
-    // 점멸(블링크)
+    // 블링크
     bool IsBlinked = false; // 블링크 중인지
-    float BlinkDelay = 0.5f; // 후 딜레이
+    public float BlinkDelayTime = 0.5f; // 후 딜레이
+    float BlinkDelayCount = 0; // 세는거
+    public float BlinkDistance = 1.5f; // 블링크 거리
+    GameObject BlinkAfterimagePrefab; // 블링크 이펙트 프리팹
+
+    Transform MousePoint; // 마우스 위치
 
     Gun GunScript;
     DamagedBlink DamageBlink;
@@ -93,11 +98,27 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // 깜빡이는 스크립트
+        // 데미지 받았을 때 깜빡이는 스크립트
         DamageBlink = GetComponent<DamagedBlink>();
         if (DamageBlink == null)
         {
             Debug.Log("Blink 못 찾음");
+            return;
+        }
+
+        // 마우스 위치
+        MousePoint = GameObject.Find("MousePoint").transform;
+        if (MousePoint == null)
+        {
+            Debug.Log("MousePoint 못 찾음");
+            return;
+        }
+
+        // 블링크 효과 프리팹
+        BlinkAfterimagePrefab = Resources.Load<GameObject>("Prefabs/BlinkAfterimage");
+        if (BlinkAfterimagePrefab == null)
+        {
+            Debug.LogError("BlinkAfterimagePrefab 못 찾음");
             return;
         }
     }
@@ -105,15 +126,28 @@ public class Player : MonoBehaviour
     void Update()
     {
         // 이동
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        if (IsBlinked == false && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
         {
             NextState = ANI_STATE.Move;
             Move();
+
+            // 블링크(우클릭)
+            if (Input.GetMouseButtonDown(1))
+            {
+                Blink();
+            }
         }
         else // 기본
         {
             NextState = ANI_STATE.Idle;
+
+            // 블링크 딜레이
+            if (IsBlinked)
+            {
+                BlinkDelay();
+            }
         }
+
 
         // 애니메이터
         PlayAnimator();
@@ -134,27 +168,11 @@ public class Player : MonoBehaviour
         {
             moveVector.z += Speed * Time.deltaTime;
             Way = 8;
-
-            // 이미지 좌우반전
-            if (ImageTF.localScale.x < 0)
-            {
-                Vector3 temp = ImageTF.localScale;
-                temp.x *= -1;
-                ImageTF.localScale = temp;
-            }
         }
         else if (Input.GetKey(KeyCode.S))
         {
             moveVector.z -= Speed * Time.deltaTime;
             Way = 2;
-
-            // 이미지 좌우반전
-            if (ImageTF.localScale.x < 0)
-            {
-                Vector3 temp = ImageTF.localScale;
-                temp.x *= -1;
-                ImageTF.localScale = temp;
-            }
         }
 
 
@@ -166,14 +184,6 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.W)) Way = 7;
             else if (Input.GetKey(KeyCode.S)) Way = 1;
             else Way = 4;
-
-            // 이미지 좌우반전
-            if (ImageTF.localScale.x > 0)
-            {
-                Vector3 temp = ImageTF.localScale;
-                temp.x *= -1;
-                ImageTF.localScale = temp;
-            }
         }
         else if (Input.GetKey(KeyCode.D))
         {
@@ -183,7 +193,21 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.W)) Way = 9;
             else if (Input.GetKey(KeyCode.S)) Way = 3;
             else Way = 6;
+        }
 
+        // 이미지 반전
+        if (Way == 1 || Way == 4 || Way == 7) // 왼쪽
+        {
+            // 이미지 좌우반전
+            if (ImageTF.localScale.x > 0)
+            {
+                Vector3 temp = ImageTF.localScale;
+                temp.x *= -1;
+                ImageTF.localScale = temp;
+            }
+        }
+        else // 오른쪽
+        {
             // 이미지 좌우반전
             if (ImageTF.localScale.x < 0)
             {
@@ -193,6 +217,7 @@ public class Player : MonoBehaviour
             }
         }
 
+        // 물리적인 움직임을 사용(벽 못 뚫게)
         transform.Translate(moveVector);
 
         // 총 위치 변경
@@ -281,5 +306,81 @@ public class Player : MonoBehaviour
         {
             InvincibleTimeCount = 0;
         }
+    }
+
+    // 블링크
+    void Blink()
+    {
+        Vector3 dir = Vector3.zero;
+
+        // 키보드 방향으로 블링크
+        switch (Way)
+        {
+            case 1: // ↙
+                dir = Vector3.left + Vector3.back;
+                break;
+            case 2: // ↓
+                dir = Vector3.back;
+                break;
+            case 3: // ↘
+                dir = Vector3.right + Vector3.back;
+                break;
+            case 4: // ←
+                dir = Vector3.left;
+                break;
+            case 6: // →
+                dir = Vector3.right;
+                break;
+            case 7: // ↖
+                dir = Vector3.left + Vector3.forward;
+                break;
+            case 8: // ↑
+                dir = Vector3.forward;
+                break;
+            case 9: // ↗
+                dir = Vector3.right + Vector3.forward;
+                break;
+        }
+
+        dir *= BlinkDistance; // 거리 증가
+
+        // 블링크 사용
+        if (dir != Vector3.zero)
+        {
+            transform.Translate(dir);
+
+            // 블링크 잔상 생성
+            CreateBlinkAfterimage(dir);
+            IsBlinked = true;
+        }
+    }
+
+    // 블링크 시간 세기
+    void BlinkDelay()
+    {
+        // 블링크 딜레이 시작
+        BlinkDelayCount += Time.deltaTime;
+
+        // 다 셌음
+        if (BlinkDelayCount >= BlinkDelayTime)
+        {
+            BlinkDelayCount = 0;
+            IsBlinked = false;
+        }
+    }
+
+    // 블링크 잔상 생성(현재 거리 1에 맞춰져있음)
+    void CreateBlinkAfterimage(Vector3 dir)
+    {
+        GameObject temp = Instantiate(BlinkAfterimagePrefab);
+        temp.transform.position = transform.position - dir;
+        temp.GetComponent<BlinkAfterimage>().SetDestroyTime(BlinkDelayTime); // 블링크 딜레이 시간 동안 보여줌
+
+        temp.transform.LookAt(transform.position);
+
+        // x축 회전 없앰
+        Vector3 tempAngle = temp.transform.eulerAngles;
+        tempAngle.x = 0;
+        temp.transform.eulerAngles = tempAngle;
     }
 }

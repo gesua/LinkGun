@@ -11,7 +11,9 @@ public class Gun : MonoBehaviour
 
     Transform BulletBox; // 총알 모아놓는 곳
 
-    float CooldownTime = 0.2f; // 연사속도
+    // 쿨다운
+    bool IsCooldown = false; // 쿨다운 중인지
+    public float CooldownTime = 0.2f; // 연사속도
     float CooldownCount = 0f; // 연사속도 세는거
 
     private void Start()
@@ -50,16 +52,14 @@ public class Gun : MonoBehaviour
         // 마우스 포인터 바라봄
         LookTarget();
 
-        // 쿨다운 증가
-        if(CooldownCount != 0)
-        {
-            Cooldown();
-        }
-
-        // 총알 발사
-        if (Input.GetMouseButton(0) && CooldownCount == 0)
+        // 총알 발사(좌클릭)
+        if (Input.GetMouseButton(0) && IsCooldown == false)
         {
             Shoot();
+        }
+        else if (IsCooldown) // 쿨다운
+        {
+            Cooldown();
         }
     }
 
@@ -78,7 +78,7 @@ public class Gun : MonoBehaviour
         tempBullet.transform.eulerAngles = tempAngle;
 
         // 쿨다운 시작
-        CooldownCount += Time.deltaTime;
+        IsCooldown = true;
     }
 
     // 마우스 포인터 바라봄
@@ -138,9 +138,10 @@ public class Gun : MonoBehaviour
         CooldownCount += Time.deltaTime;
 
         // 다 셌음
-        if(CooldownCount >= CooldownTime)
+        if (CooldownCount >= CooldownTime)
         {
             CooldownCount = 0;
+            IsCooldown = false;
         }
     }
 }
