@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     int Way = 0; // 어디 바라보고 있는지(1~9 키패드, 5는 안 씀)
 
     Gun GunScript;
+    RedBlink Blink;
 
     private void Start()
     {
@@ -90,6 +91,14 @@ public class Player : MonoBehaviour
         if (DamageHPSprite == null)
         {
             Debug.Log("DamageHPImage 못 찾음");
+            return;
+        }
+
+        // 깜빡이는 스크립트
+        Blink = GetComponent<RedBlink>();
+        if (Blink == null)
+        {
+            Debug.Log("Blink 못 찾음");
             return;
         }
     }
@@ -238,8 +247,9 @@ public class Player : MonoBehaviour
             HP -= other.GetComponent<E_Bullet>().power;
 
             // 넉백
-            Vector3 dir = transform.position - other.transform.position;
-            transform.position += dir.normalized;
+            //Vector3 dir = transform.position - other.transform.position;
+            //transform.position += dir.normalized;
+            Blink.BlinkStart();
 
             // 이미지 변경
             HP_Sprite[HP].sprite = DamageHPSprite;
