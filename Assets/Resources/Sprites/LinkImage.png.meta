@@ -232,7 +232,7 @@ TextureImporter:
     21300450: LinkImage_225
     21300452: LinkImage_226
     21300454: LinkImage_227
-    21300456: LinkImage_228
+    21300456: Shadow
     21300458: LinkImage_229
     21300460: LinkImage_230
     21300462: LinkImage_231
@@ -3790,13 +3790,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_228
+      name: Shadow
       rect:
         serializedVersion: 2
-        x: 570
+        x: 571
         y: 177
-        width: 13
-        height: 14
+        width: 12
+        height: 6
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
