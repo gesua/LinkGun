@@ -5,6 +5,9 @@ using UnityEngine;
 public class BulletSpawner : MonoBehaviour {
     //불렛 프리팹 받아서 사용
     public GameObject bulletFactory;
+    //불렛 오브젝트풀을 만들어 줘야함
+    public int poolSize = 500;
+    GameObject[] bulletPool;
     //총알의 생성 시간
     public float b_spawnTime = 0.3f;
     //현재시간
@@ -39,7 +42,13 @@ public class BulletSpawner : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-
+        bulletPool = new GameObject[poolSize];
+        for (int i = 0; i < poolSize; i++) {
+            bulletPool[i] = Instantiate(bulletFactory,transform.position, Quaternion.identity);
+            //Spawner의자식
+            bulletPool[i].transform.parent = gameObject.transform;
+            bulletPool[i].SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -157,4 +166,6 @@ public class BulletSpawner : MonoBehaviour {
             }
         }
     }
+
+    
 }

@@ -38,7 +38,7 @@ public class P_Bullet : MonoBehaviour
     }
 
     // 끄고 Pool에 넣음
-    void Off()
+    public void Off()
     {
         gameObject.SetActive(false);
 
