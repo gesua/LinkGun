@@ -275,8 +275,13 @@ public class Player : MonoBehaviour
         // 적 총알일 경우
         if (other.tag.Equals("E_Bullet"))
         {
+            E_Bullet e_Bullet = other.GetComponent<E_Bullet>();
+
             // 체력 깎임
-            HP -= other.GetComponent<E_Bullet>().power;
+            HP -= e_Bullet.power;
+
+            // 적 총알 Pool에 반환
+            e_Bullet.Off();
 
             // 넉백
             //Vector3 dir = transform.position - other.transform.position;
@@ -291,8 +296,6 @@ public class Player : MonoBehaviour
             // 이미지 변경
             HP_Sprite[HP].sprite = DamageHPSprite;
 
-            // 총알 삭제
-            Destroy(other.gameObject);
         }
     }
 

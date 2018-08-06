@@ -995,6 +995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletFactory: {fileID: 1872174724196656, guid: 6cf9f3646ed82a34b8f78dbdc0174d1c,
     type: 2}
+  poolSize: 500
   b_spawnTime: 0.3
   target: {fileID: 188518}
   bulletState: 0
@@ -1046,6 +1047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CooldownTime: 0.2
+  BulletPoolSize: 20
 --- !u!1 &1152989407
 GameObject:
   m_ObjectHideFlags: 0

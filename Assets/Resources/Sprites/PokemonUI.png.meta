@@ -19,7 +19,7 @@ TextureImporter:
     21300024: PokemonUI_12
     21300026: PokemonUI_13
     21300028: PokemonUI_14
-    21300030: PokemonUI_15
+    21300030: GunUI
     21300032: HP_Frame
     21300034: PokemonUI_17
     21300036: PokemonUI_18
@@ -398,7 +398,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: PokemonUI_15
+      name: GunUI
       rect:
         serializedVersion: 2
         x: 157
@@ -407,7 +407,7 @@ TextureImporter:
         height: 28
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 3, y: 3, z: 3, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
