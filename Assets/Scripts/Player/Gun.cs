@@ -28,6 +28,9 @@ public class Gun : MonoBehaviour
     bool IsReload = false; // 장전 중인지
     public float ReloadSpeed = 2f; // 장전속도
     float ReloadCount = 0f; // 장전시간 세는거
+    Slider ReloadSlider; // 장전 보여줄 UI
+
+    Camera MainCam;
 
     private void Awake()
     {
@@ -41,6 +44,8 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
+        MainCam = Camera.main;
+
         BulletPrefab = Resources.Load<GameObject>("Prefabs/P_Bullet");
         if (BulletPrefab == null)
         {
@@ -75,6 +80,15 @@ public class Gun : MonoBehaviour
         if (AmmoText == null)
         {
             Debug.LogError("AmmoText 못 찾음");
+            return;
+        }
+
+        // ReloadSlider
+        Transform tempReload = tempUI.transform.Find("Reload");
+        ReloadSlider = tempReload.GetChild(0).GetComponent<Slider>();
+        if (ReloadSlider == null)
+        {
+            Debug.LogError("ReloadSlider 못 찾음");
             return;
         }
 
@@ -154,15 +168,25 @@ public class Gun : MonoBehaviour
         {
             Debug.Log("Player BulletPool 초과");
         }
-
     }
 
     // 재장전
     void Reload()
     {
+        // 슬라이더 켜기
+        if (ReloadSlider.gameObject.activeSelf == false) ReloadSlider.gameObject.SetActive(true);
+
         ReloadCount += Time.deltaTime;
 
-        if(ReloadCount >= ReloadSpeed)
+        // 슬라이더 위치
+        Vector3 temp = MainCam.WorldToScreenPoint(transform.parent.position);
+        temp.y += 70;
+        temp.z = 0;
+        ReloadSlider.transform.position = temp;
+
+        ReloadSlider.value = ReloadCount / ReloadSpeed;
+
+        if (ReloadCount >= ReloadSpeed)
         {
             // 초기화
             ReloadCount = 0;
@@ -172,6 +196,9 @@ public class Gun : MonoBehaviour
 
             // TextUI 세팅
             AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
+
+            // 슬라이더 끔
+            ReloadSlider.gameObject.SetActive(false);
 
             // 재장전 끝
             IsReload = false;
