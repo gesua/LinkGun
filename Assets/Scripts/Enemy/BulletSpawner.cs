@@ -178,6 +178,7 @@ public class BulletSpawner : MonoBehaviour {
             }
         }
     }
+ 
 
     void BulletPoolActive(Vector3 fireVector) {
         GameObject tempBullet = deactiveList[0];
