@@ -47,6 +47,7 @@ public class BulletSpawner : MonoBehaviour {
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i] = Instantiate(bulletFactory,transform.position, Quaternion.identity);
             //Spawner의자식
+            bulletPool[i].GetComponent<E_Bullet>().setSpawner(this);
             bulletPool[i].transform.parent = gameObject.transform;
             bulletPool[i].SetActive(false);
             deactiveList.Add(bulletPool[i]);

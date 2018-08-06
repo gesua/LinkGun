@@ -18,7 +18,7 @@ public class E_Bullet : MonoBehaviour {
     //총알은 앞으로 날아감
 
     //총알 넣어줄 Spawner객체
-    BulletSpawner Spawner;
+    BulletSpawner bulletSpawner;
     // Use this for initialization
 
     private void OnEnable() {
@@ -30,7 +30,7 @@ public class E_Bullet : MonoBehaviour {
     }
     void Start () {
         //동적할당
-        Spawner = GameObject.Find("E_BulletSpawner").GetComponent<BulletSpawner>();
+      
         //방향계산
         dir = this.transform.forward;
         //dir.Normalize();
@@ -46,11 +46,14 @@ public class E_Bullet : MonoBehaviour {
         this.transform.position += dir * bulletSpeed * Time.deltaTime;
 
 	}
+    
+    public void setSpawner(BulletSpawner spawner) {
+        bulletSpawner = spawner;
+    }
 
     // 끄고 Pool에 넣음
     public void Off() {
         gameObject.SetActive(false);
-
-        Spawner.AddBulletPool(gameObject);
+        bulletSpawner.AddBulletPool(gameObject);
     }
 }
