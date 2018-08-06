@@ -16,6 +16,7 @@ public class Gun : MonoBehaviour
     float CooldownCount = 0f; // 연사속도 세는거
 
     // 총알 Pool
+    GameObject[] AllBullet; // 모든 총알
     List<GameObject> BulletPool; // Pool 리스트
     public int BulletPoolSize = 20; // Pool 최대 갯수
 
@@ -62,6 +63,7 @@ public class Gun : MonoBehaviour
 
         // Pool 생성
         BulletPool = new List<GameObject>();
+        AllBullet = new GameObject[BulletPoolSize];
         Transform BulletBox = GameObject.Find("P_Bullet").transform;
         for (int i = 0; i < BulletPoolSize; i++)
         {
@@ -71,6 +73,7 @@ public class Gun : MonoBehaviour
             tempBullet.SetActive(false);
 
             BulletPool.Add(tempBullet);
+            AllBullet[i] = tempBullet;
         }
 
         // AmmoText
@@ -105,7 +108,7 @@ public class Gun : MonoBehaviour
         LookTarget();
 
         // 쿨다운
-        if (IsCooldown) 
+        if (IsCooldown)
         {
             Cooldown();
         }
@@ -121,7 +124,7 @@ public class Gun : MonoBehaviour
                     Shoot();
                 }
             }
-            else if(IsReload == false) // 재장전 켜기
+            else if (IsReload == false) // 재장전 켜기
             {
                 IsReload = true;
             }
@@ -138,7 +141,7 @@ public class Gun : MonoBehaviour
     void Shoot()
     {
         // Pool에서 켜기
-        if(BulletPool.Count > 0)
+        if (BulletPool.Count > 0)
         {
             AmmoCount--; // 총알 1개 소모
 
@@ -268,10 +271,21 @@ public class Gun : MonoBehaviour
             IsCooldown = false;
         }
     }
-    
+
     // 꺼진거 Pool에 넣기
     public void AddBulletPool(GameObject bullet)
     {
         BulletPool.Add(bullet);
+    }
+
+    // 모든 총알 멈추기
+    public void AllBulletOff()
+    {
+        for (int i = 0; i < BulletPoolSize; i++)
+        {
+            P_Bullet temp = AllBullet[i].GetComponent<P_Bullet>();
+            temp.InvokeOff();
+            temp.enabled = false;
+        }
     }
 }

@@ -204,25 +204,25 @@ TextureImporter:
     21300394: LinkImage_197
     21300396: LinkImage_198
     21300398: LinkImage_199
-    21300400: LinkImage_200
+    21300400: Lose_1
     21300402: LinkImage_201
     21300404: LinkImage_202
     21300406: LinkImage_203
     21300408: LinkImage_204
-    21300410: LinkImage_205
-    21300412: test
+    21300410: Lose_2
+    21300412: Lose_3
     21300414: LinkImage_207
     21300416: LinkImage_208
     21300418: LinkImage_209
     21300420: LinkImage_210
     21300422: LinkImage_211
     21300424: LinkImage_212
-    21300426: LinkImage_213
-    21300428: LinkImage_214
-    21300430: LinkImage_215
-    21300432: LinkImage_216
+    21300426: Victory_1
+    21300428: Victory_2
+    21300430: Victory_3
+    21300432: Victory_4
     21300434: LinkImage_217
-    21300436: LinkImage_218
+    21300436: Victory_5
     21300438: LinkImage_219
     21300440: LinkImage_220
     21300442: LinkImage_221
@@ -3400,7 +3400,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_200
+      name: Lose_1
       rect:
         serializedVersion: 2
         x: 71
@@ -3470,7 +3470,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_205
+      name: Lose_2
       rect:
         serializedVersion: 2
         x: 157
@@ -3484,7 +3484,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: test
+      name: Lose_3
       rect:
         serializedVersion: 2
         x: 176
@@ -3582,7 +3582,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_213
+      name: Victory_1
       rect:
         serializedVersion: 2
         x: 307
@@ -3596,7 +3596,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_214
+      name: Victory_2
       rect:
         serializedVersion: 2
         x: 324
@@ -3610,7 +3610,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_215
+      name: Victory_3
       rect:
         serializedVersion: 2
         x: 341
@@ -3624,7 +3624,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_216
+      name: Victory_4
       rect:
         serializedVersion: 2
         x: 358
@@ -3652,7 +3652,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_218
+      name: Victory_5
       rect:
         serializedVersion: 2
         x: 393

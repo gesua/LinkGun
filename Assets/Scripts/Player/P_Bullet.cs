@@ -37,6 +37,12 @@ public class P_Bullet : MonoBehaviour
         GunScript = gun;
     }
 
+    // 인보크 끄기
+    public void InvokeOff()
+    {
+        CancelInvoke();
+    }
+
     // 끄고 Pool에 넣음
     public void Off()
     {

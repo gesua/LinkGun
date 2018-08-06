@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
         {
             if (HP_Sprite[i] == null)
             {
-                Debug.Log(HP_Sprite[i].name + " 못 찾음");
+                Debug.LogError("HP_Sprite[" + i + "] 못 찾음");
                 return;
             }
         }
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
         }
         if (DamageHPSprite == null)
         {
-            Debug.Log("DamageHPImage 못 찾음");
+            Debug.LogError("DamageHPImage 못 찾음");
             return;
         }
 
@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
         DamageBlink = GetComponent<DamagedBlink>();
         if (DamageBlink == null)
         {
-            Debug.Log("Blink 못 찾음");
+            Debug.LogError("Blink 못 찾음");
             return;
         }
 
@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
         MousePoint = GameObject.Find("MousePoint").transform;
         if (MousePoint == null)
         {
-            Debug.Log("MousePoint 못 찾음");
+            Debug.LogError("MousePoint 못 찾음");
             return;
         }
 
@@ -151,7 +151,6 @@ public class Player : MonoBehaviour
                 BlinkDelay();
             }
         }
-
 
         // 애니메이터
         PlayAnimator();
@@ -300,6 +299,11 @@ public class Player : MonoBehaviour
             // 이미지 변경
             HP_Sprite[HP].sprite = DamageHPSprite;
 
+            // 죽음
+            if (HP <= 0)
+            {
+                ResultManager.Instance.GameSet(false);
+            }
         }
     }
 

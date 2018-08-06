@@ -38,16 +38,16 @@ public class BlinkAfterimage : MonoBehaviour
         {
             if (BlinkSprite[i] == null)
             {
-                Debug.Log(BlinkSprite[i].name + " 못 찾음");
+                Debug.LogError("BlinkSprite[" + i + "] 못 찾음");
                 return;
             }
         }
 
         // 이미지 바꿀 위치
         BlinkSR = transform.GetComponentsInChildren<SpriteRenderer>();
-        if(BlinkSR == null)
+        if (BlinkSR == null)
         {
-            Debug.Log("BlinkTF 못 찾음");
+            Debug.LogError("BlinkTF 못 찾음");
         }
 
         // 일정시간 뒤 사라짐
@@ -57,14 +57,15 @@ public class BlinkAfterimage : MonoBehaviour
     void Update()
     {
         CurrentTime += Time.deltaTime;
-        
+
         // 이미지 교체
         if (CurrentTime >= ChangeTime && ChangeCount < 4)
         {
             CurrentTime -= ChangeTime;
 
             // 이미지 작은 걸로 교체
-            for (int i = 3; i > ChangeCount; i--) {
+            for (int i = 3; i > ChangeCount; i--)
+            {
                 BlinkSR[i].sprite = BlinkSprite[i - ChangeCount];
             }
 
