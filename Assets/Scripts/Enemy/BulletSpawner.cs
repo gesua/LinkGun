@@ -8,6 +8,7 @@ public class BulletSpawner : MonoBehaviour {
     //불렛 오브젝트풀을 만들어 줘야함
     public int poolSize = 500;
     GameObject[] bulletPool;
+    List<GameObject> deactiveList = new List<GameObject>();
     //총알의 생성 시간
     public float b_spawnTime = 0.3f;
     //현재시간
@@ -48,6 +49,7 @@ public class BulletSpawner : MonoBehaviour {
             //Spawner의자식
             bulletPool[i].transform.parent = gameObject.transform;
             bulletPool[i].SetActive(false);
+            deactiveList.Add(bulletPool[i]);
         }
     }
 
@@ -98,8 +100,13 @@ public class BulletSpawner : MonoBehaviour {
     }
     void ShootMode0() {
         b_spawnTime = 0.3f;
-        GameObject bullet = Instantiate(bulletFactory, this.transform.position, Quaternion.identity);
-        bullet.transform.LookAt(target.transform);
+        if(deactiveList.Count > 0) {
+            GameObject bullet = deactiveList[0];
+            deactiveList.RemoveAt(0);
+            bullet.SetActive(true);
+            bullet.transform.LookAt(target.transform);
+        }
+
     }
     void ShootMode1() {
         b_spawnTime = 0.3f;
@@ -122,7 +129,8 @@ public class BulletSpawner : MonoBehaviour {
             }
             //해당 각도 (X,Z축)
             Vector3 fireVector = new Vector3(-Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
-            GameObject tempBullet = Instantiate(bulletFactory, this.transform.position, Quaternion.LookRotation(fireVector));
+            //GameObject tempBullet1 = Instantiate(bulletFactory, this.transform.position, Quaternion.LookRotation(fireVector));
+            BulletPoolActive(fireVector);
         }
 
     }
@@ -147,7 +155,7 @@ public class BulletSpawner : MonoBehaviour {
             }
             //해당 각도 (X,Z축)
             Vector3 fireVector = new Vector3(-Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
-            GameObject tempBullet = Instantiate(bulletFactory, this.transform.position, Quaternion.LookRotation(fireVector));
+            BulletPoolActive(fireVector);
         }
     }
     void ShootMode3() {
@@ -160,12 +168,23 @@ public class BulletSpawner : MonoBehaviour {
             float radDegree = Mathf.Deg2Rad * fireDegree;
             //해당 각도 (X,Z축)
             Vector3 fireVector = new Vector3(Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
-            GameObject tempBullet = Instantiate(bulletFactory, this.transform.position, Quaternion.LookRotation(fireVector));
-            if(startDegree3 > 360) {
+            BulletPoolActive(fireVector);
+            if (startDegree3 > 360) {
                 startDegree3 = 0;
             }
         }
     }
 
+    void BulletPoolActive(Vector3 fireVector) {
+        GameObject tempBullet = deactiveList[0];
+        deactiveList.RemoveAt(0);
+        tempBullet.SetActive(true);
+        tempBullet.transform.position = this.transform.position;
+        tempBullet.transform.rotation = Quaternion.LookRotation(fireVector);
+    }
+
+    public void AddBulletPool(GameObject bullet) {
+        deactiveList.Add(bullet);
+    }
     
 }

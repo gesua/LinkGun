@@ -16,10 +16,21 @@ public class E_Bullet : MonoBehaviour {
     public float surviveTime = 5f;
     float currTime = 0f;
     //총알은 앞으로 날아감
-	// Use this for initialization
-	void Start () {
-        //동적할당
 
+    //총알 넣어줄 Spawner객체
+    BulletSpawner Spawner;
+    // Use this for initialization
+
+    private void OnEnable() {
+        // 일단 전부 끔
+        CancelInvoke();
+
+        // 3초 뒤 사라짐
+        Invoke("Off", 3f);
+    }
+    void Start () {
+        //동적할당
+        Spawner = GameObject.Find("E_BulletSpawner").GetComponent<BulletSpawner>();
         //방향계산
         dir = this.transform.forward;
         //dir.Normalize();
@@ -34,7 +45,12 @@ public class E_Bullet : MonoBehaviour {
         //총알 앞으로 날리기
         this.transform.position += dir * bulletSpeed * Time.deltaTime;
 
-      
-
 	}
+
+    // 끄고 Pool에 넣음
+    public void Off() {
+        gameObject.SetActive(false);
+
+        Spawner.AddBulletPool(gameObject);
+    }
 }
