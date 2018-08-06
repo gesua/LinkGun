@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
@@ -17,6 +18,16 @@ public class Gun : MonoBehaviour
     // 총알 Pool
     List<GameObject> BulletPool; // Pool 리스트
     public int BulletPoolSize = 20; // Pool 최대 갯수
+
+    // 탄약
+    public int AmmoMax = 30; // 최대 탄약
+    int AmmoCount = 0; // 남은 탄약
+    Text AmmoText; // UI
+
+    // 재장전
+    bool IsReload = false; // 장전 중인지
+    public float ReloadSpeed = 2f; // 장전속도
+    float ReloadCount = 0f; // 장전시간 세는거
 
     private void Start()
     {
@@ -53,6 +64,22 @@ public class Gun : MonoBehaviour
 
             BulletPool.Add(tempBullet);
         }
+
+        // AmmoText
+        GameObject tempUI = GameObject.Find("UI");
+        Transform tempGun = tempUI.transform.Find("Gun");
+        AmmoText = tempGun.GetComponentInChildren<Text>();
+        if (AmmoText == null)
+        {
+            Debug.LogError("AmmoText 못 찾음");
+            return;
+        }
+
+        // 총알 최대로 장전
+        AmmoCount = AmmoMax;
+
+        // TextUI 세팅
+        AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
     }
 
     void Update()
@@ -60,14 +87,33 @@ public class Gun : MonoBehaviour
         // 마우스 포인터 바라봄
         LookTarget();
 
-        // 총알 발사(좌클릭)
-        if (Input.GetMouseButton(0) && IsCooldown == false)
-        {
-            Shoot();
-        }
-        else if (IsCooldown) // 쿨다운
+        // 쿨다운
+        if (IsCooldown) 
         {
             Cooldown();
+        }
+
+        // 좌클릭
+        if (Input.GetMouseButton(0))
+        {
+            // 총알 발사
+            if (AmmoCount > 0)
+            {
+                if (IsCooldown == false)
+                {
+                    Shoot();
+                }
+            }
+            else if(IsReload == false) // 재장전 켜기
+            {
+                IsReload = true;
+            }
+        }
+
+        // 재장전
+        if (IsReload)
+        {
+            Reload();
         }
     }
 
@@ -77,11 +123,19 @@ public class Gun : MonoBehaviour
         // Pool에서 켜기
         if(BulletPool.Count > 0)
         {
+            AmmoCount--; // 총알 1개 소모
+
+            // TextUI 세팅
+            AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
+
+            // Pool에서 뺌
             GameObject tempBullet = BulletPool[0];
             BulletPool.RemoveAt(0);
 
+            // 켬
             tempBullet.SetActive(true);
 
+            // 위치 잡아줌
             tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
             tempBullet.transform.LookAt(Target);
 
@@ -98,6 +152,27 @@ public class Gun : MonoBehaviour
             Debug.Log("Player BulletPool 초과");
         }
 
+    }
+
+    // 재장전
+    void Reload()
+    {
+        ReloadCount += Time.deltaTime;
+
+        if(ReloadCount >= ReloadSpeed)
+        {
+            // 초기화
+            ReloadCount = 0;
+
+            // 재장전
+            AmmoCount = AmmoMax;
+
+            // TextUI 세팅
+            AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
+
+            // 재장전 끝
+            IsReload = false;
+        }
     }
 
     // 마우스 포인터 바라봄
