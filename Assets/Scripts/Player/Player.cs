@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     bool IsBlinked = false; // 블링크 중인지
     public float BlinkDelayTime = 0.5f; // 후 딜레이
     float BlinkDelayCount = 0; // 세는거
-    public float BlinkDistance = 1.5f; // 블링크 거리
+    public float BlinkDistance = 1; // 블링크 거리
     GameObject BlinkAfterimagePrefab; // 블링크 이펙트 프리팹
 
     Transform MousePoint; // 마우스 위치

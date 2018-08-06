@@ -9,12 +9,14 @@ public class Gun : MonoBehaviour
 
     SpriteRenderer GunImage;
 
-    Transform BulletBox; // 총알 모아놓는 곳
-
     // 쿨다운
     bool IsCooldown = false; // 쿨다운 중인지
     public float CooldownTime = 0.2f; // 연사속도
     float CooldownCount = 0f; // 연사속도 세는거
+
+    // 총알 Pool
+    List<GameObject> BulletPool; // Pool 리스트
+    public int BulletPoolSize = 20; // Pool 최대 갯수
 
     private void Start()
     {
@@ -39,11 +41,17 @@ public class Gun : MonoBehaviour
             return;
         }
 
-        BulletBox = GameObject.Find("P_Bullet").transform;
-        if (BulletBox == null)
+        // Pool 생성
+        BulletPool = new List<GameObject>();
+        Transform BulletBox = GameObject.Find("P_Bullet").transform;
+        for (int i = 0; i < BulletPoolSize; i++)
         {
-            Debug.LogError("BulletBox 못 찾음");
-            return;
+            GameObject tempBullet = Instantiate(BulletPrefab);
+            tempBullet.GetComponent<P_Bullet>().SetGun(this);
+            tempBullet.transform.parent = BulletBox;
+            tempBullet.SetActive(false);
+
+            BulletPool.Add(tempBullet);
         }
     }
 
@@ -66,19 +74,30 @@ public class Gun : MonoBehaviour
     // 총알 발사
     void Shoot()
     {
-        GameObject tempBullet = Instantiate(BulletPrefab);
-        tempBullet.transform.parent = BulletBox; // 한 곳에 모아둠
+        // Pool에서 켜기
+        if(BulletPool.Count > 0)
+        {
+            GameObject tempBullet = BulletPool[0];
+            BulletPool.RemoveAt(0);
 
-        tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
-        tempBullet.transform.LookAt(Target);
+            tempBullet.SetActive(true);
 
-        // x축 회전 없앰
-        Vector3 tempAngle = tempBullet.transform.eulerAngles;
-        tempAngle.x = 0;
-        tempBullet.transform.eulerAngles = tempAngle;
+            tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
+            tempBullet.transform.LookAt(Target);
 
-        // 쿨다운 시작
-        IsCooldown = true;
+            // x축 회전 없앰
+            Vector3 tempAngle = tempBullet.transform.eulerAngles;
+            tempAngle.x = 0;
+            tempBullet.transform.eulerAngles = tempAngle;
+
+            // 쿨다운 시작
+            IsCooldown = true;
+        }
+        else
+        {
+            Debug.Log("Player BulletPool 초과");
+        }
+
     }
 
     // 마우스 포인터 바라봄
@@ -143,5 +162,11 @@ public class Gun : MonoBehaviour
             CooldownCount = 0;
             IsCooldown = false;
         }
+    }
+    
+    // 꺼진거 Pool에 넣기
+    public void AddBulletPool(GameObject bullet)
+    {
+        BulletPool.Add(bullet);
     }
 }
