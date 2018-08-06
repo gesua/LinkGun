@@ -19,8 +19,14 @@ public class GasterSpawner : MonoBehaviour {
         currTime += Time.deltaTime;
         if(currTime > spawnTime) {
             GameObject gaster = Instantiate(gasterFactory);
-            gaster.transform.position = new Vector3(player.transform.position.x + Random.Range(0, 1),0, player.transform.position.x + Random.Range(0, 1));
+            gaster.transform.position = new Vector3(player.transform.position.x + Random.Range(-2, 2), -10, player.transform.position.z + Random.Range(-2, 2));
+            Vector3 dir = player.transform.position - gaster.transform.position;
+            Debug.Log(dir);
             
+            float degree = Mathf.Acos(dir.x);
+            Debug.Log(degree);
+            degree = Mathf.Rad2Deg * degree;
+            gaster.transform.rotation = Quaternion.Euler(0, degree, 0);
             currTime = 0;
         }
 	}
