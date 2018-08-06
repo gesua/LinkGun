@@ -139,6 +139,14 @@ public class ResultManager : MonoSingleton<ResultManager>
             return;
         }
 
+        // 승리 이미지
+        VictoryImage = temp.transform.Find("Victory").GetComponent<Image>();
+        if (VictoryImage == null)
+        {
+            Debug.LogError("VictoryImage 못 찾음");
+            return;
+        }
+
         // 적 관련
         EnemyScript = GameObject.Find("Enemy").GetComponent<Enemy>();
         if (EnemyScript == null)
@@ -204,8 +212,8 @@ public class ResultManager : MonoSingleton<ResultManager>
     {
         for (int i = 0; i < 5; i++)
         {
-            yield return new WaitForSeconds(0.1f);
-            PlayerSprite.sprite = LoseSprites[i];
+            yield return new WaitForSeconds(0.5f);
+            PlayerSprite.sprite = VictorySprites[i];
         }
         //Shadow.gameObject.SetActive(false);
 

@@ -311,5 +311,10 @@ public class Enemy : MonoBehaviour {
         this.HP -= power;
         BossHp.fillAmount = this.HP / 100f;
         blink.BlinkStart();
+
+        if (HP <= 0)
+        {
+            ResultManager.Instance.GameSet(true);
+        }
     }
 }
