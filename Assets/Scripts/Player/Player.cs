@@ -121,6 +121,10 @@ public class Player : MonoBehaviour
             Debug.LogError("BlinkAfterimagePrefab 못 찾음");
             return;
         }
+
+        // 총 위치 초기화
+        Way = 2;
+        GunScript.SetPosition(Way);
     }
 
     void Update()

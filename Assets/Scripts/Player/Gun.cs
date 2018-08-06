@@ -29,6 +29,16 @@ public class Gun : MonoBehaviour
     public float ReloadSpeed = 2f; // 장전속도
     float ReloadCount = 0f; // 장전시간 세는거
 
+    private void Awake()
+    {
+        GunImage = GetComponentInChildren<SpriteRenderer>();
+        if (GunImage == null)
+        {
+            Debug.LogError("GunImage 못 찾음");
+            return;
+        }
+    }
+
     private void Start()
     {
         BulletPrefab = Resources.Load<GameObject>("Prefabs/P_Bullet");
@@ -42,13 +52,6 @@ public class Gun : MonoBehaviour
         if (Target == null)
         {
             Debug.LogError("Target 못 찾음");
-            return;
-        }
-
-        GunImage = GetComponentInChildren<SpriteRenderer>();
-        if (GunImage == null)
-        {
-            Debug.LogError("GunImage 못 찾음");
             return;
         }
 

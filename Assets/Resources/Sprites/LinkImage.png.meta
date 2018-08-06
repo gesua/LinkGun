@@ -313,7 +313,7 @@ TextureImporter:
     21300612: LinkImage_306
     21300614: LinkImage_307
     21300616: LinkImage_308
-    21300618: LinkImage_309
+    21300618: BlueSword
     21300620: LinkImage_310
     21300622: LinkImage_311
     21300624: LinkImage_312
@@ -371,7 +371,7 @@ TextureImporter:
     21300728: LinkImage_364
     21300730: LinkImage_365
     21300732: LinkImage_366
-    21300734: LinkImage_367
+    21300734: ReloadCursor
     21300736: LinkImage_368
     21300738: LinkImage_369
     21300740: LinkImage_370
@@ -511,6 +511,8 @@ TextureImporter:
     21301008: LinkImage_504
     21301010: LinkImage_505
     21301012: LinkImage_506
+    21301014: ReloadBar
+    21301016: ReloadCursor
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -4924,7 +4926,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_309
+      name: BlueSword
       rect:
         serializedVersion: 2
         x: 96
@@ -5197,20 +5199,6 @@ TextureImporter:
         y: 79
         width: 14
         height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: LinkImage_329
-      rect:
-        serializedVersion: 2
-        x: 388
-        y: 79
-        width: 7
-        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5736,7 +5724,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_367
+      name: ReloadCursor
       rect:
         serializedVersion: 2
         x: 390
@@ -7692,6 +7680,20 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ReloadBar
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 82
+        width: 3
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 1, z: 1, w: 1}
       outline: []
       physicsShape: []
       tessellationDetail: 0
