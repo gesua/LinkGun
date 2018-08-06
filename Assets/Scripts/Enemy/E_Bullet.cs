@@ -26,13 +26,12 @@ public class E_Bullet : MonoBehaviour {
         CancelInvoke();
 
         // 3초 뒤 사라짐
-        Invoke("Off", 3f);
+        Invoke("Off", 7f);
     }
     void Start () {
         //동적할당
       
         //방향계산
-        dir = this.transform.forward;
         //dir.Normalize();
         //총알방향전환 //전환필요없어짐(스폰에넘김)
         //this.transform.LookAt(target);
@@ -42,6 +41,7 @@ public class E_Bullet : MonoBehaviour {
 	void Update () {
         currTime += Time.deltaTime;
         
+        dir = this.transform.forward;
         //총알 앞으로 날리기
         this.transform.position += dir * bulletSpeed * Time.deltaTime;
 

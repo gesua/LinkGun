@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour {
         EnemyAnimator = gameObject.GetComponentInChildren<Animator>();
         blink = gameObject.GetComponent<DamagedBlink>();
         BossHp = GameObject.Find("Bar").GetComponentInChildren<Image>();
-        bulletSpawner = transform.GetComponentInChildren<BulletSpawner>();
+        bulletSpawner = GameObject.Find("E_BulletSpawner").GetComponent<BulletSpawner>();
     }
 
     // Update is called once per frame

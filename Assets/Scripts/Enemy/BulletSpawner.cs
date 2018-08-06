@@ -43,19 +43,21 @@ public class BulletSpawner : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        
         bulletPool = new GameObject[poolSize];
         for (int i = 0; i < poolSize; i++) {
-            bulletPool[i] = Instantiate(bulletFactory,transform.position, Quaternion.identity);
-            //Spawner의자식
+            bulletPool[i] = Instantiate(bulletFactory);
             bulletPool[i].GetComponent<E_Bullet>().setSpawner(this);
-            bulletPool[i].transform.parent = gameObject.transform;
             bulletPool[i].SetActive(false);
+            //Spawner의자식
+            bulletPool[i].transform.parent = GameObject.Find("E_Bullet").transform;
             deactiveList.Add(bulletPool[i]);
         }
     }
 
     // Update is called once per frame
     void Update() {
+        this.transform.position = GameObject.Find("Enemy").transform.position;
         //시간 증가
         //if(attackState) { 
         currTime += Time.deltaTime;
@@ -105,6 +107,7 @@ public class BulletSpawner : MonoBehaviour {
             GameObject bullet = deactiveList[0];
             deactiveList.RemoveAt(0);
             bullet.SetActive(true);
+            bullet.transform.position = this.transform.position;
             bullet.transform.LookAt(target.transform);
         }
 
