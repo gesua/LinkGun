@@ -31,6 +31,7 @@ public class Gun : MonoBehaviour
     float ReloadCount = 0f; // 장전시간 세는거
     Slider ReloadSlider; // 장전 보여줄 UI
 
+
     Camera MainCam;
 
     private void Awake()

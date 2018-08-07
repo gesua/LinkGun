@@ -301,7 +301,7 @@ public class Enemy : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if (other.tag.Equals("P_Bullet")) {
             Damage(other.GetComponent<P_Bullet>().power);
-            other.GetComponent<P_Bullet>().Off();
+            other.GetComponent<P_Bullet>().Hit();
         }
     }
 
