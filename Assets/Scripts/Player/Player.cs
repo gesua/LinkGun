@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
 
     Transform MousePoint; // 마우스 위치
 
+    public bool GodMode = false; // 무적 모드
+
     Gun GunScript;
     DamagedBlink DamageBlink;
 
@@ -281,7 +283,10 @@ public class Player : MonoBehaviour
             E_Bullet e_Bullet = other.GetComponent<E_Bullet>();
 
             // 체력 깎임
-            HP -= e_Bullet.power;
+            if (GodMode == false)
+            {
+                HP -= e_Bullet.power;
+            }
 
             // 적 총알 Pool에 반환
             e_Bullet.Off();
@@ -297,7 +302,10 @@ public class Player : MonoBehaviour
             InvincibleTimeCount += Time.deltaTime;
 
             // 이미지 변경
-            HP_Sprite[HP].sprite = DamageHPSprite;
+            if (GodMode == false)
+            {
+                HP_Sprite[HP].sprite = DamageHPSprite;
+            }
 
             // 죽음
             if (HP <= 0)

@@ -161,6 +161,7 @@ MonoBehaviour:
   Speed: 3
   BlinkDelayTime: 0.5
   BlinkDistance: 1
+  GodMode: 1
 --- !u!135 &188521
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2754,7 +2755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  HP: 1
+  HP: 100
   attackDelay: 2
   attackContinuousTime: 4
   target: {fileID: 188519}
