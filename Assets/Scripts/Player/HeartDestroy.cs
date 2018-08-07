@@ -40,6 +40,8 @@ public class HeartDestroy : MonoBehaviour
         {
             Heart.SetActive(false);
             BrokenHeart.SetActive(true);
+
+            enabled = false; // 자신 끔
         }
 
     }
