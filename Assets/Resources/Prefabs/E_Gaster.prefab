@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4291694070937652}
   - component: {fileID: 65888229727865482}
   m_Layer: 0
-  m_Name: E_Bullet_Gaster
+  m_Name: E_Gaster
   m_TagString: E_Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

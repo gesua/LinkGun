@@ -116,11 +116,11 @@ public class Enemy : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         currTimeMov1 += Time.deltaTime;
-        currTimeMov2 += Time.deltaTime;
         if (mov2ResCheck == true) {
             currTimeMov2Res += Time.deltaTime;
         }
         if(attackState) {
+            currTimeMov2 += Time.deltaTime;
             currCtTime += Time.deltaTime;
         }
 
@@ -209,7 +209,6 @@ public class Enemy : MonoBehaviour {
         }
 
     }
-
 
     void Move() {
         //방향계산
