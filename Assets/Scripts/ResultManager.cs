@@ -56,7 +56,7 @@ public class ResultManager : MonoSingleton<ResultManager>
             return;
         }
 
-        PlayerSprite = temp.GetComponentInChildren<SpriteRenderer>();
+        PlayerSprite = temp.transform.Find("Image").GetComponent<SpriteRenderer>();
         if (PlayerSprite == null)
         {
             Debug.LogError("PlayerSprite 못 찾음");

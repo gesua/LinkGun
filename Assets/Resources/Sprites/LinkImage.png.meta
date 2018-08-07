@@ -433,8 +433,8 @@ TextureImporter:
     21300852: LinkImage_426
     21300854: LinkImage_427
     21300856: LinkImage_428
-    21300858: LinkImage_429
-    21300860: LinkImage_430
+    21300858: Heart
+    21300860: BrokenHeart
     21300862: LinkImage_431
     21300864: LinkImage_432
     21300866: LinkImage_433
@@ -6592,7 +6592,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_429
+      name: Heart
       rect:
         serializedVersion: 2
         x: 580
@@ -6606,7 +6606,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_430
+      name: BrokenHeart
       rect:
         serializedVersion: 2
         x: 589

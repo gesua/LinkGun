@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
 
     public bool GodMode = false; // 무적 모드
 
+    Transform HitPointTF; // 피격점
+
     Gun GunScript;
     DamagedBlink DamageBlink;
 
@@ -155,6 +157,14 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // 피격점
+        HitPointTF = transform.Find("HitPoint");
+        if (HitPointTF == null)
+        {
+            Debug.LogError("HitPointTF 못 찾음");
+            return;
+        }
+
         // 총 위치 초기화
         Way = 2;
         GunScript.SetPosition(Way);
@@ -202,6 +212,9 @@ public class Player : MonoBehaviour
         {
             Invincible();
         }
+
+        // 피격점 보여줄지 말지
+        HitPointCheck();
     }
 
     // 이동(WASD)
@@ -463,5 +476,11 @@ public class Player : MonoBehaviour
         }
 
         BombSR.gameObject.SetActive(false);
+    }
+
+    // 피격점 보여줄지 말지
+    void HitPointCheck()
+    {
+        Collider[] temp = Physics.OverlapSphere(transform.position, 5f);
     }
 }
