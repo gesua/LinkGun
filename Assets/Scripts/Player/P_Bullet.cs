@@ -39,7 +39,7 @@ public class P_Bullet : MonoBehaviour
         }
 
         // 총알 이펙트
-        BulletEffect = Resources.LoadAll<Sprite>("Sprites/bulletEffect");
+        BulletEffect = Resources.LoadAll<Sprite>("Sprites/BulletEffect");
         if (BulletEffect == null)
         {
             Debug.LogError("BulletEffect 못 찾음");

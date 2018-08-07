@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: 4a8313696c5afcc419b29ae4a010eb55
-timeCreated: 1533602730
+guid: d5d2aec019dcc7e4fa0f9e07c16cd061
+timeCreated: 1533606714
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: bulletEffect_1
-    21300002: bulletEffect_2
-    21300004: bulletEffect_5
-    21300006: bulletEffect_3
-    21300008: bulletEffect_4
+    21300000: BulletEffect_0
+    21300002: BulletEffect_1
+    21300004: BulletEffect_2
+    21300006: BulletEffect_3
+    21300008: BulletEffect_4
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -96,21 +96,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bulletEffect_1
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 14
-        width: 11
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: bulletEffect_2
+      name: BulletEffect_0
       rect:
         serializedVersion: 2
         x: 1
@@ -124,11 +110,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bulletEffect_5
+      name: BulletEffect_1
       rect:
         serializedVersion: 2
         x: 1
-        y: 55
+        y: 14
         width: 11
         height: 11
       alignment: 0
@@ -138,7 +124,21 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bulletEffect_3
+      name: BulletEffect_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 29
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BulletEffect_3
       rect:
         serializedVersion: 2
         x: 1
@@ -152,11 +152,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: bulletEffect_4
+      name: BulletEffect_4
       rect:
         serializedVersion: 2
         x: 1
-        y: 29
+        y: 55
         width: 11
         height: 11
       alignment: 0
