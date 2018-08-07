@@ -11,9 +11,9 @@ public class Player : MonoBehaviour
     Sprite DamageHPSprite; // 데미지 입은 HP 이미지
 
     // 폭탄
-    int Bomb = 2; // 갯수
+    int BombCount = 2; // 갯수
     Image[] BombImage; // 폭탄 이미지 위치
-    Transform BombPos; // 폭탄 위치
+    SpriteRenderer BombSR; // 폭탄 랜더러
     Sprite[] BombSprite; // 폭탄 스프라이트
 
     // 이동속도
@@ -124,8 +124,8 @@ public class Player : MonoBehaviour
         }
 
         // 폭탄 터지는 위치 찾기
-        BombPos = transform.Find("Bomb");
-        if (BombPos == null)
+        BombSR = transform.Find("Bomb").GetComponent<SpriteRenderer>();
+        if (BombSR == null)
         {
             Debug.LogError("BombPos 못 찾음");
             return;
@@ -185,6 +185,14 @@ public class Player : MonoBehaviour
             }
         }
 
+        // 폭탄
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (BombCount > 0)
+            {
+                Bomb();
+            }
+        }
 
         // 애니메이터
         PlayAnimator();
@@ -429,5 +437,29 @@ public class Player : MonoBehaviour
         Vector3 tempAngle = temp.transform.eulerAngles;
         tempAngle.x = 0;
         temp.transform.eulerAngles = tempAngle;
+    }
+
+    // 폭탄
+    void Bomb()
+    {
+        BombCount--;
+        BombImage[BombCount].enabled = false;
+
+        StartCoroutine("BombEffect");
+    }
+
+    // 이펙트 이미지
+    IEnumerator BombEffect()
+    {
+        BombSR.gameObject.SetActive(true);
+
+        for (int i = 0; i < BombSprite.Length; i++)
+        {
+            BombSR.sprite = BombSprite[i];
+            BombSR.transform.localScale = new Vector3(i, i, 1); // 크기 커지게
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        BombSR.gameObject.SetActive(false);
     }
 }
