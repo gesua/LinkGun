@@ -198,5 +198,10 @@ public class BulletSpawner : MonoBehaviour {
             bulletPool[i].GetComponent<E_Bullet>().enabled = false;
         }
     }
+    public void AllBulletDisable() {
+        for (int i = 0; i < poolSize; i++) {
+            bulletPool[i].SetActive(false);
+        }
+    }
 
 }

@@ -2727,7 +2727,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1772847141}
   - component: {fileID: 1772847143}
-  - component: {fileID: 1772847142}
   m_Layer: 0
   m_Name: Teleport
   m_TagString: Untagged
@@ -2748,23 +2747,6 @@ Transform:
   m_Father: {fileID: 1918289999}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!95 &1772847142
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1772847140}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a4ac2e764f688704d866e02f80a65cba, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!212 &1772847143
 SpriteRenderer:
   m_ObjectHideFlags: 0

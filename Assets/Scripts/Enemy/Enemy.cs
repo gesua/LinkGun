@@ -84,6 +84,9 @@ public class Enemy : MonoBehaviour {
 
     //이펙트
     GameObject teleport;
+    //스프라이트이미지
+    SpriteRenderer teleportSprite;
+    Sprite[] sprite;
 
     // Use this for initialization
     void Start() {
@@ -94,7 +97,7 @@ public class Enemy : MonoBehaviour {
         bulletSpawner = GameObject.Find("E_BulletSpawner").GetComponent<BulletSpawner>();
         teleport = GameObject.Find("Teleport");
         teleport.GetComponent<SpriteRenderer>().enabled = false;
-        teleport.GetComponent<Animator>().enabled = false;
+        Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/telEffect");
     }
 
     // Update is called once per frame
@@ -272,11 +275,9 @@ public class Enemy : MonoBehaviour {
                 tempTel = true;
                 Debug.Log("순간이동시전,위치 기존이동");
                 //순간이동위치에 찍어주기
-                
                 teleport.transform.position = tempTelPos;
                 teleport.GetComponent<SpriteRenderer>().enabled = true;
-                teleport.GetComponent<Animator>().enabled = true;
-                teleport.GetComponent<Animator>().Play("E_Teleport");
+                
             }
             if (currTimePat2 > respawnTime) {
                 Debug.Log("순간이동대기시간끝,완료");
@@ -284,7 +285,7 @@ public class Enemy : MonoBehaviour {
                 currTimePat2 = 0;
                 tempTel = false;
                 teleport.GetComponent<SpriteRenderer>().enabled = false;
-                teleport.GetComponent<Animator>().enabled = false;
+                
             }
         }
     }
