@@ -53,6 +53,8 @@ public class Enemy : MonoBehaviour {
     Vector3 tempPos;
 
     ////////////////패턴2 ->지정방향으로 순간이동,순간이동지정시에 플레이어 위치 주변반경 일정범위 내에 랜덤으로 나옴
+
+    float currTimePat2 = 0f;
     public float maxTime2 = 1.5f;
     //사라졌다가 다시 나오는대기시간
     public float respawnTime = 4.0f;
@@ -261,8 +263,8 @@ public class Enemy : MonoBehaviour {
         //텔레포트
         //임시지정
         //애니메이션 필요(방향지정,슈웅사라짐)
-        currTime += Time.deltaTime;
-        if (currTime > maxTime2) {
+        currTimePat2 += Time.deltaTime;
+        if (currTimePat2 > maxTime2) {
             //해당위치에 나올지점 이펙트 찍어주기
             if (tempTel == false) {
                 tempTelPos = target.position;
@@ -276,10 +278,10 @@ public class Enemy : MonoBehaviour {
                 teleport.GetComponent<Animator>().enabled = true;
                 teleport.GetComponent<Animator>().Play("E_Teleport");
             }
-            if (currTime > respawnTime) {
+            if (currTimePat2 > respawnTime) {
                 Debug.Log("순간이동대기시간끝,완료");
                 this.transform.position = tempTelPos;
-                currTime = 0;
+                currTimePat2 = 0;
                 tempTel = false;
                 teleport.GetComponent<SpriteRenderer>().enabled = false;
                 teleport.GetComponent<Animator>().enabled = false;
