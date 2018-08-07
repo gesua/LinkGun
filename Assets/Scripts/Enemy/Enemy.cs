@@ -314,7 +314,11 @@ public class Enemy : MonoBehaviour {
 
         if (HP <= 0)
         {
+            //보스hp가 0이하가 되면 ResultManager에서 true호출하여 게임을 종료시킴
             ResultManager.Instance.GameSet(true);
+            //총알 멈춰주는 작업이 필요함
+            bulletSpawner.AllBulletOff();
+            EnemyAnimator.enabled = false;
         }
     }
 }

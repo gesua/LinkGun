@@ -191,5 +191,12 @@ public class BulletSpawner : MonoBehaviour {
     public void AddBulletPool(GameObject bullet) {
         deactiveList.Add(bullet);
     }
-    
+
+    public void AllBulletOff() {
+        for (int i = 0; i < poolSize; i++) {
+            bulletPool[i].GetComponent<E_Bullet>().InvokeOff();
+            bulletPool[i].GetComponent<E_Bullet>().enabled = false;
+        }
+    }
+
 }

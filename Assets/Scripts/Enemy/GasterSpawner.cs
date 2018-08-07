@@ -30,4 +30,8 @@ public class GasterSpawner : MonoBehaviour {
             currTime = 0;
         }
 	}
+
+    public void AllBulletOff() {
+        
+    }
 }

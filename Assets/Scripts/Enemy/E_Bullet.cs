@@ -53,4 +53,8 @@ public class E_Bullet : MonoBehaviour {
         gameObject.SetActive(false);
         bulletSpawner.AddBulletPool(gameObject);
     }
+
+    public void InvokeOff() {
+        CancelInvoke();
+    }
 }
