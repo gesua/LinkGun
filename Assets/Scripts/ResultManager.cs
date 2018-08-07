@@ -174,7 +174,7 @@ public class ResultManager : MonoSingleton<ResultManager>
 
         EnemyScript.enabled = false;
         BulletSpawnerScript.enabled = false;
-        EnemyScript.AllStop();
+        EnemyScript.AllStop(); // 총알, 애니메이터 다 멈춤
 
         // 승리
         if (victory)
