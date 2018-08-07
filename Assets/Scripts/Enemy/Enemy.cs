@@ -35,7 +35,6 @@ public class Enemy : MonoBehaviour {
     bool attackState = false;
     //이동상태체크
     bool moveState = true;
-    BulletSpawner bulletSpawner;
     //BulletSpawner bulletSpawner;
     //캐릭터의 방향을 체크해줄 값
     bool checkRight = false;
