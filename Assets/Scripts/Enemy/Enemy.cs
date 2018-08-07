@@ -161,6 +161,8 @@ public class Enemy : MonoBehaviour {
             attackState = false;
             moveState = true;
             //공격패턴0초기화
+            currTimeMov1 = 0;
+            setRandomMove = Random.Range(0, 100);
             if (HP > 50) {
                 BulletSpawner.Instance.bulletState = 0;
             }
@@ -175,7 +177,7 @@ public class Enemy : MonoBehaviour {
     void SetMovePattern() {
         //공격시간재기
        
-        setRandomMove = Random.Range(0, 100);
+        
         //체력적을때 정해주는 패턴
         if (HP > 12) {
             if (setRandomMove > 50) {
@@ -273,17 +275,18 @@ public class Enemy : MonoBehaviour {
     }
     void MovePattern1() {
         //패턴1의 시간 계산
-
+        Debug.Log("위치재선정패턴(무브패턴1)");
         //시간이 0일때만 dir의 방향을 받음
         if (currTimeMov1 <= 0.5) {
             tempPos = target.transform.position;
             tempDir = tempPos - this.transform.position;
+            Debug.Log("위치재선정1");
         }
 
         this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
         if ((this.transform.position.x - 1 < tempPos.x && this.transform.position.x + 1 > tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
             currTimeMov1 = 0;
-            Debug.Log("위치재선정");
+            Debug.Log("위치재선정2");
         }
 
     }
