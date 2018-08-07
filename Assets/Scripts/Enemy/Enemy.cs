@@ -79,6 +79,10 @@ public class Enemy : MonoBehaviour {
 
     //공격패턴4(돌리기) 발사조건 -> 체력%이하
 
+
+    //이펙트
+    GameObject teleport;
+
     // Use this for initialization
     void Start() {
         //할당
@@ -86,6 +90,9 @@ public class Enemy : MonoBehaviour {
         blink = gameObject.GetComponent<DamagedBlink>();
         BossHp = GameObject.Find("Bar").GetComponentInChildren<Image>();
         bulletSpawner = GameObject.Find("E_BulletSpawner").GetComponent<BulletSpawner>();
+        teleport = GameObject.Find("Teleport");
+        teleport.GetComponent<SpriteRenderer>().enabled = false;
+        teleport.GetComponent<Animator>().enabled = false;
     }
 
     // Update is called once per frame
@@ -263,12 +270,19 @@ public class Enemy : MonoBehaviour {
                 tempTel = true;
                 Debug.Log("순간이동시전,위치 기존이동");
                 //순간이동위치에 찍어주기
+                
+                teleport.transform.position = tempTelPos;
+                teleport.GetComponent<SpriteRenderer>().enabled = true;
+                teleport.GetComponent<Animator>().enabled = true;
+                teleport.GetComponent<Animator>().Play("E_Teleport");
             }
             if (currTime > respawnTime) {
                 Debug.Log("순간이동대기시간끝,완료");
                 this.transform.position = tempTelPos;
                 currTime = 0;
                 tempTel = false;
+                teleport.GetComponent<SpriteRenderer>().enabled = false;
+                teleport.GetComponent<Animator>().enabled = false;
             }
         }
     }
@@ -321,15 +335,13 @@ public class Enemy : MonoBehaviour {
         BossHp.fillAmount = this.HP / 100f;
         blink.BlinkStart();
 
-        if (HP <= 0)
-        {
+        if (HP <= 0) {
             //보스hp가 0이하가 되면 ResultManager에서 true호출하여 게임을 종료시킴
             ResultManager.Instance.GameSet(true);
         }
     }
 
-    public void AllStop()
-    {
+    public void AllStop() {
         //총알 멈춰주는 작업이 필요함
         bulletSpawner.AllBulletOff();
         EnemyAnimator.enabled = false;
