@@ -12,6 +12,7 @@ public class ResultManager : MonoSingleton<ResultManager>
     SpriteRenderer PlayerSprite;
     Animator PlayerAnimator;
     Transform Shadow;
+    HeartDestroy HeartDestroyScript;
 
     // 패배
     Sprite[] LoseSprites; // 스프라이트
@@ -74,6 +75,13 @@ public class ResultManager : MonoSingleton<ResultManager>
         if (Shadow == null)
         {
             Debug.LogError("Shadow 못 찾음");
+            return;
+        }
+
+        HeartDestroyScript = temp.transform.Find("HitPoint").GetComponent<HeartDestroy>();
+        if (HeartDestroyScript == null)
+        {
+            Debug.LogError("HeartDestroyScript 못 찾음");
             return;
         }
 
@@ -191,6 +199,7 @@ public class ResultManager : MonoSingleton<ResultManager>
     IEnumerator LoseSpriteChange()
     {
         PlayerSprite.sprite = LoseSprites[0];
+        HeartDestroyScript.enabled = true;
 
         for (int i = 1; i < 3; i++)
         {

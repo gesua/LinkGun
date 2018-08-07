@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4983810940936676}
   - component: {fileID: 212113699807004738}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4863618981568718}
   - component: {fileID: 114448967753674740}
   - component: {fileID: 65705961861911680}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: E_Bullet
   m_TagString: E_Bullet
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd11b833c73527b4e90af487bac0a118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 5
+  bulletSpeed: 3
   power: 1
 --- !u!212 &212113699807004738
 SpriteRenderer:

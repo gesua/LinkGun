@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
 
     public bool GodMode = false; // 무적 모드
 
-    Transform HitPointTF; // 피격점
+    GameObject HitPoint; // 피격점
 
     Gun GunScript;
     DamagedBlink DamageBlink;
@@ -158,8 +158,8 @@ public class Player : MonoBehaviour
         }
 
         // 피격점
-        HitPointTF = transform.Find("HitPoint");
-        if (HitPointTF == null)
+        HitPoint = transform.Find("HitPoint").GetChild(0).gameObject;
+        if (HitPoint == null)
         {
             Debug.LogError("HitPointTF 못 찾음");
             return;
@@ -481,6 +481,19 @@ public class Player : MonoBehaviour
     // 피격점 보여줄지 말지
     void HitPointCheck()
     {
-        Collider[] temp = Physics.OverlapSphere(transform.position, 5f);
+        // 총알이 근처에 있으면 피격점 보여줌
+        Collider[] temp = Physics.OverlapSphere(transform.position, 1f, 1 << 8);
+
+        if (temp.Length > 0)
+        {
+            if (HitPoint.activeSelf == false)
+            {
+                HitPoint.SetActive(true);
+            }
+        }
+        else if (HitPoint.activeSelf == true)
+        {
+            HitPoint.SetActive(false);
+        }
     }
 }
