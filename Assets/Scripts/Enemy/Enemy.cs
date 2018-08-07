@@ -56,6 +56,8 @@ public class Enemy : MonoBehaviour {
     public float maxTime2 = 1.5f;
     //사라졌다가 다시 나오는대기시간
     public float respawnTime = 4.0f;
+    bool tempTel = false;
+    Vector3 tempTelPos = Vector3.zero;
 
     //보스깜빡임데미지표현
     DamagedBlink blink;
@@ -255,11 +257,18 @@ public class Enemy : MonoBehaviour {
         currTime += Time.deltaTime;
         if (currTime > maxTime2) {
             //해당위치에 나올지점 이펙트 찍어주기
-            Debug.Log("순간이동시전");
+            if (tempTel == false) {
+                tempTelPos = target.position;
+                Debug.Log(tempTelPos);
+                tempTel = true;
+                Debug.Log("순간이동시전,위치 기존이동");
+                //순간이동위치에 찍어주기
+            }
             if (currTime > respawnTime) {
                 Debug.Log("순간이동대기시간끝,완료");
-                this.transform.position = new Vector3(target.position.x + Random.Range(-2, 2), -10, target.position.z + Random.Range(-2, 2));
+                this.transform.position = tempTelPos;
                 currTime = 0;
+                tempTel = false;
             }
         }
     }
