@@ -7,8 +7,14 @@ public class Player : MonoBehaviour
 {
     // 체력
     int HP = 3; // 잔기
-    Image[] HP_Sprite; // HP 이미지
+    Image[] HP_Sprite; // HP 이미지 위치
     Sprite DamageHPSprite; // 데미지 입은 HP 이미지
+
+    // 폭탄
+    int Bomb = 2; // 갯수
+    Image[] BombImage; // 폭탄 이미지 위치
+    Transform BombPos; // 폭탄 위치
+    Sprite[] BombSprite; // 폭탄 스프라이트
 
     // 이동속도
     public float Speed = 3f;
@@ -71,7 +77,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // HP 이미지 찾기
+        // HP 위치 찾기
         Transform tempTF = GameObject.Find("PlayerHP").transform;
         HP_Sprite = tempTF.GetComponentsInChildren<Image>();
         for (int i = 0; i < HP_Sprite.Length; i++)
@@ -105,6 +111,31 @@ public class Player : MonoBehaviour
         if (DamageBlink == null)
         {
             Debug.LogError("Blink 못 찾음");
+            return;
+        }
+
+        // 폭탄 위치 찾기
+        tempTF = GameObject.Find("PlayerBomb").transform;
+        BombImage = tempTF.GetComponentsInChildren<Image>();
+        if (BombImage == null)
+        {
+            Debug.LogError("BombSprite 못 찾음");
+            return;
+        }
+
+        // 폭탄 터지는 위치 찾기
+        BombPos = transform.Find("Bomb");
+        if (BombPos == null)
+        {
+            Debug.LogError("BombPos 못 찾음");
+            return;
+        }
+
+        // 폭탄 스프라이트 가져옴
+        BombSprite = Resources.LoadAll<Sprite>("Sprites/BombEffect");
+        if (BombSprite == null)
+        {
+            Debug.LogError("BombSprite 못 찾음");
             return;
         }
 
@@ -153,6 +184,7 @@ public class Player : MonoBehaviour
                 BlinkDelay();
             }
         }
+
 
         // 애니메이터
         PlayAnimator();
@@ -290,10 +322,6 @@ public class Player : MonoBehaviour
 
             // 적 총알 Pool에 반환
             e_Bullet.Off();
-
-            // 넉백
-            //Vector3 dir = transform.position - other.transform.position;
-            //transform.position += dir.normalized;
 
             // 깜빡임
             DamageBlink.BlinkStart();
