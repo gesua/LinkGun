@@ -445,6 +445,8 @@ public class Player : MonoBehaviour
         BombCount--;
         BombImage[BombCount].enabled = false;
 
+        BulletSpawner.Instance.AllBulletDisable();
+
         StartCoroutine("BombEffect");
     }
 

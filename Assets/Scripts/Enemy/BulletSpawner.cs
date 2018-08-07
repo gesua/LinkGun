@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletSpawner : MonoBehaviour {
+public class BulletSpawner : MonoSingleton<BulletSpawner>
+{
     //불렛 프리팹 받아서 사용
     public GameObject bulletFactory;
     //불렛 오브젝트풀을 만들어 줘야함
@@ -40,6 +41,10 @@ public class BulletSpawner : MonoBehaviour {
     //간격차
     public float bulletDegree3 = 0.5f;
 
+    private void Awake()
+    {
+        SetInstance(this);
+    }
 
     // Use this for initialization
     void Start() {
