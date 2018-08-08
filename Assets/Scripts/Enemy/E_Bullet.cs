@@ -11,10 +11,9 @@ public class E_Bullet : MonoBehaviour {
     Vector3 dir;
     //총알공격력
     public int power = 1;
-   
     //총알은 앞으로 날아감
     //동적할당
-
+    float currTime = 0f;
     //방향계산
     //dir.Normalize();
     //총알방향전환 //전환필요없어짐(스폰에넘김)
@@ -26,18 +25,21 @@ public class E_Bullet : MonoBehaviour {
 
     private void OnEnable() {
         // 일단 전부 끔
-        CancelInvoke();
-
+        //CancelInvoke();
         // 3초 뒤 사라짐
-        Invoke("Off", 7f);
+        
+        //Invoke("Test", 7f);
     }
 
 
 
     // Update is called once per frame
     void Update() {
-   
-
+        currTime += Time.deltaTime;
+        if (currTime > 7f) {
+            Off();
+            currTime = 0f;
+        }
         dir = this.transform.forward;
         //총알 앞으로 날리기
         this.transform.position += dir * bulletSpeed * Time.deltaTime;
@@ -50,8 +52,11 @@ public class E_Bullet : MonoBehaviour {
 
     // 끄고 Pool에 넣음
     public void Off() {
+        Debug.Log("들어와서꺼짐");
         gameObject.SetActive(false);
         bulletSpawner.AddBulletPool(gameObject);
+        // 일단 전부 끔
+        //CancelInvoke();
     }
 
     public void InvokeOff() {

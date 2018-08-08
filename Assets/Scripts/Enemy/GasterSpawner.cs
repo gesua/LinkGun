@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GasterSpawner : MonoBehaviour {
+public class GasterSpawner : MonoSingleton<GasterSpawner> {
     //플레이어의 위치를 받음
     public Transform player;
     //가스터 블래스터 모드 지정
@@ -21,7 +21,12 @@ public class GasterSpawner : MonoBehaviour {
     //Vector3 기준위치
     Vector3 gasterPivot;
     // Use this for initialization
-    
+
+    private void Awake() {
+
+        SetInstance(this);
+
+    }
 
 
 
@@ -51,9 +56,7 @@ public class GasterSpawner : MonoBehaviour {
         
         currTimePat1 += Time.deltaTime;
         if (currTimePat1 > spawnTimePat1) {
-            GameObject tempGaster = Instantiate(gasterFactory);
-            tempGaster.transform.position = gasterPivot;
-            tempGaster.transform.LookAt(player.transform);
+            GasterSpawn();
             radius += Random.Range(0, 360);
             currTimePat1 = 0f;
         }
@@ -62,12 +65,16 @@ public class GasterSpawner : MonoBehaviour {
     void SpawnPat2() {
         currTimePat2 += Time.deltaTime;
         if (currTimePat2 > spawnTimePat2) {
-            GameObject tempGaster = Instantiate(gasterFactory);
-            tempGaster.transform.position = gasterPivot;
-            tempGaster.transform.LookAt(player.transform);
+            GasterSpawn();
             radius += 0.3f;
             currTimePat2 = 0f;
         }
     }
 
+    void GasterSpawn() {
+        GameObject tempGaster = Instantiate(gasterFactory);
+        tempGaster.transform.position = gasterPivot;
+        tempGaster.transform.LookAt(player.transform);
+        tempGaster.transform.localScale = new Vector3(0, this.transform.localScale.y, this.transform.localScale.z);
+    }
 }

@@ -25,12 +25,26 @@ public class Enemy : MonoBehaviour {
     ANI_STATE aniState = ANI_STATE.E_IDLE;
     //애니메이터
     Animator EnemyAnimator;
+
+    /// <summary>
+    /// //////////////////////////////////////////////////////////////이동관련
+    
     //캐릭터의 방향을 체크해줄 값
     bool checkRight = false;
     //플레이어의 위치를 받을값
     public Transform target;
     //플레이어의방향계산
     Vector3 dir;
+    //상태판단
+    bool attackState = false;
+    //공격지속시간
+    public float attackContinuousTime = 3f;
+    //공격시간
+    float currAtkTime = 0f;
+    //이동시간(공격딜레이)
+    public float attackDelayTime = 2.5f;
+    float currAtkDyTime = 0f;
+
     //패턴종류
     //패턴종류랜덤지정
     int setRandomMove = 0;
@@ -51,13 +65,11 @@ public class Enemy : MonoBehaviour {
     public float respawnTime = 1f;
     bool tempTel = false;
     Vector3 tempTelPos = Vector3.zero;
+    /// </summary>
 
-    //보스깜빡임데미지표현
-    DamagedBlink blink;
 
-    //보스HP바계산
-    Image BossHp;
-
+    /// <summary>
+    /// //////////////////////////////////////////////////////////////공격관련
     ////////////////공격패턴위한 수치값
     public float currPatCheck = 0f;
     int onDamagedCount = 0;
@@ -73,23 +85,20 @@ public class Enemy : MonoBehaviour {
     //공격패턴4(돌리기) 발사조건 -> 체력%이하
 
 
+    /// <summary>
+
     //이펙트
     GameObject teleport;
     //스프라이트이미지
     SpriteRenderer teleportSprite;
     Sprite[] sprite;
 
-    //상태판단
-    bool attackState = false;
-    //공격지속시간
-    public float attackContinuousTime = 3f;
-    //공격시간
-    float currAtkTime = 0f;
+    //보스깜빡임데미지표현
+    DamagedBlink blink;
 
+    //보스HP바계산
+    Image BossHp;
 
-    //이동시간(공격딜레이)
-    public float attackDelayTime = 2.5f;
-    float currAtkDyTime = 0f;
 
 
     // Use this for initialization
@@ -219,32 +228,38 @@ public class Enemy : MonoBehaviour {
         //패턴1기준
         if (HP > 50) {
             if (currPatCheck < atPat1Check) {
+                //데미지축적치이상일때
                 if (onDamagedCount > CheckPat1Dam) {
+                    //부채꼴
                     BulletSpawner.Instance.bulletState = 1;
-                    aniState = ANI_STATE.E_AP1;
-                }
-            }
-            else {
-                onDamagedCount = 0;
-                currPatCheck = 0;
-            }
-        }
-        else if (HP <= 50) {
-            if (currPatCheck < atPat2Check) {
-                if (onDamagedCount > CheckPat2Dam) {
-                    BulletSpawner.Instance.bulletState = 2;
-                    aniState = ANI_STATE.E_AP2;
-                }
-            }
-            else {
-                onDamagedCount = 0;
-                currPatCheck = 0;
-            }
-        }
-        else {
-            //공격패턴3,4짬뽕
 
+                } else {
+                    //직선
+                    BulletSpawner.Instance.bulletState = 0;
+                }
+            } else {
+                onDamagedCount = 0;
+                currPatCheck = 0;
+            }
+        } else if (HP <= 50 && HP > 12) {
+            if (currPatCheck < atPat2Check) {
+                //데미지축적치이상일때
+                if (onDamagedCount > CheckPat2Dam) {
+                    //원형
+                    BulletSpawner.Instance.bulletState = 2;
+
+                } else {
+                    //부채꼴
+                    BulletSpawner.Instance.bulletState = 1;
+                }
+            } else {
+                onDamagedCount = 0;
+                currPatCheck = 0;
+            }
+        } else if (HP <= 12) {
+            BulletSpawner.Instance.bulletState = 3;
         }
+
     }
     void MovePattern1() {
         //패턴1의 시간 계산

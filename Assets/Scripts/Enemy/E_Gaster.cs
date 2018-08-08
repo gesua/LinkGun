@@ -10,6 +10,8 @@ public class E_Gaster : MonoBehaviour {
     //스프라이트이미지
     SpriteRenderer gasterSprite;
     Sprite[] sprite;
+    //레이저받기
+    public GameObject gasterLaser;
 
     void Start() {
         //가스터이미지지정
@@ -31,14 +33,26 @@ public class E_Gaster : MonoBehaviour {
         }
     }
 
-  
     IEnumerator GasterSpawn() {
+        for (int i = 0; i < 5; i++) {
+            yield return new WaitForSeconds(0.05f);
+            this.transform.localScale = new Vector3((i + 1) * 0.2f, this.transform.localScale.y, this.transform.localScale.z);
+        }
+        StartCoroutine("GasterAttack");
+    }
+    IEnumerator GasterAttack() {
         gasterSprite.sprite = sprite[0];
+        //레이저생성
+        GameObject tempLaser = Instantiate(gasterLaser);
+        tempLaser.transform.position = this.transform.position;
+        tempLaser.transform.forward = this.transform.forward;
         for (int i = 1; i < sprite.Length; i++) {
             yield return new WaitForSeconds(0.05f);
             gasterSprite.sprite = sprite[i];
+            tempLaser.transform.localScale = new Vector3((i + 1) * 0.25f, this.transform.localScale.y, this.transform.localScale.z*10);
         }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.25f);
+        Destroy(tempLaser);
         Destroy(gameObject);
     }
 }

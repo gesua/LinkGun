@@ -101,10 +101,6 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
             }
         //}
 
-
-
-
-
     }
     void ShootMode0() {
         b_spawnTime = 0.3f;
@@ -199,11 +195,13 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
 
     public void AllBulletOff() {
         for (int i = 0; i < poolSize; i++) {
+            
             bulletPool[i].GetComponent<E_Bullet>().InvokeOff();
             bulletPool[i].GetComponent<E_Bullet>().enabled = false;
         }
     }
     public void AllBulletDisable() {
+        //Bomb
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i].SetActive(false);
         }
