@@ -220,6 +220,8 @@ public class ResultManager : MonoSingleton<ResultManager>
     // 승리 이미지 변경
     IEnumerator VictorySpriteChange()
     {
+        HeartDestroyScript.gameObject.SetActive(false);
+
         for (int i = 0; i < 5; i++)
         {
             yield return new WaitForSeconds(0.5f);
