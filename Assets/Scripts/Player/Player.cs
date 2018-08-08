@@ -169,6 +169,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        GetComponent<Rigidbody>().velocity = Vector3.zero; // 리지드바디 안 튕기게
+
         // 이동
         if (IsBlinked == false && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
         {

@@ -10,6 +10,14 @@ public class Gun : MonoBehaviour
 
     SpriteRenderer GunImage;
 
+    // 무기 타입
+    enum GunType
+    {
+        MagicStick, // 마법봉
+        Boomerang // 부메랑
+    }
+    GunType G_Type = GunType.MagicStick;
+
     // 쿨다운
     bool IsCooldown = false; // 쿨다운 중인지
     public float CooldownTime = 0.2f; // 연사속도
@@ -31,6 +39,9 @@ public class Gun : MonoBehaviour
     float ReloadCount = 0f; // 장전시간 세는거
     Slider ReloadSlider; // 장전 보여줄 UI
 
+    // 무기 스프라이트
+    Sprite BlueWandSprite; // 마법봉
+    Sprite BoomerangSprite; // 부메랑
 
     Camera MainCam;
 
@@ -93,6 +104,33 @@ public class Gun : MonoBehaviour
         if (ReloadSlider == null)
         {
             Debug.LogError("ReloadSlider 못 찾음");
+            return;
+        }
+
+        // 무기 스프라이트
+        Sprite[] temp = Resources.LoadAll<Sprite>("Sprites/LinkImage");
+        for (int i = 0; i < temp.Length; i++)
+        {
+            // 마법봉
+            if (temp[i].name.Equals("BlueWand"))
+            {
+                BlueWandSprite = temp[i];
+            }
+
+            // 부메랑
+            if (temp[i].name.Equals("Boomerang"))
+            {
+                BoomerangSprite = temp[i];
+            }
+        }
+        if (BlueWandSprite == null)
+        {
+            Debug.LogError("BlueWandSprite 못 찾음");
+            return;
+        }
+        if (BoomerangSprite == null)
+        {
+            Debug.LogError("BoomerangSprite 못 찾음");
             return;
         }
 

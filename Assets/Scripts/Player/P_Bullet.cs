@@ -125,4 +125,13 @@ public class P_Bullet : MonoBehaviour
         // 풀에 넣음
         GunScript.AddBulletPool(gameObject);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // 벽과 부딪히면 사라짐
+        if (other.tag.Equals("Wall"))
+        {
+            Hit();
+        }
+    }
 }

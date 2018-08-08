@@ -355,7 +355,7 @@ TextureImporter:
     21300696: LinkImage_348
     21300698: LinkImage_349
     21300700: LinkImage_350
-    21300702: LinkImage_351
+    21300702: Boomerang
     21300704: LinkImage_352
     21300706: LinkImage_353
     21300708: LinkImage_354
@@ -5500,7 +5500,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_351
+      name: Boomerang
       rect:
         serializedVersion: 2
         x: 196

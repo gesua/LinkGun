@@ -6,6 +6,7 @@ TagManager:
   tags:
   - E_Bullet
   - P_Bullet
+  - Wall
   layers:
   - Default
   - TransparentFX
