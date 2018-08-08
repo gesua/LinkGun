@@ -11,6 +11,7 @@ TextureImporter:
     21300008: Knife
     21300010: WhiteKnife
     21300012: Basic
+    21300014: Shuriken
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -177,6 +178,20 @@ TextureImporter:
         height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shuriken
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 141
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -8,7 +8,8 @@ public class BulletType : MonoBehaviour
     {
         Basic,
         Knife,
-        Nabi
+        Nabi,
+        Shuriken
     };
     public B_Type BType = B_Type.Basic;
 
@@ -17,6 +18,7 @@ public class BulletType : MonoBehaviour
     static Sprite BasicSprite;
     static Sprite KnifeSprite;
     static Sprite[] NabiSprite;
+    static Sprite ShurikenSprite;
 
     // 랜더러
     SpriteRenderer BulletSR;
@@ -26,8 +28,10 @@ public class BulletType : MonoBehaviour
 
     bool IsAnimation = false; // 움직이는 총알
     float CurrentTime = 0; // 누적 시간
-    int AniCount = 0; // 스프라이트 몇 번째 보여줄지
-    int AniAddValue = 1; // 더해질 값
+
+    // 나비
+    int NabiCount = 0; // 스프라이트 몇 번째 보여줄지
+    int NabiAddValue = 1; // 더해질 값
 
     void Start()
     {
@@ -56,6 +60,11 @@ public class BulletType : MonoBehaviour
                     NabiSprite[nabiCount] = temp[i];
                     nabiCount++;
                 }
+                // 수리검
+                else if (temp[i].name.Equals("Shuriken"))
+                {
+                    ShurikenSprite = temp[i];
+                }
             }
             if (KnifeSprite == null)
             {
@@ -65,6 +74,11 @@ public class BulletType : MonoBehaviour
             if (NabiSprite[NabiSprite.Length - 1] == null)
             {
                 Debug.LogError("Nabi 끝까지 못 찾음");
+                return;
+            }
+            if (ShurikenSprite == null)
+            {
+                Debug.LogError("ShurikenSprite 못 찾음");
                 return;
             }
 
@@ -108,6 +122,12 @@ public class BulletType : MonoBehaviour
                 BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
                 BulletSR.transform.localScale = new Vector3(3, 3, 1);
                 break;
+            case B_Type.Shuriken: // 수리검
+                IsAnimation = true;
+                BulletSR.sprite = ShurikenSprite;
+                BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
+                BulletSR.transform.localScale = new Vector3(3, 3, 1);
+                break;
         }
     }
 
@@ -116,30 +136,44 @@ public class BulletType : MonoBehaviour
         // 움직이는 총알
         if (IsAnimation)
         {
-            CurrentTime += Time.deltaTime;
-
-            // 애니메이션 재생
-            if (CurrentTime >= 0.05f)
+            switch (BType)
             {
-                CurrentTime = 0; // 초기화
-                AniCount += AniAddValue; // 다음 스프라이트
+                // 나비
+                case B_Type.Nabi:
+                    CurrentTime += Time.deltaTime;
 
-                switch (BType)
-                {
-                    case B_Type.Nabi:
-                        if (AniCount == 0) AniAddValue *= -1; // 정순으로 보이기
-                        if (AniCount == 3) AniAddValue *= -1; // 역순으로 보이기
+                    // 애니메이션 재생
+                    if (CurrentTime >= 0.05f)
+                    {
+                        CurrentTime = 0; // 초기화
+                        NabiCount += NabiAddValue; // 다음 스프라이트
 
-                        BulletSR.sprite = NabiSprite[AniCount];
-                        break;
-                }
+                        if (NabiCount == 0) NabiAddValue *= -1; // 정순으로 보이기
+                        if (NabiCount == 3) NabiAddValue *= -1; // 역순으로 보이기
+
+                        BulletSR.sprite = NabiSprite[NabiCount];
+                    }
+                    break;
+                
+                // 수리검
+                case B_Type.Shuriken:
+                    CurrentTime -= Time.deltaTime * 1000;
+
+                    BulletSR.transform.eulerAngles = new Vector3(90, 0, CurrentTime);
+                    break;
             }
         }
     }
 
     // 총알 타입 설정
-    //public void SetBType(B_Type type)
-    //{
-    //    BType = type;
-    //}
+    public void SetBType(B_Type type)
+    {
+        BType = type;
+    }
+
+    // 애니메이션 끄기
+    public void StopAnimation()
+    {
+        IsAnimation = false;
+    }
 }
