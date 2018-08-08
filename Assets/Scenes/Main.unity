@@ -360,7 +360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &69258088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,10 +373,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 188519}
-  spawnTime: 1
+  patState: 1
+  spawnTimePat1: 1
+  spawnTimePat2: 0.4
   gasterFactory: {fileID: 1032346278309140, guid: 2f83e07713fc9484da0fa690fc9da714,
     type: 2}
-  spawnRadius: 5
+  spawnRadius: 3
 --- !u!4 &69258089
 Transform:
   m_ObjectHideFlags: 0

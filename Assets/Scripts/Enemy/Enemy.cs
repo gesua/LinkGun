@@ -102,15 +102,7 @@ public class Enemy : MonoBehaviour {
         //스프라이트지정
         teleportSprite = teleport.GetComponent<SpriteRenderer>();
         teleportSprite.enabled = false;
-        //밖으로빼낼거
-        Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/telEffect");
-        int teleportCount = 0;
-        sprite = new Sprite[8];
-        for (int i = 0; i < tempSprite.Length; i++) {
-            if (tempSprite[i].name.Contains("teleport")) {
-                sprite[teleportCount++] = tempSprite[i];
-            }
-        }
+        SetTeleportSprite();
     }
 
     // Update is called once per frame
@@ -120,7 +112,6 @@ public class Enemy : MonoBehaviour {
             currTimeMov2Res += Time.deltaTime;
         }
         if(attackState) {
-            currTimeMov2 += Time.deltaTime;
             currCtTime += Time.deltaTime;
         }
 
@@ -292,7 +283,7 @@ public class Enemy : MonoBehaviour {
     }
     void MovePattern2() {
         //텔레포트
- 
+        currTimeMov2 += Time.deltaTime;
         if (currTimeMov2 > Mov2SetTime) {
             //해당위치에 나올지점 이펙트 찍어주기
             if (tempTel == false) {
@@ -377,14 +368,18 @@ public class Enemy : MonoBehaviour {
         EnemyAnimator.enabled = false;
     }
 
-    IEnumerator teleportAlert() {
-        //PlayerSprite.sprite = LoseSprites[0];
+    void SetTeleportSprite() {
+        Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/telEffect");
+        int teleportCount = 0;
+        sprite = new Sprite[8];
+        for (int i = 0; i < tempSprite.Length; i++) {
+            if (tempSprite[i].name.Contains("teleport")) {
+                sprite[teleportCount++] = tempSprite[i];
+            }
+        }
 
-        //for (int i = 1; i < 3; i++) {
-        //    yield return new WaitForSeconds(1f);
-        //    PlayerSprite.sprite = LoseSprites[i];
-        //}
-        //Shadow.gameObject.SetActive(false);
+    }
+    IEnumerator teleportAlert() {
         teleportSprite.sprite = sprite[0];
         for (int i = 1; i < sprite.Length; i++) {
             yield return new WaitForSeconds(0.15f);
