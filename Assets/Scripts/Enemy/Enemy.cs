@@ -25,38 +25,26 @@ public class Enemy : MonoBehaviour {
     ANI_STATE aniState = ANI_STATE.E_IDLE;
     //애니메이터
     Animator EnemyAnimator;
-    //플레이어의 공격 시간 체크
-    public float attackDelay = 1.5f;
-    float currADTime = 0f;
-    //공격지속시간
-    float currCtTime = 0f;
-    public float attackContinuousTime = 3f;
-    //공격상태체크
-    bool attackState = false;
-    //이동상태체크
-    bool moveState = true;
-    //BulletSpawner bulletSpawner;
     //캐릭터의 방향을 체크해줄 값
     bool checkRight = false;
     //플레이어의 위치를 받을값
     public Transform target;
     //플레이어의방향계산
     Vector3 dir;
-    //사용시간
-    float currTimeMov1 = 0f;
     //패턴종류
     //패턴종류랜덤지정
     int setRandomMove = 0;
     public int movePattern = 0;
     ////////////////패턴1 -> 플레이어의 위치를 지정시간마다 따라감
-    //public float maxTime1 = 2f;
+    //사용시간
+    float currTimeMov1 = 0f;
     Vector3 tempDir;
     Vector3 tempPos;
 
     ////////////////패턴2 ->지정방향으로 순간이동,순간이동지정시에 플레이어 위치 주변반경 일정범위 내에 랜덤으로 나옴
-
+    //사용시간
     float currTimeMov2 = 0f;
-    public float Mov2SetTime = 1.5f;
+    public float Mov2SetTime = 1.0f;
     //사라졌다가 다시 나오는대기시간
     bool mov2ResCheck = false;
     float currTimeMov2Res = 0f;
@@ -91,6 +79,19 @@ public class Enemy : MonoBehaviour {
     SpriteRenderer teleportSprite;
     Sprite[] sprite;
 
+    //상태판단
+    bool attackState = false;
+    //공격지속시간
+    public float attackContinuousTime = 3f;
+    //공격시간
+    float currAtkTime = 0f;
+
+
+    //이동시간(공격딜레이)
+    public float attackDelayTime = 2.5f;
+    float currAtkDyTime = 0f;
+
+
     // Use this for initialization
     void Start() {
         //할당
@@ -107,69 +108,49 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        currTimeMov1 += Time.deltaTime;
-        if (mov2ResCheck == true) {
-            currTimeMov2Res += Time.deltaTime;
+        //시간재기
+        if (attackState) {
+            currAtkTime += Time.deltaTime;
+        } else {
+            currAtkDyTime += Time.deltaTime;
         }
-        if(attackState) {
-            currCtTime += Time.deltaTime;
+        //공격상태 이동상태 구분
+        if (currAtkTime > attackContinuousTime) {
+            //공격시간지나서끝남
+            attackState = false;
+            currAtkTime = 0f;
+        }
+        if (currAtkDyTime > attackDelayTime) {
+            //공격딜레이(이동) 끝나서 공격전환
+            attackState = true;
+            currAtkDyTime = 0f;
+            //이동패턴1시간초기화
+            currTimeMov1 = 0f;
+            currTimeMov2 = 0f;
+            currTimeMov2Res = 0f;
         }
 
-
-        //행동지정
-        SetEnemyBehavState();
-        //공격패턴지정
-        SetAttackPattern();
-        if (moveState) {
-            currADTime += Time.deltaTime;
-            //무브패턴지정
-            SetMovePattern();
+        //상태판단
+        switch (attackState) {
+            case true:
+                SetAttackPattern();
+                break;
+            case false:
+                //이동상태(0,1)일때 랜덤지정
+                setRandomMove = Random.Range(0, 100); 
+                SetMovePattern();
+                break;
         }
-
 
         //애니메이터
         PlayAnimator();
-    }
-
-    void SetEnemyBehavState() {
-        //상태체크
-        if (currADTime > attackDelay) {
-            //상태변경
-            attackState = true;
-            moveState = false;
-        }
-        if (attackState) {
-            //애니메이션지정필요(체력/공격패턴따라)
-            aniState = ANI_STATE.E_AP1;
-            //bulletSpawner.attackState = this.attackState;
-        }
-        if (currCtTime > attackContinuousTime) {
-            //시간끝 공격중지
-            //시간초기화
-            currADTime = 0;
-            currCtTime = 0;
-            //상태변경
-            attackState = false;
-            moveState = true;
-            //공격패턴0초기화
-            currTimeMov1 = 0;
-            setRandomMove = Random.Range(0, 100);
-            if (HP > 50) {
-                BulletSpawner.Instance.bulletState = 0;
-            }
-            else if (HP <= 50) {
-                BulletSpawner.Instance.bulletState = 1;
-            }
-        }
-
 
     }
+
 
     void SetMovePattern() {
-        //공격시간재기
-       
-        
-        //체력적을때 정해주는 패턴
+        //체력따라 정해주는 패턴
+        Move();
         if (HP > 12) {
             if (setRandomMove > 50) {
                 movePattern = 0;
@@ -183,7 +164,6 @@ public class Enemy : MonoBehaviour {
             movePattern = 2;
         }
 
-        Move();
 
         //보스의이동
         switch (movePattern) {
@@ -241,6 +221,7 @@ public class Enemy : MonoBehaviour {
             if (currPatCheck < atPat1Check) {
                 if (onDamagedCount > CheckPat1Dam) {
                     BulletSpawner.Instance.bulletState = 1;
+                    aniState = ANI_STATE.E_AP1;
                 }
             }
             else {
@@ -252,6 +233,7 @@ public class Enemy : MonoBehaviour {
             if (currPatCheck < atPat2Check) {
                 if (onDamagedCount > CheckPat2Dam) {
                     BulletSpawner.Instance.bulletState = 2;
+                    aniState = ANI_STATE.E_AP2;
                 }
             }
             else {
@@ -266,41 +248,50 @@ public class Enemy : MonoBehaviour {
     }
     void MovePattern1() {
         //패턴1의 시간 계산
+        currTimeMov1 += Time.deltaTime;
         Debug.Log("위치재선정패턴(무브패턴1)");
         //시간이 0일때만 dir의 방향을 받음
         if (currTimeMov1 <= 0.5) {
             tempPos = target.transform.position;
             tempDir = tempPos - this.transform.position;
-            Debug.Log("위치재선정1");
+            Debug.Log("위치재선정1,시간부족");
         }
 
         this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
         if ((this.transform.position.x - 1 < tempPos.x && this.transform.position.x + 1 > tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
             currTimeMov1 = 0;
-            Debug.Log("위치재선정2");
+            Debug.Log("위치재선정2,플레이어위치도달");
         }
 
     }
     void MovePattern2() {
         //텔레포트
-        currTimeMov2 += Time.deltaTime;
+        //위치지정시간
+        if(mov2ResCheck) {
+            currTimeMov2Res += Time.deltaTime;
+        } else {
+            currTimeMov2 += Time.deltaTime;
+        }
         if (currTimeMov2 > Mov2SetTime) {
             //해당위치에 나올지점 이펙트 찍어주기
             if (tempTel == false) {
+                //지정시간 초기화
+                //위치지정
                 tempTelPos = target.position;
+                //들어오는것제한
                 tempTel = true;
+                //시간초기화
+                currTimeMov2 = 0;
                 //순간이동위치에 찍어주기
                 teleport.transform.position = tempTelPos;
                 teleportSprite.enabled = true;
                 mov2ResCheck = true;
                 StartCoroutine("teleportAlert");
             }
-           
         }
         if (currTimeMov2Res > respawnTime) {
             Debug.Log("순간이동대기시간끝,완료");
             this.transform.position = tempTelPos;
-            currTimeMov2 = 0;
             currTimeMov2Res = 0;
             tempTel = false;
             mov2ResCheck = false;
