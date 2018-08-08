@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 81bce47d4cbcc7f49b79109e6791ecc1
-timeCreated: 1533529173
+guid: 80b1e32286d514245850a7fa3708a8a3
+timeCreated: 1533687421
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: gaster_0
-    21300002: gaster_1
-    21300004: gaster_2
-    21300006: gaster_3
+    21300000: gasterBla0
+    21300002: gasterBla1
+    21300004: gasterBla2
+    21300006: gasterBla3
     21300008: gaster_4
     21300010: gaster_5
     21300012: gaster_6
@@ -93,7 +93,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gaster_0
+      name: gasterBla0
       rect:
         serializedVersion: 2
         x: 1
@@ -107,7 +107,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: gaster_1
+      name: gasterBla1
       rect:
         serializedVersion: 2
         x: 55
@@ -121,7 +121,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: gaster_2
+      name: gasterBla2
       rect:
         serializedVersion: 2
         x: 111
@@ -135,7 +135,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: gaster_3
+      name: gasterBla3
       rect:
         serializedVersion: 2
         x: 166
