@@ -82,13 +82,10 @@ public class Player : MonoBehaviour
         // HP 위치 찾기
         Transform tempTF = GameObject.Find("PlayerHP").transform;
         HP_Sprite = tempTF.GetComponentsInChildren<Image>();
-        for (int i = 0; i < HP_Sprite.Length; i++)
+        if (HP_Sprite == null)
         {
-            if (HP_Sprite[i] == null)
-            {
-                Debug.LogError("HP_Sprite[" + i + "] 못 찾음");
-                return;
-            }
+            Debug.LogError("HP_Sprite 못 찾음");
+            return;
         }
 
         // 데미지 입은 HP 찾기

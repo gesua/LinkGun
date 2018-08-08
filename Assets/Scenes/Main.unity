@@ -3508,7 +3508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  HP: 1
+  HP: 30
   attackDelay: 2.3
   attackContinuousTime: 3
   target: {fileID: 188519}

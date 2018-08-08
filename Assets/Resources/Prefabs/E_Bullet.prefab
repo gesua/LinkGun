@@ -37,6 +37,8 @@ GameObject:
   - component: {fileID: 4863618981568718}
   - component: {fileID: 114448967753674740}
   - component: {fileID: 65705961861911680}
+  - component: {fileID: 114967086329758180}
+  - component: {fileID: 114511762957971844}
   m_Layer: 8
   m_Name: E_Bullet
   m_TagString: E_Bullet
@@ -96,6 +98,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 3
   power: 1
+--- !u!114 &114511762957971844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872174724196656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef5dbc4cd0717a4a9f477a00262e2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BType: 0
+--- !u!114 &114967086329758180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1872174724196656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ef4d656e11fc1459fd8b43896579e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212113699807004738
 SpriteRenderer:
   m_ObjectHideFlags: 1

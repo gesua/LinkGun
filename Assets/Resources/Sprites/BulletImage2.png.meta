@@ -4,7 +4,13 @@ timeCreated: 1533174535
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: BulletImage2_0
+    21300000: Nabi_0
+    21300002: Nabi_1
+    21300004: Nabi_2
+    21300006: Nabi_3
+    21300008: Knife
+    21300010: WhiteKnife
+    21300012: Basic
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -92,15 +98,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BulletImage2_0
+      name: Nabi_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 799
-        height: 391
+        x: 335
+        y: 254
+        width: 29
+        height: 20
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Nabi_1
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 232
+        width: 29
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Nabi_2
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 211
+        width: 29
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Nabi_3
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 190
+        width: 29
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WhiteKnife
+      rect:
+        serializedVersion: 2
+        x: 669
+        y: 245
+        width: 10
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Basic
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 378
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
