@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
     bool IsBlinked = false; // 블링크 중인지
     public float BlinkDelayTime = 0.5f; // 후 딜레이
     float BlinkDelayCount = 0; // 세는거
+    Vector3 BlinkDir; // 블링크 방향
     public float BlinkDistance = 1; // 블링크 거리
     GameObject BlinkAfterimagePrefab; // 블링크 이펙트 프리팹
 
@@ -180,7 +181,7 @@ public class Player : MonoBehaviour
             // 블링크(우클릭)
             if (Input.GetMouseButtonDown(1))
             {
-                Blink();
+                BlinkUse();
             }
         }
         else // 기본
@@ -190,7 +191,7 @@ public class Player : MonoBehaviour
             // 블링크 딜레이
             if (IsBlinked)
             {
-                BlinkDelay();
+                Blink();
             }
         }
 
@@ -328,6 +329,7 @@ public class Player : MonoBehaviour
     {
         if (HP <= 0) return; // 이미 죽음
         if (InvincibleTimeCount != 0) return; // 무적시간
+        if (IsBlinked) return; // 블링크중
 
         // 적 총알일 경우
         if (other.tag.Equals("E_Bullet"))
@@ -375,56 +377,57 @@ public class Player : MonoBehaviour
         }
     }
 
-    // 블링크
-    void Blink()
+    // 블링크 시작
+    void BlinkUse()
     {
-        Vector3 dir = Vector3.zero;
+        BlinkDir = Vector3.zero;
 
         // 키보드 방향으로 블링크
         switch (Way)
         {
             case 1: // ↙
-                dir = Vector3.left + Vector3.back;
+                BlinkDir = Vector3.left + Vector3.back;
                 break;
             case 2: // ↓
-                dir = Vector3.back;
+                BlinkDir = Vector3.back;
                 break;
             case 3: // ↘
-                dir = Vector3.right + Vector3.back;
+                BlinkDir = Vector3.right + Vector3.back;
                 break;
             case 4: // ←
-                dir = Vector3.left;
+                BlinkDir = Vector3.left;
                 break;
             case 6: // →
-                dir = Vector3.right;
+                BlinkDir = Vector3.right;
                 break;
             case 7: // ↖
-                dir = Vector3.left + Vector3.forward;
+                BlinkDir = Vector3.left + Vector3.forward;
                 break;
             case 8: // ↑
-                dir = Vector3.forward;
+                BlinkDir = Vector3.forward;
                 break;
             case 9: // ↗
-                dir = Vector3.right + Vector3.forward;
+                BlinkDir = Vector3.right + Vector3.forward;
                 break;
         }
 
-        dir *= BlinkDistance; // 거리 증가
+        BlinkDir *= BlinkDistance; // 거리 증가
 
         // 블링크 사용
-        if (dir != Vector3.zero)
+        if (BlinkDir != Vector3.zero)
         {
-            transform.position += dir;
-
             // 블링크 잔상 생성
-            CreateBlinkAfterimage(dir);
+            CreateBlinkAfterimage(BlinkDir);
             IsBlinked = true;
         }
     }
 
-    // 블링크 시간 세기
-    void BlinkDelay()
+    // 블링크
+    void Blink()
     {
+        // 방향으로 블링크
+        transform.position += BlinkDir * Time.deltaTime * 10;
+
         // 블링크 딜레이 시작
         BlinkDelayCount += Time.deltaTime;
 
