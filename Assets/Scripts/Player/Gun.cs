@@ -11,12 +11,12 @@ public class Gun : MonoBehaviour
     SpriteRenderer GunImage;
 
     // 무기 타입
-    enum GunType
+    enum WeaponType
     {
         MagicStick, // 마법봉
         Boomerang // 부메랑
     }
-    GunType G_Type = GunType.MagicStick;
+    WeaponType W_Type = WeaponType.MagicStick;
 
     // 쿨다운
     bool IsCooldown = false; // 쿨다운 중인지
@@ -168,6 +168,8 @@ public class Gun : MonoBehaviour
                 IsReload = true;
             }
         }
+
+        //if(Input.getmou)
 
         // 재장전
         if (IsReload)
@@ -326,5 +328,11 @@ public class Gun : MonoBehaviour
             temp.InvokeOff();
             temp.enabled = false;
         }
+    }
+
+    // 무기 변경
+    void WeaponChange()
+    {
+        GunImage.sprite = BoomerangSprite;
     }
 }
