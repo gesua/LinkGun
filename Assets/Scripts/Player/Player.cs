@@ -354,7 +354,6 @@ public class Player : MonoBehaviour
     {
         if (HP <= 0) return; // 이미 죽음
         if (InvincibleTimeCount != 0) return; // 무적시간
-        if (IsBlinked) return; // 블링크중
 
         // 적 총알일 경우
         if (other.tag.Equals("E_Bullet"))
@@ -439,6 +438,8 @@ public class Player : MonoBehaviour
         // 블링크 사용
         if (BlinkDir != Vector3.zero)
         {
+            Vector3 tempPos = transform.position;
+
             // 장애물과 충돌했는지
             Ray ray = new Ray(transform.position, BlinkDir.normalized);
             RaycastHit hitInfo;
@@ -453,7 +454,8 @@ public class Player : MonoBehaviour
             }
 
             // 블링크 잔상 생성
-            CreateBlinkAfterimage(BlinkDir);
+            CreateBlinkAfterimage(tempPos, transform.position);
+
             IsBlinked = true;
         }
     }
@@ -473,13 +475,13 @@ public class Player : MonoBehaviour
     }
 
     // 블링크 잔상 생성(현재 거리 1에 맞춰져있음)
-    void CreateBlinkAfterimage(Vector3 dir)
+    void CreateBlinkAfterimage(Vector3 prevPos, Vector3 nextPos)
     {
         GameObject temp = Instantiate(BlinkAfterimagePrefab);
-        temp.transform.position = transform.position - dir;
-        temp.GetComponent<BlinkAfterimage>().SetDestroyTime(BlinkDelayTime); // 블링크 딜레이 시간 동안 보여줌
+        temp.transform.position = prevPos;
+        temp.GetComponent<BlinkAfterimage>().SetInitialization((prevPos - nextPos).magnitude, BlinkDelayTime); // 블링크 이펙트 설정(이미지 위치, 사라지는 시간)
 
-        temp.transform.LookAt(transform.position);
+        temp.transform.LookAt(nextPos);
 
         // x축 회전 없앰
         Vector3 tempAngle = temp.transform.eulerAngles;

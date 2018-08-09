@@ -23,8 +23,7 @@ public class P_Bullet : MonoBehaviour
 
     //총알생존시간(Invoke대체변수)
     public float SurviveTime = 3f;
-    //축적시간
-    float CurrTime = 0f;
+    float CurrentTime = 0f; // 누적 시간
 
     private void Awake()
     {
@@ -55,25 +54,17 @@ public class P_Bullet : MonoBehaviour
     // 켜졌을 때(맨 처음 만들 때도 생김)
     private void OnEnable()
     {
-        // 일단 전부 끔  //인보크수정
-        //CancelInvoke();
-
         // 총알 스프라이트로 변경
         BulletSR.sprite = BulletSprite;
 
         // 움직이게
         IsMove = true;
-
-        // 3초 뒤 사라짐 //인보크수정
-        //Invoke("Off", 3f);
     }
 
     private void Update()
     {
-        
         if (IsMove)
         {
-            //Invoke대체, 시간지날경우사라짐
             Off();
             Move();
         }
@@ -93,22 +84,18 @@ public class P_Bullet : MonoBehaviour
         GunScript = gun;
     }
 
-    // 인보크 끄기
-    //public void InvokeOff()
-    //{
-        //CancelInvoke();
-    //}
-
     // 걍 끄기
     public void Off()
     {
         //Invoke대체 if문
-        CurrTime += Time.deltaTime;
+        CurrentTime += Time.deltaTime;
         //시간 넘을경우 false 
 
-        if (CurrTime > SurviveTime) {
+        if (CurrentTime >= SurviveTime) {
             // 끄기
             gameObject.SetActive(false);
+
+            CurrentTime = 0;
 
             // 풀에 넣음
             GunScript.AddBulletPool(gameObject);
