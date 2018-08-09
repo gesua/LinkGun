@@ -56,7 +56,7 @@ public class BlinkAfterimage : MonoBehaviour
         CurrentTime += Time.deltaTime;
 
         // 이미지 교체
-        if (CurrentTime >= ChangeTime && ChangeCount < 4)
+        if (CurrentTime >= ChangeTime && ChangeCount < BlinkSR.Length)
         {
             CurrentTime -= ChangeTime;
 
@@ -70,6 +70,11 @@ public class BlinkAfterimage : MonoBehaviour
             BlinkSR[ChangeCount].enabled = false;
 
             ChangeCount++;
+        }
+        // 다 끝났으면 삭제
+        else if (ChangeCount >= BlinkSR.Length)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -89,8 +94,5 @@ public class BlinkAfterimage : MonoBehaviour
         // 사라지는 시간 설정
         DestroyTime = _DestroyTime;
         ChangeTime = DestroyTime / 5;
-
-        // 일정시간 뒤 사라짐
-        //Destroy(gameObject, DestroyTime);
     }
 }
