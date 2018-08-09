@@ -325,7 +325,7 @@ public class Gun : MonoBehaviour
         for (int i = 0; i < BulletPoolSize; i++)
         {
             P_Bullet temp = AllBullet[i].GetComponent<P_Bullet>();
-            temp.InvokeOff();
+            //temp.InvokeOff();
             temp.enabled = false;
         }
     }
