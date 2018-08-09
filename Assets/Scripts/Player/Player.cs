@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
     Gun GunScript;
     DamagedBlink DamageBlink;
 
+    Rigidbody Rigid; // 리지드바디
+
     private void Start()
     {
         // 애니메이터
@@ -147,6 +149,14 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // 리지드바디
+        Rigid = GetComponent<Rigidbody>();
+        if (Rigid == null)
+        {
+            Debug.LogError("Rigid 못 찾음");
+            return;
+        }
+
         // 블링크 효과 프리팹
         BlinkAfterimagePrefab = Resources.Load<GameObject>("Prefabs/BlinkAfterimage");
         if (BlinkAfterimagePrefab == null)
@@ -170,7 +180,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        GetComponent<Rigidbody>().velocity = Vector3.zero; // 리지드바디 안 튕기게
+        //Ray ray;
+        //if(Physics.Raycast(ray,))
+
+        // 리지드바디 안 튕기게
+        if (Rigid.velocity != Vector3.zero)
+        {
+            Rigid.velocity = Vector3.zero; 
+        }
 
         // 이동
         if (IsBlinked == false && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
