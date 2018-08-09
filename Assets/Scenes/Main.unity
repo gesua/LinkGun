@@ -463,7 +463,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 45126544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.4557576, y: -8.9994755, z: 1.2691156}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 188519}
-  patState: 1
+  patState: 0
   spawnTimePat1: 1
   spawnTimePat2: 0.4
   gasterFactory: {fileID: 1032346278309140, guid: 2f83e07713fc9484da0fa690fc9da714,

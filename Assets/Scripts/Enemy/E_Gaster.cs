@@ -14,7 +14,7 @@ public class E_Gaster : MonoBehaviour {
 
     GasterSpawner gasterSpawner;
 
-    //LaserSpawner laserSpawner;
+    
 
     public void SetSpawner(GasterSpawner spawner) {
         gasterSpawner = spawner;
@@ -24,10 +24,9 @@ public class E_Gaster : MonoBehaviour {
         //가스터이미지지정
         gasterSprite = gameObject.GetComponentInChildren<SpriteRenderer>();
         SetGasterSprite();
+    }
+    private void OnEnable() {
         StartCoroutine("GasterSpawn");
-
-        //레이저스포너지정
-        //laserSpawner = GameObject.Find("LaserSpawner").GetComponent<LaserSpawner>();
     }
 
 

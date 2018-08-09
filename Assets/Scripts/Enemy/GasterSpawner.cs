@@ -6,7 +6,7 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
     //플레이어의 위치를 받음
     public Transform player;
     //가스터 블래스터 모드 지정
-    public int patState = 1;
+    public int patState = 0;
     //가스터블래스터 스폰타임
     public float spawnTimePat1 = 1f;
     public float spawnTimePat2 = 0.5f;
@@ -53,6 +53,9 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
         //스폰타임 넘으면 생성
 
         switch (patState) {
+            case 0:
+                //꺼진상태
+                break;
             case 1:
                 //랜덤출현
                 SpawnPat1();
@@ -94,6 +97,7 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
         tempGaster.transform.position = gasterPivot;
         tempGaster.transform.LookAt(player.transform);
         tempGaster.transform.localScale = new Vector3(0, this.transform.localScale.y, this.transform.localScale.z);
+    
     }
 
 

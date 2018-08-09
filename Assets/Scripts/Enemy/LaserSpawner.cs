@@ -44,8 +44,6 @@ public class LaserSpawner : MonoSingleton<LaserSpawner> {
 
     public void AllLaserOff() {
         for (int i = 0; i < poolSize; i++) {
-
-            //bulletPool[i].GetComponent<E_Bullet>().InvokeOff();
             laserPool[i].GetComponent<E_Laser>().enabled = false;
         }
     }
