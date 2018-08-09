@@ -266,35 +266,35 @@ public class Gun : MonoBehaviour
         switch (way)
         {
             case 1: // ↙
-                transform.localPosition = new Vector3(-0.195f, 0, -0.12f);
+                transform.localPosition = new Vector3(-0.195f, 0, -0.02f);
                 GunImage.sortingOrder = 3;
                 break;
             case 2: // ↓
-                transform.localPosition = new Vector3(-0.18f, 0, -0.15f);
+                transform.localPosition = new Vector3(-0.18f, 0, -0.05f);
                 GunImage.sortingOrder = 3;
                 break;
             case 3: // ↘
-                transform.localPosition = new Vector3(-0.09f, 0, -0.2f);
+                transform.localPosition = new Vector3(-0.09f, 0, -0.1f);
                 GunImage.sortingOrder = 3;
                 break;
             case 4: // ←
-                transform.localPosition = new Vector3(-0.2f, 0, -0.04f);
+                transform.localPosition = new Vector3(-0.2f, 0, 0.06f);
                 GunImage.sortingOrder = 1;
                 break;
             case 6: // →
-                transform.localPosition = new Vector3(0.03f, 0, -0.2f);
+                transform.localPosition = new Vector3(0.03f, 0, -0.1f);
                 GunImage.sortingOrder = 3;
                 break;
             case 7: // ↖
-                transform.localPosition = new Vector3(0, 0, 0);
+                transform.localPosition = new Vector3(0, 0, 0.1f);
                 GunImage.sortingOrder = 1;
                 break;
             case 8: // ↑
-                transform.localPosition = new Vector3(0.2f, 0, -0.038f);
+                transform.localPosition = new Vector3(0.2f, 0, 0.062f);
                 GunImage.sortingOrder = 1;
                 break;
             case 9: // ↗
-                transform.localPosition = new Vector3(0.1f, 0, -0.2f);
+                transform.localPosition = new Vector3(0.1f, 0, -0.1f);
                 GunImage.sortingOrder = 1;
                 break;
         }

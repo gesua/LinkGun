@@ -293,10 +293,9 @@ public class Player : MonoBehaviour
         // 장애물과 충돌했는지
         Ray ray = new Ray(transform.position, moveVector.normalized);
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, moveVector.magnitude * 1.001f, 1 << 9))
+        if (Physics.Raycast(ray, out hitInfo, moveVector.magnitude * 2, 1 << 9))
         {
-            Debug.Log(hitInfo.point + ":" + moveVector.normalized.x / 10);
-            transform.position = hitInfo.point - (moveVector.normalized / 1000);
+            transform.position = hitInfo.point - (moveVector.normalized * moveVector.magnitude * 1.1f);
         }
         else
         {
@@ -437,17 +436,20 @@ public class Player : MonoBehaviour
 
         BlinkDir *= BlinkDistance; // 거리 증가
 
-
-
         // 블링크 사용
         if (BlinkDir != Vector3.zero)
         {
-            // 장애물과 충돌
+            // 장애물과 충돌했는지
             Ray ray = new Ray(transform.position, BlinkDir.normalized);
             RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo, BlinkDistance, 1 << 9))
+            if (Physics.Raycast(ray, out hitInfo, BlinkDir.magnitude, 1 << 9))
             {
-                Debug.Log(hitInfo.point);
+                transform.position = hitInfo.point;// + (BlinkDir.normalized / 100f);
+            }
+            else
+            {
+                // 움직임 계산
+                transform.position += BlinkDir;
             }
 
             // 블링크 잔상 생성
@@ -459,9 +461,6 @@ public class Player : MonoBehaviour
     // 블링크
     void Blink()
     {
-        // 방향으로 블링크
-        //transform.position += BlinkDir * Time.deltaTime * 10;
-
         // 블링크 딜레이 시작
         BlinkDelayCount += Time.deltaTime;
 
