@@ -99,7 +99,8 @@ public class Enemy : MonoBehaviour {
     //보스HP바계산
     Image BossHp;
 
-
+    //충돌체밀림방지
+    Rigidbody rigid;
 
     // Use this for initialization
     void Start() {
@@ -113,12 +114,17 @@ public class Enemy : MonoBehaviour {
         teleportSprite = teleport.GetComponent<SpriteRenderer>();
         teleportSprite.enabled = false;
         SetTeleportSprite();
+
+        //안튕기게하기
+        rigid = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update() {
-        //안튕겨나가게
-        //gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            //안튕겨나가게
+        if (rigid.velocity != Vector3.zero) {
+            rigid.velocity = Vector3.zero;
+        }
         //시간재기
         if (attackState) {
             //공격중
@@ -234,7 +240,7 @@ public class Enemy : MonoBehaviour {
                 if (onDamagedCount > CheckPat1Dam) {
                     //부채꼴
                     BulletSpawner.Instance.bulletState = 1;
-
+                    
                 } else {
                     //직선
                     BulletSpawner.Instance.bulletState = 0;
@@ -243,6 +249,8 @@ public class Enemy : MonoBehaviour {
                 onDamagedCount = 0;
                 currPatCheck = 0;
             }
+            //애니메이션1
+            aniState = ANI_STATE.E_AP1;
         } else if (HP <= 50 && HP > 12) {
             if (currPatCheck < atPat2Check) {
                 //데미지축적치이상일때
@@ -258,8 +266,11 @@ public class Enemy : MonoBehaviour {
                 onDamagedCount = 0;
                 currPatCheck = 0;
             }
+            //애니메이션1
+            aniState = ANI_STATE.E_AP1;
         } else if (HP <= 12) {
             BulletSpawner.Instance.bulletState = 3;
+            aniState = ANI_STATE.E_AP2;
         }
 
     }
@@ -335,7 +346,9 @@ public class Enemy : MonoBehaviour {
             case ANI_STATE.E_AP1:
                 EnemyAnimator.SetInteger("State", 4);
                 break;
-
+            case ANI_STATE.E_AP2:
+                EnemyAnimator.SetInteger("State", 5);
+                break;
         }
 
     }
@@ -362,6 +375,9 @@ public class Enemy : MonoBehaviour {
     public void AllStop() {
         //총알 멈춰주는 작업이 필요함
         BulletSpawner.Instance.AllBulletOff();
+        GasterSpawner.Instance.AllGasterOff();
+        LaserSpawner.Instance.AllLaserOff();
+
         EnemyAnimator.enabled = false;
     }
 

@@ -47,6 +47,8 @@ public class E_Gaster : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
             this.transform.localScale = new Vector3((i + 1) * 0.2f, this.transform.localScale.y, this.transform.localScale.z);
         }
+        //나타난후 공격대기시간
+        yield return new WaitForSeconds(0.3f);
         StartCoroutine("GasterAttack");
     }
     IEnumerator GasterAttack() {
@@ -69,5 +71,8 @@ public class E_Gaster : MonoBehaviour {
         tempLaser.SetActive(false);
         LaserSpawner.Instance.AddLaserPool(tempLaser);
 
+    }
+    public void GameSetCoroutine() {
+        StopAllCoroutines();
     }
 }

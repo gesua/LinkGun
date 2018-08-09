@@ -107,9 +107,8 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
 
     public void AllGasterOff() {
         for (int i = 0; i < poolSize; i++) {
-
-            //bulletPool[i].GetComponent<E_Bullet>().InvokeOff();
             gasterPool[i].GetComponent<E_Gaster>().enabled = false;
+            gasterPool[i].GetComponent<E_Gaster>().GameSetCoroutine();
         }
     }
     public void AllGasterDisable() {
