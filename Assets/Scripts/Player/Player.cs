@@ -180,13 +180,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //Ray ray;
-        //if(Physics.Raycast(ray,))
 
         // 리지드바디 안 튕기게
         if (Rigid.velocity != Vector3.zero)
         {
-            Rigid.velocity = Vector3.zero; 
+            Rigid.velocity = Vector3.zero;
         }
 
         // 이동
@@ -292,8 +290,19 @@ public class Player : MonoBehaviour
             }
         }
 
-        // 움직임 계산
-        transform.position += moveVector;
+        // 장애물과 충돌했는지
+        Ray ray = new Ray(transform.position, moveVector.normalized);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo, moveVector.magnitude * 1.001f, 1 << 9))
+        {
+            Debug.Log(hitInfo.point + ":" + moveVector.normalized.x / 10);
+            transform.position = hitInfo.point - (moveVector.normalized / 1000);
+        }
+        else
+        {
+            // 움직임 계산
+            transform.position += moveVector;
+        }
 
         // 총 위치 변경
         GunScript.SetPosition(Way);
@@ -358,9 +367,6 @@ public class Player : MonoBehaviour
             {
                 HP -= e_Bullet.power;
             }
-
-            // 적 총알 Pool에 반환
-            e_Bullet.Off();
 
             // 깜빡임
             DamageBlink.BlinkStart();
@@ -428,11 +434,22 @@ public class Player : MonoBehaviour
                 break;
         }
 
+
         BlinkDir *= BlinkDistance; // 거리 증가
+
+
 
         // 블링크 사용
         if (BlinkDir != Vector3.zero)
         {
+            // 장애물과 충돌
+            Ray ray = new Ray(transform.position, BlinkDir.normalized);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(ray, out hitInfo, BlinkDistance, 1 << 9))
+            {
+                Debug.Log(hitInfo.point);
+            }
+
             // 블링크 잔상 생성
             CreateBlinkAfterimage(BlinkDir);
             IsBlinked = true;
@@ -443,7 +460,7 @@ public class Player : MonoBehaviour
     void Blink()
     {
         // 방향으로 블링크
-        transform.position += BlinkDir * Time.deltaTime * 10;
+        //transform.position += BlinkDir * Time.deltaTime * 10;
 
         // 블링크 딜레이 시작
         BlinkDelayCount += Time.deltaTime;
