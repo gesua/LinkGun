@@ -22,7 +22,7 @@ public class E_Bullet : MonoBehaviour {
     public float surviveTime = 7f;
 
     //총알 넣어줄 Spawner객체
-    protected BulletSpawner bulletSpawner;
+    BulletSpawner bulletSpawner;
     // Use this for initialization
 
     //private void OnEnable() {
@@ -44,7 +44,7 @@ public class E_Bullet : MonoBehaviour {
 
     }
 
-    public void setSpawner(BulletSpawner spawner) {
+    public void SetSpawner(BulletSpawner spawner) {
         bulletSpawner = spawner;
     }
 
@@ -64,9 +64,10 @@ public class E_Bullet : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other) {
  
-        if (other.tag.Equals("Wall")) {
+        if (other.tag.Equals("Wall") || other.tag.Equals("Player")) {
             gameObject.SetActive(false);
             bulletSpawner.AddBulletPool(gameObject);
         }
+        
     }
 }

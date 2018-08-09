@@ -6,21 +6,31 @@ public class E_Gaster : MonoBehaviour {
     //정면쪽으로 레이저 발사 필요
     //레이저발사 스프라이트 이미지 변경
     //이펙트
- 
+
     //스프라이트이미지
     SpriteRenderer gasterSprite;
     Sprite[] sprite;
     //레이저받기
-    public GameObject gasterLaser;
+
+    GasterSpawner gasterSpawner;
+
+    //LaserSpawner laserSpawner;
+
+    public void SetSpawner(GasterSpawner spawner) {
+        gasterSpawner = spawner;
+    }
 
     void Start() {
         //가스터이미지지정
         gasterSprite = gameObject.GetComponentInChildren<SpriteRenderer>();
         SetGasterSprite();
         StartCoroutine("GasterSpawn");
+
+        //레이저스포너지정
+        //laserSpawner = GameObject.Find("LaserSpawner").GetComponent<LaserSpawner>();
     }
 
-    
+
 
     void SetGasterSprite() {
         Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/gaster");
@@ -43,7 +53,8 @@ public class E_Gaster : MonoBehaviour {
     IEnumerator GasterAttack() {
         gasterSprite.sprite = sprite[0];
         //레이저생성
-        GameObject tempLaser = Instantiate(gasterLaser);
+        GameObject tempLaser = LaserSpawner.Instance.ActiveLaser();
+        tempLaser.SetActive(true);
         tempLaser.transform.position = this.transform.position;
         tempLaser.transform.forward = this.transform.forward;
         for (int i = 1; i < sprite.Length; i++) {
@@ -52,7 +63,12 @@ public class E_Gaster : MonoBehaviour {
             tempLaser.transform.localScale = new Vector3((i + 1) * 0.25f, this.transform.localScale.y, this.transform.localScale.z*10);
         }
         yield return new WaitForSeconds(0.25f);
-        Destroy(tempLaser);
-        Destroy(gameObject);
+        //가스터를 풀에 집어넣음
+        gameObject.SetActive(false);
+        gasterSpawner.AddGasterPool(gameObject);
+        //레이저를 풀에 집어넣음
+        tempLaser.SetActive(false);
+        LaserSpawner.Instance.AddLaserPool(tempLaser);
+
     }
 }

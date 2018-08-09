@@ -52,7 +52,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
         bulletPool = new GameObject[poolSize];
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i] = Instantiate(bulletFactory);
-            bulletPool[i].GetComponent<E_Bullet>().setSpawner(this);
+            bulletPool[i].GetComponent<E_Bullet>().SetSpawner(this);
             bulletPool[i].SetActive(false);
             //Spawner의자식
             bulletPool[i].transform.parent = GameObject.Find("E_Bullet").transform;
@@ -134,7 +134,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
             }
             //해당 각도 (X,Z축)
             Vector3 fireVector = new Vector3(-Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
-            //GameObject tempBullet1 = Instantiate(bulletFactory, this.transform.position, Quaternion.LookRotation(fireVector));
+           
             BulletPoolActive(fireVector);
         }
 

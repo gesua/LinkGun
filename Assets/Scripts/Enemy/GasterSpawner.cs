@@ -22,13 +22,29 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
     Vector3 gasterPivot;
     // Use this for initialization
 
+    //가스터풀만듬
+    GameObject[] gasterPool;
+    List<GameObject> deactiveList = new List<GameObject>();
+    public int poolSize = 50;
+
+
     private void Awake() {
 
         SetInstance(this);
 
     }
 
-
+    void Start() {
+        gasterPool = new GameObject[poolSize];
+        for (int i = 0; i < poolSize; i++) {
+            gasterPool[i] = Instantiate(gasterFactory);
+            gasterPool[i].GetComponent<E_Gaster>().SetSpawner(this);
+            gasterPool[i].SetActive(false);
+            //Spawner의자식
+            gasterPool[i].transform.parent = GameObject.Find("E_Gaster").transform;
+            deactiveList.Add(gasterPool[i]);
+        }
+    }
 
     // Update is called once per frame
     void Update() {
@@ -51,9 +67,8 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
         }
         
     }
-
+    //랜덤
     void SpawnPat1() {
-        
         currTimePat1 += Time.deltaTime;
         if (currTimePat1 > spawnTimePat1) {
             GasterSpawn();
@@ -61,7 +76,7 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
             currTimePat1 = 0f;
         }
     }
-
+    //빙빙이
     void SpawnPat2() {
         currTimePat2 += Time.deltaTime;
         if (currTimePat2 > spawnTimePat2) {
@@ -72,9 +87,31 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
     }
 
     void GasterSpawn() {
-        GameObject tempGaster = Instantiate(gasterFactory);
+        //풀에서 제거 및 true
+        GameObject tempGaster = deactiveList[0];
+        deactiveList.RemoveAt(0);
+        tempGaster.SetActive(true);
         tempGaster.transform.position = gasterPivot;
         tempGaster.transform.LookAt(player.transform);
         tempGaster.transform.localScale = new Vector3(0, this.transform.localScale.y, this.transform.localScale.z);
+    }
+
+
+    public void AddGasterPool(GameObject gaster) {
+        deactiveList.Add(gaster);
+    }
+
+    public void AllGasterOff() {
+        for (int i = 0; i < poolSize; i++) {
+
+            //bulletPool[i].GetComponent<E_Bullet>().InvokeOff();
+            gasterPool[i].GetComponent<E_Gaster>().enabled = false;
+        }
+    }
+    public void AllGasterDisable() {
+        //Bomb
+        for (int i = 0; i < poolSize; i++) {
+            gasterPool[i].SetActive(false);
+        }
     }
 }
