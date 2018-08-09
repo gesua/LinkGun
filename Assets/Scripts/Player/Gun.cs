@@ -13,10 +13,10 @@ public class Gun : MonoBehaviour
     // 무기 타입
     enum WeaponType
     {
-        MagicStick, // 마법봉
+        BlueWand, // 마법봉
         Boomerang // 부메랑
     }
-    WeaponType W_Type = WeaponType.MagicStick;
+    WeaponType W_Type = WeaponType.BlueWand;
 
     // 쿨다운
     bool IsCooldown = false; // 쿨다운 중인지
@@ -158,7 +158,7 @@ public class Gun : MonoBehaviour
             // 총알 발사
             if (AmmoCount > 0)
             {
-                if (IsCooldown == false)
+                if (IsCooldown == false && IsReload == false)
                 {
                     Shoot();
                 }
@@ -169,7 +169,21 @@ public class Gun : MonoBehaviour
             }
         }
 
-        //if(Input.getmou)
+        // 재장전
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (IsReload == false && AmmoCount != AmmoMax)
+            {
+                IsReload = true;
+            }
+        }
+
+        // 마우스 휠
+        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            // 무기 변경
+            WeaponChange();
+        }
 
         // 재장전
         if (IsReload)
@@ -325,7 +339,6 @@ public class Gun : MonoBehaviour
         for (int i = 0; i < BulletPoolSize; i++)
         {
             P_Bullet temp = AllBullet[i].GetComponent<P_Bullet>();
-            //temp.InvokeOff();
             temp.enabled = false;
         }
     }
@@ -333,6 +346,15 @@ public class Gun : MonoBehaviour
     // 무기 변경
     void WeaponChange()
     {
-        GunImage.sprite = BoomerangSprite;
+        if (W_Type == WeaponType.BlueWand)
+        {
+            GunImage.sprite = BoomerangSprite;
+            W_Type = WeaponType.Boomerang;
+        }
+        else
+        {
+            GunImage.sprite = BlueWandSprite;
+            W_Type = WeaponType.BlueWand;
+        }
     }
 }
