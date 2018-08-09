@@ -13,7 +13,7 @@ public class BlinkAfterimage : MonoBehaviour
     float ChangeTime = 0; // 이미지 교체 시간
     int ChangeCount = 0; // 이미지 교체된 횟수
 
-    void Start()
+    void Awake()
     {
         // 블링크 잔상 이미지
         Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/BulletImage1");
@@ -49,9 +49,6 @@ public class BlinkAfterimage : MonoBehaviour
         {
             Debug.LogError("BlinkTF 못 찾음");
         }
-
-        // 일정시간 뒤 사라짐
-        Destroy(gameObject, DestroyTime);
     }
 
     void Update()
@@ -76,9 +73,24 @@ public class BlinkAfterimage : MonoBehaviour
         }
     }
 
-    public void SetDestroyTime(float _DestroyTime)
+    // 초기화
+    public void SetInitialization(float magnitude, float _DestroyTime)
     {
+        // 이미지 위치 조정
+        float addValue = magnitude / 4f;
+        float temp = 0;
+
+        for (int i = 0; i < BlinkSR.Length; i++)
+        {
+            BlinkSR[i].transform.localPosition = new Vector3(0, temp, 0);
+            temp += addValue;
+        }
+
+        // 사라지는 시간 설정
         DestroyTime = _DestroyTime;
         ChangeTime = DestroyTime / 5;
+
+        // 일정시간 뒤 사라짐
+        //Destroy(gameObject, DestroyTime);
     }
 }
