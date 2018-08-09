@@ -27,6 +27,10 @@ public class ResultManager : MonoSingleton<ResultManager>
     Enemy EnemyScript;
     BulletSpawner BulletSpawnerScript;
 
+    GasterSpawner GasterSpawnerScript;
+
+    LaserSpawner LaserSpawnerScript;
+
     private void Awake()
     {
         SetInstance(this);
@@ -84,6 +88,8 @@ public class ResultManager : MonoSingleton<ResultManager>
             Debug.LogError("HeartDestroyScript 못 찾음");
             return;
         }
+
+
 
         // 스프라이트
         Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/LinkImage");
@@ -169,19 +175,39 @@ public class ResultManager : MonoSingleton<ResultManager>
             Debug.LogError("BulletSpawnerScript 못 찾음");
             return;
         }
+
+        GasterSpawnerScript = GameObject.Find("E_GasterSpawner").GetComponent<GasterSpawner>();
+        if (BulletSpawnerScript == null) {
+            Debug.LogError("GasterSpawnerScript 못 찾음");
+            return;
+        }
+
+
+        LaserSpawnerScript = GameObject.Find("E_LaserSpawner").GetComponent<LaserSpawner>();
+        if (BulletSpawnerScript == null) {
+            Debug.LogError("LaserSpawnerScript 못 찾음");
+            return;
+        }
+
     }
 
     // 게임 끝
     public void GameSet(bool victory)
     {
+        //플레이어
         PlayerScript.enabled = false; // 플레이어 멈춤
         GunScript.AllBulletOff(); // 총알 다 멈춤
         GunScript.gameObject.SetActive(false); // 총 사라짐
         MousePointScript.enabled = false; // 마우스 포인터 가만히
         PlayerAnimator.enabled = false; // 애니메이터 끔
-
+        //에너미
+        //샌즈
         EnemyScript.enabled = false;
         BulletSpawnerScript.enabled = false;
+        //가스터
+        GasterSpawnerScript.enabled = false;
+        //레이저
+        LaserSpawnerScript.enabled = false;
         EnemyScript.AllStop(); // 총알, 애니메이터 다 멈춤
 
         // 승리
