@@ -19,27 +19,25 @@ public class E_Bullet : MonoBehaviour {
     //총알방향전환 //전환필요없어짐(스폰에넘김)
     //this.transform.LookAt(target);
 
+    public float surviveTime = 7f;
+
     //총알 넣어줄 Spawner객체
     protected BulletSpawner bulletSpawner;
     // Use this for initialization
 
-    private void OnEnable() {
+    //private void OnEnable() {
         // 일단 전부 끔
         //CancelInvoke();
         // 3초 뒤 사라짐
-        
+
         //Invoke("Test", 7f);
-    }
+    //}
 
 
 
     // Update is called once per frame
     void Update() {
-        currTime += Time.deltaTime;
-        if (currTime > 7f) {
-            Off();
-            currTime = 0f;
-        }
+        Off();
         dir = this.transform.forward;
         //총알 앞으로 날리기
         this.transform.position += dir * bulletSpeed * Time.deltaTime;
@@ -52,14 +50,23 @@ public class E_Bullet : MonoBehaviour {
 
     // 끄고 Pool에 넣음
     public void Off() {
-        Debug.Log("들어와서꺼짐");
-        gameObject.SetActive(false);
-        bulletSpawner.AddBulletPool(gameObject);
-        // 일단 전부 끔
-        //CancelInvoke();
+        currTime += Time.deltaTime;
+        if (currTime > surviveTime) {
+            currTime = 0f;
+            gameObject.SetActive(false);
+            bulletSpawner.AddBulletPool(gameObject);
+        }
     }
+    //인보크 임시 주석처리
+    //public void InvokeOff() {
+    //    CancelInvoke();
+    //}
 
-    public void InvokeOff() {
-        CancelInvoke();
+    private void OnTriggerEnter(Collider other) {
+ 
+        if (other.tag.Equals("Wall")) {
+            gameObject.SetActive(false);
+            bulletSpawner.AddBulletPool(gameObject);
+        }
     }
 }

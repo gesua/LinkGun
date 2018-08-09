@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour {
     float currTimeMov2 = 0f;
     public float Mov2SetTime = 1.0f;
     //사라졌다가 다시 나오는대기시간
-    bool mov2ResCheck = false;
+    //bool mov2ResCheck = false;
     //float currTimeMov2Res = 0f;
     public float respawnTime = 1f;
     bool tempTel = false;
@@ -117,6 +117,8 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        //안튕겨나가게
+        //gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         //시간재기
         if (attackState) {
             //공격중
@@ -286,7 +288,7 @@ public class Enemy : MonoBehaviour {
         if (currTimeMov2 > Mov2SetTime) {
             //해당위치에 나올지점 이펙트 찍어주기
             if (tempTel == false) {
-                mov2ResCheck = true;
+                
                 //지정시간 초기화
                 //위치지정
                 tempTelPos = target.position;

@@ -196,7 +196,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
     public void AllBulletOff() {
         for (int i = 0; i < poolSize; i++) {
             
-            bulletPool[i].GetComponent<E_Bullet>().InvokeOff();
+            //bulletPool[i].GetComponent<E_Bullet>().InvokeOff();
             bulletPool[i].GetComponent<E_Bullet>().enabled = false;
         }
     }
