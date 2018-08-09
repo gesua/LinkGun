@@ -40,6 +40,7 @@ public class Gun : MonoBehaviour
     Slider ReloadSlider; // 장전 보여줄 UI
 
     // 무기 스프라이트
+    Image UIGunImage; // UI상 이미지 위치
     Sprite BlueWandSprite; // 마법봉
     Sprite BoomerangSprite; // 부메랑
 
@@ -98,6 +99,14 @@ public class Gun : MonoBehaviour
             return;
         }
 
+        // UIGunImage
+        UIGunImage = tempGun.Find("Image").GetComponent<Image>();
+        if (UIGunImage == null)
+        {
+            Debug.LogError("UIGunImage 못 찾음");
+            return;
+        }
+
         // ReloadSlider
         Transform tempReload = tempUI.transform.Find("Reload");
         ReloadSlider = tempReload.GetChild(0).GetComponent<Slider>();
@@ -146,49 +155,65 @@ public class Gun : MonoBehaviour
         // 마우스 포인터 바라봄
         LookTarget();
 
-        // 쿨다운
-        if (IsCooldown)
+        // 무기 종류 따라 다르게 작동
+        switch (W_Type) 
         {
-            Cooldown();
-        }
-
-        // 좌클릭
-        if (Input.GetMouseButton(0))
-        {
-            // 총알 발사
-            if (AmmoCount > 0)
-            {
-                if (IsCooldown == false && IsReload == false)
+            // 마법봉
+            case WeaponType.BlueWand:
+                // 쿨다운
+                if (IsCooldown)
                 {
-                    Shoot();
+                    Cooldown();
                 }
-            }
-            else if (IsReload == false) // 재장전 켜기
-            {
-                IsReload = true;
-            }
-        }
 
-        // 재장전
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (IsReload == false && AmmoCount != AmmoMax)
-            {
-                IsReload = true;
-            }
+                // 좌클릭
+                if (Input.GetMouseButton(0))
+                {
+                    // 총알 발사
+                    if (AmmoCount > 0)
+                    {
+                        if (IsCooldown == false && IsReload == false)
+                        {
+                            Shoot();
+                        }
+                    }
+                    else if (IsReload == false) // 재장전 켜기
+                    {
+                        IsReload = true;
+                    }
+                }
+
+                // R키
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    // 재장전
+                    if (IsReload == false && AmmoCount != AmmoMax)
+                    {
+                        IsReload = true;
+                    }
+                }
+
+                // 재장전
+                if (IsReload)
+                {
+                    Reload();
+                }
+                break;
+
+            // 부메랑
+            case WeaponType.Boomerang:
+
+                break;
         }
 
         // 마우스 휠
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            // 무기 변경
-            WeaponChange();
-        }
-
-        // 재장전
-        if (IsReload)
-        {
-            Reload();
+            if (IsReload == false)
+            {
+                // 무기 변경
+                WeaponChange();
+            }
         }
     }
 
@@ -348,13 +373,15 @@ public class Gun : MonoBehaviour
     {
         if (W_Type == WeaponType.BlueWand)
         {
-            GunImage.sprite = BoomerangSprite;
             W_Type = WeaponType.Boomerang;
+            GunImage.sprite = BoomerangSprite;
+            UIGunImage.sprite = BoomerangSprite;
         }
         else
         {
-            GunImage.sprite = BlueWandSprite;
             W_Type = WeaponType.BlueWand;
+            GunImage.sprite = BlueWandSprite;
+            UIGunImage.sprite = BlueWandSprite;
         }
     }
 }

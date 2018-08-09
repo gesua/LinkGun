@@ -121,19 +121,19 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1872174724196656}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ef5dbc4cd0717a4a9f477a00262e2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BType: 1
+  BType: 0
 --- !u!114 &114967086329758180
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1872174724196656}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19ef4d656e11fc1459fd8b43896579e3, type: 3}
   m_Name: 
