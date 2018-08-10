@@ -8,9 +8,16 @@ public class SetColor : MonoBehaviour
     static Color NextColor; // 다음 색
     static int ColorCount = -1;
 
-    void Start()
+    SpriteRenderer SR;
+
+    private void Awake()
     {
-        GetComponentInChildren<SpriteRenderer>().color = ColorChange();
+        SR = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    void OnEnable()
+    {
+        SR.color = ColorChange();
     }
 
     public Color RandomColor()
@@ -36,7 +43,7 @@ public class SetColor : MonoBehaviour
             ColorCount++;
         }
 
-        Color applyColor = Color.Lerp(PrevColor, NextColor, ColorCount / 10f);
+        Color applyColor = Color.Lerp(PrevColor, NextColor, ColorCount / 20f);
 
         // 새로운 색 지정
         if (applyColor.Equals(NextColor))
@@ -46,7 +53,7 @@ public class SetColor : MonoBehaviour
         }
 
         // 카운트 초기화
-        if (ColorCount >= 10)
+        if (ColorCount >= 20)
         {
             ColorCount = 0;
         }
