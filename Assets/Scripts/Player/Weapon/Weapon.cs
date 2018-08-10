@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 무기 타입
+public enum WeaponType
+{
+    None,     // 없음
+    Gun,      // 총
+    Boomerang // 부메랑
+}
+
 public class Weapon
 {
-    // 무기 타입
-    enum WeaponType
-    {
-        None,     // 없음
-        Gun,      // 총
-        Boomerang // 부메랑
-    }
-    WeaponType W_Type = WeaponType.None;
+    protected WeaponType W_Type = WeaponType.None;
 
     // 속성
     protected int Number; // 번호
@@ -95,11 +96,24 @@ public class Weapon
         }
     }
 
+    public WeaponType _W_Type
+    {
+        get
+        {
+            return W_Type;
+        }
+    }
+
     public int _AmmoCount
     {
         get
         {
             return AmmoCount;
+        }
+
+        set
+        {
+            AmmoCount = value;
         }
     }
 }
