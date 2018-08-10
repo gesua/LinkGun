@@ -18,7 +18,7 @@ public class Gun : MonoBehaviour
     // 총알 Pool
     GameObject[] AllBullet; // 모든 총알
     List<GameObject> BulletPool; // Pool 리스트
-    public int BulletPoolSize = 20; // Pool 최대 갯수
+    int BulletPoolSize = 100; // Pool 최대 갯수
 
     // 무기
     List<Weapon> WeaponsList = new List<Weapon>(); // 현재 갖고 있는 무기 리스트
