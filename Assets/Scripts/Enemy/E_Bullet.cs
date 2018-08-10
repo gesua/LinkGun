@@ -26,14 +26,17 @@ public class E_Bullet : MonoBehaviour {
     // Use this for initialization
 
     //private void OnEnable() {
-        // 일단 전부 끔
-        //CancelInvoke();
-        // 3초 뒤 사라짐
+    // 일단 전부 끔
+    //CancelInvoke();
+    // 3초 뒤 사라짐
 
-        //Invoke("Test", 7f);
+    //Invoke("Test", 7f);
     //}
 
 
+    private void OnEnable() {
+        currTime = 0f;
+    }
 
     // Update is called once per frame
     void Update() {

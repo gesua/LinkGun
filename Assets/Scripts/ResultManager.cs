@@ -30,6 +30,9 @@ public class ResultManager : MonoSingleton<ResultManager>
     GasterSpawner GasterSpawnerScript;
 
     LaserSpawner LaserSpawnerScript;
+    //패배
+    SpriteRenderer deadSpirte;
+    Sprite[] dieSprite;
 
     private void Awake()
     {
@@ -188,6 +191,15 @@ public class ResultManager : MonoSingleton<ResultManager>
             Debug.LogError("LaserSpawnerScript 못 찾음");
             return;
         }
+        //패배스프라이트
+        deadSpirte = GameObject.Find("Enemy").GetComponentInChildren<SpriteRenderer>();
+        if (deadSpirte == null) {
+            Debug.LogError("deadSpirte 못 찾음");
+            return;
+        } else {
+        //패배이미지
+        SetDeadSprite();
+        }
 
     }
 
@@ -214,6 +226,9 @@ public class ResultManager : MonoSingleton<ResultManager>
         if (victory)
         {
             StartCoroutine("VictorySpriteChange"); // 승리 이미지 변경 코루틴 실행
+
+            //샌즈스프라이트재생
+            StartCoroutine("SansDeadAnim");
         }
         else // 패배
         {
@@ -261,5 +276,28 @@ public class ResultManager : MonoSingleton<ResultManager>
             VictoryImage.color = new Color(1, 1, 1, (float)i / 256);
             yield return new WaitForSeconds(0.01f);
         }
+    }
+
+    //샌즈 죽음 스프라이트
+    void SetDeadSprite() {
+        Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/SansDead");
+        int DeadCount = 0;
+        dieSprite = new Sprite[9];
+        for (int i = 0; i < tempSprite.Length; i++) {
+            if (tempSprite[i].name.Contains("Die")) {
+                dieSprite[DeadCount++] = tempSprite[i];
+            }
+        }
+    }
+    //샌즈죽음애니메이션
+    IEnumerator SansDeadAnim() {
+        deadSpirte.sprite = dieSprite[0];
+        //샌즈order
+        deadSpirte.sortingOrder = 10;
+        for (int i = 1; i < dieSprite.Length; i++) {
+            yield return new WaitForSeconds(0.25f);
+            deadSpirte.sprite = dieSprite[i];
+        }
+
     }
 }

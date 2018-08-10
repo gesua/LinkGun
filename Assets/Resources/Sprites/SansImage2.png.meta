@@ -50,11 +50,11 @@ TextureImporter:
     21300086: Sans_Ap1_2
     21300088: Sans_Ap1_3
     21300090: SansImage2_45
-    21300092: SansImage2_46
+    21300092: SansDie4
     21300094: SansImage2_47
-    21300096: SansImage2_48
-    21300098: SansImage2_49
-    21300100: SansImage2_50
+    21300096: SansDie1
+    21300098: SansDie3
+    21300100: SansDie2
     21300102: SansImage2_51
     21300104: SansImage2_52
     21300106: SansImage2_53
@@ -820,7 +820,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_46
+      name: SansDie4
       rect:
         serializedVersion: 2
         x: 133
@@ -848,7 +848,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_48
+      name: SansDie1
       rect:
         serializedVersion: 2
         x: 197
@@ -862,7 +862,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_49
+      name: SansDie3
       rect:
         serializedVersion: 2
         x: 229
@@ -876,7 +876,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SansImage2_50
+      name: SansDie2
       rect:
         serializedVersion: 2
         x: 261

@@ -91,7 +91,8 @@ public class Enemy : MonoBehaviour {
     GameObject teleport;
     //스프라이트이미지
     SpriteRenderer teleportSprite;
-    Sprite[] sprite;
+    Sprite[] telSprite;
+
 
     //보스깜빡임데미지표현
     DamagedBlink blink;
@@ -114,7 +115,7 @@ public class Enemy : MonoBehaviour {
         teleportSprite = teleport.GetComponent<SpriteRenderer>();
         teleportSprite.enabled = false;
         SetTeleportSprite();
-
+     
         //안튕기게하기
         rigid = gameObject.GetComponent<Rigidbody>();
     }
@@ -377,26 +378,27 @@ public class Enemy : MonoBehaviour {
         BulletSpawner.Instance.AllBulletOff();
         GasterSpawner.Instance.AllGasterOff();
         LaserSpawner.Instance.AllLaserOff();
-
         EnemyAnimator.enabled = false;
     }
 
     void SetTeleportSprite() {
         Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/telEffect");
         int teleportCount = 0;
-        sprite = new Sprite[8];
+        telSprite = new Sprite[8];
         for (int i = 0; i < tempSprite.Length; i++) {
             if (tempSprite[i].name.Contains("teleport")) {
-                sprite[teleportCount++] = tempSprite[i];
+                telSprite[teleportCount++] = tempSprite[i];
             }
         }
 
     }
+
+    
     IEnumerator teleportAlert() {
-        teleportSprite.sprite = sprite[0];
-        for (int i = 1; i < sprite.Length; i++) {
-            yield return new WaitForSeconds(respawnTime/sprite.Length);
-            teleportSprite.sprite = sprite[i];
+        teleportSprite.sprite = telSprite[0];
+        for (int i = 1; i < telSprite.Length; i++) {
+            yield return new WaitForSeconds(respawnTime/telSprite.Length);
+            teleportSprite.sprite = telSprite[i];
         }
         yield return new WaitForSeconds(0.15f);
         Debug.Log("순간이동대기시간끝,완료");

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletSpawner : MonoSingleton<BulletSpawner>
-{
+public class BulletSpawner : MonoSingleton<BulletSpawner> {
     //불렛 프리팹 받아서 사용
     public GameObject bulletFactory;
     //불렛 오브젝트풀을 만들어 줘야함
@@ -41,14 +40,14 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
     //간격차
     public float bulletDegree3 = 0.5f;
 
-    private void Awake()
-    {
+    private void Awake() {
+        //싱글톤
         SetInstance(this);
     }
 
     // Use this for initialization
     void Start() {
-        
+
         bulletPool = new GameObject[poolSize];
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i] = Instantiate(bulletFactory);
@@ -64,52 +63,53 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
     void Update() {
         this.transform.position = GameObject.Find("Enemy").transform.position;
         //시간 증가
-        //if(attackState) { 
+
         currTime += Time.deltaTime;
-            //시간이 증가할때마다 총알을생성
-            //1.시간체크
-            if (currTime > b_spawnTime) {
+        //시간이 증가할때마다 총알을생성
+        //1.시간체크
+        if (currTime > b_spawnTime) {
 
-                //2.총알을생성
-                //조건분기
-                switch (bulletState) {
-                    case 0:
-                        //직선일때
+            //2.총알을생성
+            //조건분기
+            switch (bulletState) {
+                case 0:
+                    //직선일때
 
-                        ShootMode0();
-                        break;
-                    case 1:
-                        //부채꼴일때
-                        ShootMode1();
-                        break;
-                    case 2:
-                        //전방향발사(기본)
-                        ShootMode2();
-                        break;
-                    case 3:
-                        //회전샷(방향forWard)
-                        //자연스러운 발사시간전환
-                        ShootMode3();
-                        break;
-                    default:
-                        break;
+                    ShootMode0();
+                    break;
+                case 1:
+                    //부채꼴일때
+                    ShootMode1();
+                    break;
+                case 2:
+                    //전방향발사(기본)
+                    ShootMode2();
+                    break;
+                case 3:
+                    //회전샷(방향forWard)
+                    //자연스러운 발사시간전환
+                    ShootMode3();
+                    break;
+                default:
+                    break;
 
-                }
-
-                //3.시간을초기화
-                currTime = 0f;
             }
-        //}
+
+            //3.시간을초기화
+            currTime = 0f;
+        }
+
 
     }
     void ShootMode0() {
         b_spawnTime = 0.3f;
-        if(deactiveList.Count > 0) {
+        if (deactiveList.Count > 0) {
             GameObject bullet = deactiveList[0];
             deactiveList.RemoveAt(0);
             bullet.SetActive(true);
             bullet.transform.position = this.transform.position;
             bullet.transform.LookAt(target.transform);
+            bullet.GetComponent<BulletType>().BType = BulletType.B_Type.Basic;
         }
 
     }
@@ -134,8 +134,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
             }
             //해당 각도 (X,Z축)
             Vector3 fireVector = new Vector3(-Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
-           
-            BulletPoolActive(fireVector);
+            BulletPoolActive(fireVector,BulletType.B_Type.Nabi);
         }
 
     }
@@ -160,7 +159,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
             }
             //해당 각도 (X,Z축)
             Vector3 fireVector = new Vector3(-Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
-            BulletPoolActive(fireVector);
+            BulletPoolActive(fireVector,BulletType.B_Type.Knife);
         }
     }
     void ShootMode3() {
@@ -173,17 +172,18 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
             float radDegree = Mathf.Deg2Rad * fireDegree;
             //해당 각도 (X,Z축)
             Vector3 fireVector = new Vector3(Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
-            BulletPoolActive(fireVector);
+            BulletPoolActive(fireVector, BulletType.B_Type.Shuriken);
             if (startDegree3 > 360) {
                 startDegree3 = 0;
             }
         }
     }
- 
 
-    void BulletPoolActive(Vector3 fireVector) {
+
+    void BulletPoolActive(Vector3 fireVector, BulletType.B_Type type) {
         GameObject tempBullet = deactiveList[0];
         deactiveList.RemoveAt(0);
+        tempBullet.GetComponent<BulletType>().BType = type;
         tempBullet.SetActive(true);
         tempBullet.transform.position = this.transform.position;
         tempBullet.transform.rotation = Quaternion.LookRotation(fireVector);
@@ -195,7 +195,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner>
 
     public void AllBulletOff() {
         for (int i = 0; i < poolSize; i++) {
-            
+
             //bulletPool[i].GetComponent<E_Bullet>().InvokeOff();
             bulletPool[i].GetComponent<E_Bullet>().enabled = false;
         }
