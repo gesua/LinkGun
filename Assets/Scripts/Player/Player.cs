@@ -180,7 +180,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-
         // 리지드바디 안 튕기게
         if (Rigid.velocity != Vector3.zero)
         {
@@ -363,7 +362,8 @@ public class Player : MonoBehaviour
             // 체력 깎임
             if (GodMode == false)
             {
-                HP -= e_Bullet.power;
+                //HP -= e_Bullet.power;
+                HP--;
             }
 
             // 깜빡임

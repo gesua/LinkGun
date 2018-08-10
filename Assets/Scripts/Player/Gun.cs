@@ -13,14 +13,17 @@ public class Gun : MonoBehaviour
     // 무기 타입
     enum WeaponType
     {
-        BlueWand, // 마법봉
-        Boomerang // 부메랑
+        MIN,       // 최소
+        BlueWand,  // 마법봉
+        Sword,     // 칼
+        Boomerang, // 부메랑
+        MAX        // 최대
     }
     WeaponType W_Type = WeaponType.BlueWand;
 
     // 쿨다운
     bool IsCooldown = false; // 쿨다운 중인지
-    public float CooldownTime = 0.2f; // 연사속도
+    float CooldownTime = 0.2f; // 연사속도
     float CooldownCount = 0f; // 연사속도 세는거
 
     // 총알 Pool
@@ -29,19 +32,21 @@ public class Gun : MonoBehaviour
     public int BulletPoolSize = 20; // Pool 최대 갯수
 
     // 탄약
-    public int AmmoMax = 30; // 최대 탄약
+    int AmmoMax = 30; // 최대 탄약
     int AmmoCount = 0; // 남은 탄약
     Text AmmoText; // UI
+    int[] TempAmmo = new int[2]; // 무기에 따라 탄약 담아둘 거
 
     // 재장전
     bool IsReload = false; // 장전 중인지
-    public float ReloadSpeed = 2f; // 장전속도
+    float ReloadSpeed = 2f; // 장전속도
     float ReloadCount = 0f; // 장전시간 세는거
     Slider ReloadSlider; // 장전 보여줄 UI
 
     // 무기 스프라이트
     Image UIGunImage; // UI상 이미지 위치
     Sprite BlueWandSprite; // 마법봉
+    Sprite SwordSprite; // 칼
     Sprite BoomerangSprite; // 부메랑
 
     Camera MainCam;
@@ -99,6 +104,10 @@ public class Gun : MonoBehaviour
             return;
         }
 
+        // 초기 총알
+        TempAmmo[0] = 30; // 마법봉
+        TempAmmo[1] = 100; // 칼
+
         // UIGunImage
         UIGunImage = tempGun.Find("Image").GetComponent<Image>();
         if (UIGunImage == null)
@@ -126,6 +135,12 @@ public class Gun : MonoBehaviour
                 BlueWandSprite = temp[i];
             }
 
+            // 칼
+            if (temp[i].name.Equals("Sword"))
+            {
+                SwordSprite = temp[i];
+            }
+
             // 부메랑
             if (temp[i].name.Equals("Boomerang"))
             {
@@ -135,6 +150,11 @@ public class Gun : MonoBehaviour
         if (BlueWandSprite == null)
         {
             Debug.LogError("BlueWandSprite 못 찾음");
+            return;
+        }
+        if (SwordSprite == null)
+        {
+            Debug.LogError("SwordSprite 못 찾음");
             return;
         }
         if (BoomerangSprite == null)
@@ -156,10 +176,11 @@ public class Gun : MonoBehaviour
         LookTarget();
 
         // 무기 종류 따라 다르게 작동
-        switch (W_Type) 
+        switch (W_Type)
         {
-            // 마법봉
+            // 마법봉, 칼
             case WeaponType.BlueWand:
+            case WeaponType.Sword:
                 // 쿨다운
                 if (IsCooldown)
                 {
@@ -371,17 +392,72 @@ public class Gun : MonoBehaviour
     // 무기 변경
     void WeaponChange()
     {
-        if (W_Type == WeaponType.BlueWand)
+        // 현재 총알 기억해놓기
+        switch (W_Type)
         {
-            W_Type = WeaponType.Boomerang;
-            GunImage.sprite = BoomerangSprite;
-            UIGunImage.sprite = BoomerangSprite;
+            case WeaponType.BlueWand:
+                TempAmmo[0] = AmmoCount;
+                break;
+            case WeaponType.Sword:
+                TempAmmo[1] = AmmoCount;
+                break;
+        }
+
+        // 1개씩 교체
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            W_Type++;
+            if (W_Type == WeaponType.MAX)
+            {
+                W_Type = WeaponType.MIN + 1;
+            }
         }
         else
         {
-            W_Type = WeaponType.BlueWand;
-            GunImage.sprite = BlueWandSprite;
-            UIGunImage.sprite = BlueWandSprite;
+            W_Type--;
+            if (W_Type == WeaponType.MIN)
+            {
+                W_Type = WeaponType.MAX - 1;
+            }
+        }
+
+        // 무기마다 이것저것 설정
+        switch (W_Type)
+        {
+            case WeaponType.BlueWand: // 마법봉
+                // 이미지 교체
+                GunImage.sprite = BlueWandSprite;
+                UIGunImage.sprite = BlueWandSprite;
+
+                // 총알 변경
+                AmmoCount = TempAmmo[0];
+
+                // 
+
+                // 총알 갯수 보이게
+                AmmoText.enabled = true;
+                AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
+                break;
+            case WeaponType.Sword: // 칼
+                // 이미지 교체
+                GunImage.sprite = SwordSprite;
+                UIGunImage.sprite = SwordSprite;
+
+                // 총알 변경
+                AmmoCount = TempAmmo[1];
+
+                // 총알 갯수 보이게
+                AmmoText.enabled = true;
+                AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
+                break;
+            case WeaponType.Boomerang: // 부메랑
+                // 이미지 교체
+                GunImage.sprite = BoomerangSprite;
+                UIGunImage.sprite = BoomerangSprite;
+
+                // 총알 갯수 안 보이게
+                AmmoText.enabled = false;
+                break;
         }
     }
 }

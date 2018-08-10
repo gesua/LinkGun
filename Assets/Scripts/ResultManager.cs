@@ -122,21 +122,15 @@ public class ResultManager : MonoSingleton<ResultManager>
                 }
             }
         }
-        for (int i = 0; i < 3; i++)
+        if (LoseSprites[LoseSprites.Length - 1] == null)
         {
-            if (LoseSprites[i] == null)
-            {
-                Debug.LogError("LoseSprites[" + i + "] 못 찾음");
-                return;
-            }
+            Debug.LogError("LoseSprites 끝까지 못 찾음");
+            return;
         }
-        for (int i = 0; i < 5; i++)
+        if (VictorySprites[VictorySprites.Length - 1] == null)
         {
-            if (VictorySprites[i] == null)
-            {
-                Debug.LogError("VictorySprites[" + i + "] 못 찾음");
-                return;
-            }
+            Debug.LogError("VictorySprites 끝까지 못 찾음");
+            return;
         }
 
         // 패배 이미지
@@ -180,17 +174,19 @@ public class ResultManager : MonoSingleton<ResultManager>
         }
 
         GasterSpawnerScript = GameObject.Find("E_GasterSpawner").GetComponent<GasterSpawner>();
-        if (BulletSpawnerScript == null) {
+        if (BulletSpawnerScript == null)
+        {
             Debug.LogError("GasterSpawnerScript 못 찾음");
             return;
         }
 
-
         LaserSpawnerScript = GameObject.Find("E_LaserSpawner").GetComponent<LaserSpawner>();
-        if (BulletSpawnerScript == null) {
+        if (BulletSpawnerScript == null)
+        {
             Debug.LogError("LaserSpawnerScript 못 찾음");
             return;
         }
+
         //패배스프라이트
         deadSpirte = GameObject.Find("Enemy").GetComponentInChildren<SpriteRenderer>();
         if (deadSpirte == null) {

@@ -54,6 +54,9 @@ public class P_Bullet : MonoBehaviour
     // 켜졌을 때(맨 처음 만들 때도 생김)
     private void OnEnable()
     {
+        // 시간 초기화
+        CurrentTime = 0;
+
         // 총알 스프라이트로 변경
         BulletSR.sprite = BulletSprite;
 
@@ -89,13 +92,11 @@ public class P_Bullet : MonoBehaviour
     {
         //Invoke대체 if문
         CurrentTime += Time.deltaTime;
-        //시간 넘을경우 false 
 
+        // 일정시간 뒤 끔
         if (CurrentTime >= SurviveTime) {
             // 끄기
             gameObject.SetActive(false);
-
-            CurrentTime = 0;
 
             // 풀에 넣음
             GunScript.AddBulletPool(gameObject);

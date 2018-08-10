@@ -306,14 +306,14 @@ TextureImporter:
     21300598: LinkImage_299
     21300600: LinkImage_300
     21300602: LinkImage_301
-    21300604: LinkImage_302
+    21300604: Sword
     21300606: LinkImage_303
     21300608: LinkImage_304
     21300610: LinkImage_305
     21300612: LinkImage_306
     21300614: LinkImage_307
     21300616: LinkImage_308
-    21300618: BlueSword
+    21300618: SwordBullet
     21300620: LinkImage_310
     21300622: LinkImage_311
     21300624: LinkImage_312
@@ -4828,15 +4828,15 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_302
+      name: Sword
       rect:
         serializedVersion: 2
         x: 1
         y: 79
         width: 6
         height: 13
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -4926,13 +4926,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BlueSword
+      name: SwordBullet
       rect:
         serializedVersion: 2
-        x: 96
-        y: 79
-        width: 7
-        height: 16
+        x: 98
+        y: 82
+        width: 3
+        height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5507,8 +5507,8 @@ TextureImporter:
         y: 63
         width: 8
         height: 12
-      alignment: 6
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.25, y: 0.17}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5955,8 +5955,8 @@ TextureImporter:
         y: 45
         width: 8
         height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
