@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 //보스의 이동경로지정
 //기본으로 키입력을 받아서 이동하기
@@ -11,7 +12,8 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour {
     //이동속도및체력
     public float moveSpeed = 1f;
-    public int HP = 100;
+    public int MaxHP = 100;
+    public int CurrHP;
 
     //이동애니메이션표현
     enum ANI_STATE {
@@ -31,6 +33,8 @@ public class Enemy : MonoBehaviour {
     
     //캐릭터의 방향을 체크해줄 값
     bool checkRight = false;
+    //네비게이션
+    NavMeshAgent agent;
     //플레이어의 위치를 받을값
     public Transform target;
     //플레이어의방향계산
@@ -60,8 +64,6 @@ public class Enemy : MonoBehaviour {
     float currTimeMov2 = 0f;
     public float Mov2SetTime = 1.0f;
     //사라졌다가 다시 나오는대기시간
-    //bool mov2ResCheck = false;
-    //float currTimeMov2Res = 0f;
     public float respawnTime = 1f;
     bool tempTel = false;
     Vector3 tempTelPos = Vector3.zero;
@@ -105,6 +107,10 @@ public class Enemy : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        //네비
+        agent = gameObject.GetComponent<NavMeshAgent>();
+        //체력
+        CurrHP = MaxHP;
         //할당
         EnemyAnimator = gameObject.GetComponentInChildren<Animator>();
         blink = gameObject.GetComponent<DamagedBlink>();
@@ -122,10 +128,12 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-            //안튕겨나가게
+        //안튕겨나가게
         if (rigid.velocity != Vector3.zero) {
             rigid.velocity = Vector3.zero;
         }
+        //안돌리기
+        this.transform.rotation = Quaternion.Euler(0, 0, 0);
         //시간재기
         if (attackState) {
             //공격중
@@ -168,7 +176,7 @@ public class Enemy : MonoBehaviour {
 
     void SetMovePattern() {
         //체력따라 정해주는 패턴
-        if (HP > 12) {
+        /*if (CurrHP > MaxHP*0.12f) {
             if (setRandomMove > 50) {
                 movePattern = 0;
             }
@@ -179,15 +187,17 @@ public class Enemy : MonoBehaviour {
         }
         else {
             movePattern = 2;
-        }
+        }*/
 
         Move();
 
         //보스의이동
         switch (movePattern) {
             case 0:
+                //네비게이션
+                agent.destination = target.position;
                 //플레이어따라감
-                this.transform.position += dir * moveSpeed * Time.deltaTime;
+                //this.transform.position += dir * moveSpeed * Time.deltaTime;
                 break;
             case 1:
                 MovePattern1();
@@ -235,7 +245,7 @@ public class Enemy : MonoBehaviour {
         currPatCheck += Time.deltaTime;
         //공격패턴판단(데미지받은것기준)
         //패턴1기준
-        if (HP > 50) {
+        if (CurrHP > MaxHP * 0.50) {
             if (currPatCheck < atPat1Check) {
                 //데미지축적치이상일때
                 if (onDamagedCount > CheckPat1Dam) {
@@ -252,7 +262,7 @@ public class Enemy : MonoBehaviour {
             }
             //애니메이션1
             aniState = ANI_STATE.E_AP1;
-        } else if (HP <= 50 && HP > 12) {
+        } else if (CurrHP <= MaxHP * 0.50 && CurrHP > MaxHP * 0.12) {
             if (currPatCheck < atPat2Check) {
                 //데미지축적치이상일때
                 if (onDamagedCount > CheckPat2Dam) {
@@ -269,7 +279,7 @@ public class Enemy : MonoBehaviour {
             }
             //애니메이션1
             aniState = ANI_STATE.E_AP1;
-        } else if (HP <= 12) {
+        } else if (CurrHP <= MaxHP * 0.12) {
             BulletSpawner.Instance.bulletState = 3;
             aniState = ANI_STATE.E_AP2;
         }
@@ -363,11 +373,11 @@ public class Enemy : MonoBehaviour {
     //데미지받는것
     public void Damage(int power) {
         onDamagedCount += power;
-        this.HP -= power;
-        BossHp.fillAmount = this.HP / 100f;
+        this.CurrHP -= power;
+        BossHp.fillAmount = (float) this.CurrHP / this.MaxHP ;
         blink.BlinkStart();
 
-        if (HP <= 0) {
+        if (CurrHP <= 0) {
             //보스hp가 0이하가 되면 ResultManager에서 true호출하여 게임을 종료시킴
             ResultManager.Instance.GameSet(true);
         }

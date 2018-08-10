@@ -5,6 +5,8 @@ using UnityEngine;
 public class E_Bullet : MonoBehaviour {
     //총알스피드
     public float bulletSpeed = 1f;
+    //총알스피드임시저장
+    float tempSpeed;
     //타겟위치 ->동적으로변경(프리팹)
     //Transform target;
     //위치계산
@@ -25,13 +27,35 @@ public class E_Bullet : MonoBehaviour {
     BulletSpawner bulletSpawner;
     // Use this for initialization
 
-    //private void OnEnable() {
-    // 일단 전부 끔
-    //CancelInvoke();
-    // 3초 뒤 사라짐
+    // 스프라이트
+    SpriteRenderer BulletSR; // 스프라이트 그리는거
+    Sprite BulletSprite; // 총알 이미지
+    Sprite[] BulletEffect; // 총알 이펙트
 
-    //Invoke("Test", 7f);
-    //}
+
+    private void Awake() {
+        BulletSR = GetComponentInChildren<SpriteRenderer>();
+        if (BulletSR == null) {
+            Debug.LogError("BulletSR 못 찾음");
+            return;
+        }
+
+        // 총알 스프라이트
+        BulletSprite = BulletSR.sprite;
+        if (BulletSprite == null) {
+            Debug.LogError("BulletSprite 못 찾음");
+            return;
+        }
+
+        // 총알 이펙트
+        BulletEffect = Resources.LoadAll<Sprite>("Sprites/BulletEffect");
+        if (BulletEffect == null) {
+            Debug.LogError("BulletEffect 못 찾음");
+            return;
+        }
+
+        tempSpeed = bulletSpeed;
+    }
 
 
     private void OnEnable() {
@@ -60,17 +84,31 @@ public class E_Bullet : MonoBehaviour {
             bulletSpawner.AddBulletPool(gameObject);
         }
     }
-    //인보크 임시 주석처리
-    //public void InvokeOff() {
-    //    CancelInvoke();
-    //}
 
     private void OnTriggerEnter(Collider other) {
  
         if (other.tag.Equals("Wall") || other.tag.Equals("Player")) {
-            gameObject.SetActive(false);
-            bulletSpawner.AddBulletPool(gameObject);
+            gameObject.transform.GetChild(0).localScale = new Vector3(5, 5, 1);
+            StartCoroutine("SpriteChange");
+            bulletSpeed = 0f;     
         }
         
+    }
+
+    // 이펙트로 변경
+    IEnumerator SpriteChange() {
+        BulletSR.sprite = BulletEffect[0];
+        for (int i = 1; i < BulletEffect.Length; i++) {
+            yield return new WaitForSeconds(0.05f);
+            BulletSR.sprite = BulletEffect[i];
+        }
+
+        // 끄기
+        gameObject.SetActive(false);
+
+        // 풀에 넣음
+        bulletSpawner.AddBulletPool(gameObject);
+        //속도복구
+        bulletSpeed = tempSpeed;
     }
 }
