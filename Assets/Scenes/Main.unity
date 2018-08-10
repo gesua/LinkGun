@@ -5655,7 +5655,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9c43028ac09004b8a2f90cacad94d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletPoolSize: 100
 --- !u!1 &1115440146
 GameObject:
   m_ObjectHideFlags: 0
@@ -9422,7 +9421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  MaxHP: 100
+  MaxHP: 300
   CurrHP: 0
   target: {fileID: 188519}
   attackContinuousTime: 4

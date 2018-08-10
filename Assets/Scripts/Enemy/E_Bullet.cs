@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class E_Bullet : MonoBehaviour {
     //총알스피드
-    public float bulletSpeed = 1f;
+    public float bulletSpeed = 3f;
     //총알스피드임시저장
-    float tempSpeed;
+    float tempSpeed = 3f;
     //타겟위치 ->동적으로변경(프리팹)
     //Transform target;
     //위치계산
@@ -31,7 +31,7 @@ public class E_Bullet : MonoBehaviour {
     SpriteRenderer BulletSR; // 스프라이트 그리는거
     Sprite BulletSprite; // 총알 이미지
     Sprite[] BulletEffect; // 총알 이펙트
-
+    
 
     private void Awake() {
         BulletSR = GetComponentInChildren<SpriteRenderer>();
@@ -54,21 +54,25 @@ public class E_Bullet : MonoBehaviour {
             return;
         }
 
+       
+    }
+
+    private void Start() {
         tempSpeed = bulletSpeed;
     }
 
-
     private void OnEnable() {
         currTime = 0f;
+        bulletSpeed = tempSpeed;
     }
-
     // Update is called once per frame
     void Update() {
+        
         Off();
         dir = this.transform.forward;
         //총알 앞으로 날리기
         this.transform.position += dir * bulletSpeed * Time.deltaTime;
-
+        
     }
 
     public void SetSpawner(BulletSpawner spawner) {

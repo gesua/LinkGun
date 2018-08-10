@@ -194,6 +194,7 @@ public class Enemy : MonoBehaviour {
             }
         }
         else {
+            agent.destination = Vector3.zero;
             attackDelayTime = respawnTime + Mov2SetTime;
             movePattern = 2;
         }
@@ -318,7 +319,6 @@ public class Enemy : MonoBehaviour {
         if (currTimeMov2 > Mov2SetTime) {
             //해당위치에 나올지점 이펙트 찍어주기
             if (tempTel == false) {
-                
                 //지정시간 초기화
                 //위치지정
                 tempTelPos = target.position;
