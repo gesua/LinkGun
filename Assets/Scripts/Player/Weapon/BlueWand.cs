@@ -15,6 +15,8 @@ public class BlueWand : Weapon {
         AmmoCount = AmmoMax;
 
         Power = 4;
+        BulletSpeed = 20f;
+        BulletTime = 3f;
 
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++) {

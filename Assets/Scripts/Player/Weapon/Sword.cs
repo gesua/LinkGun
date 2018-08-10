@@ -9,12 +9,14 @@ public class Sword : Weapon
         Number = 2;
         Name = "Sword";
         W_Type = WeaponType.Gun;
-        CooldownTime = 0.1f;
-        ReloadSpeed = 5f;
+        CooldownTime = 0.01f;
+        ReloadSpeed = 3f;
         AmmoMax = 100;
         AmmoCount = AmmoMax;
 
         Power = 1;
+        BulletSpeed = 10f;
+        BulletTime = 1f;
 
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++)

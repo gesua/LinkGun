@@ -17,7 +17,11 @@ public class Weapon
     // 속성
     protected int Number; // 번호
     protected string Name; // 이름
+
     protected int Power; // 공격력
+    protected float BulletSpeed; // 총알 속도
+    protected float BulletTime; // 총알 살아있는 시간
+
     protected float CooldownTime; // 쿨다운 시간
     protected float ReloadSpeed; // 장전속도
     protected int AmmoMax; // 최대 탄약
@@ -132,6 +136,22 @@ public class Weapon
         get
         {
             return Power;
+        }
+    }
+
+    public float _BulletSpeed
+    {
+        get
+        {
+            return BulletSpeed;
+        }
+    }
+
+    public float _BulletTime
+    {
+        get
+        {
+            return BulletTime;
         }
     }
 }

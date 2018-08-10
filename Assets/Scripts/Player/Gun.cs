@@ -238,8 +238,11 @@ public class Gun : MonoBehaviour
             // 켬
             tempBullet.SetActive(true);
 
-            // 공격력 설정
-            tempBullet.GetComponent<P_Bullet>().power = WeaponsList[WeaponSelectNumber]._Power;
+            // 총알 상세 설정
+            P_Bullet tempScript = tempBullet.GetComponent<P_Bullet>();
+            tempScript.power = WeaponsList[WeaponSelectNumber]._Power;
+            tempScript.speed = WeaponsList[WeaponSelectNumber]._BulletSpeed;
+            tempScript.SurviveTime = WeaponsList[WeaponSelectNumber]._BulletTime;
 
             // 생김새 바꿔줌
             tempBullet.GetComponentInChildren<SpriteRenderer>().sprite = WeaponsList[WeaponSelectNumber]._BulletSprite;
@@ -384,7 +387,7 @@ public class Gun : MonoBehaviour
     void WeaponChange()
     {
         // 1개씩 교체
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             WeaponSelectNumber++;
 

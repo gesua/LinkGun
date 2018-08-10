@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class P_Bullet : MonoBehaviour
 {
+    public WeaponType W_Type = WeaponType.None;
+
     // 속도
     public float speed = 10f;
 
