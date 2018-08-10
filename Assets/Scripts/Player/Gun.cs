@@ -10,20 +10,9 @@ public class Gun : MonoBehaviour
 
     SpriteRenderer GunImage;
 
-    // 무기 타입
-    enum WeaponType
-    {
-        MIN,       // 최소
-        BlueWand,  // 마법봉
-        Sword,     // 칼
-        Boomerang, // 부메랑
-        MAX        // 최대
-    }
-    WeaponType W_Type = WeaponType.BlueWand;
-
     // 쿨다운
     bool IsCooldown = false; // 쿨다운 중인지
-    float CooldownTime = 0.2f; // 연사속도
+    float CooldownTime; // 연사속도
     float CooldownCount = 0f; // 연사속도 세는거
 
     // 총알 Pool
@@ -31,23 +20,22 @@ public class Gun : MonoBehaviour
     List<GameObject> BulletPool; // Pool 리스트
     public int BulletPoolSize = 20; // Pool 최대 갯수
 
+    // 무기
+    List<Weapon> WeaponsList = new List<Weapon>(); // 현재 갖고 있는 무기 리스트
+    int WeaponSelectNumber = 0; // 현재 사용중인 무기 위치
+
     // 탄약
-    int AmmoMax = 30; // 최대 탄약
-    int AmmoCount = 0; // 남은 탄약
+    int AmmoMax; // 최대 탄약
     Text AmmoText; // UI
-    int[] TempAmmo = new int[2]; // 무기에 따라 탄약 담아둘 거
 
     // 재장전
     bool IsReload = false; // 장전 중인지
-    float ReloadSpeed = 2f; // 장전속도
+    float ReloadSpeed; // 장전속도
     float ReloadCount = 0f; // 장전시간 세는거
     Slider ReloadSlider; // 장전 보여줄 UI
 
     // 무기 스프라이트
     Image UIGunImage; // UI상 이미지 위치
-    Sprite BlueWandSprite; // 마법봉
-    Sprite SwordSprite; // 칼
-    Sprite BoomerangSprite; // 부메랑
 
     Camera MainCam;
 
@@ -94,6 +82,15 @@ public class Gun : MonoBehaviour
             AllBullet[i] = tempBullet;
         }
 
+        // 기본 무기 추가하고 정보 받아옴
+        WeaponsList.Add(new BlueWand());
+        CooldownTime = WeaponsList[0]._CooldownTime;
+        AmmoMax = WeaponsList[0]._AmmoMax;
+        ReloadSpeed = WeaponsList[0]._ReloadSpeed;
+
+        // 무기 추가
+        WeaponsList.Add(new Sword());
+
         // AmmoText
         GameObject tempUI = GameObject.Find("UI");
         Transform tempGun = tempUI.transform.Find("Gun");
@@ -103,10 +100,6 @@ public class Gun : MonoBehaviour
             Debug.LogError("AmmoText 못 찾음");
             return;
         }
-
-        // 초기 총알
-        TempAmmo[0] = 30; // 마법봉
-        TempAmmo[1] = 100; // 칼
 
         // UIGunImage
         UIGunImage = tempGun.Find("Image").GetComponent<Image>();
@@ -125,49 +118,8 @@ public class Gun : MonoBehaviour
             return;
         }
 
-        // 무기 스프라이트
-        Sprite[] temp = Resources.LoadAll<Sprite>("Sprites/LinkImage");
-        for (int i = 0; i < temp.Length; i++)
-        {
-            // 마법봉
-            if (temp[i].name.Equals("BlueWand"))
-            {
-                BlueWandSprite = temp[i];
-            }
-
-            // 칼
-            if (temp[i].name.Equals("Sword"))
-            {
-                SwordSprite = temp[i];
-            }
-
-            // 부메랑
-            if (temp[i].name.Equals("Boomerang"))
-            {
-                BoomerangSprite = temp[i];
-            }
-        }
-        if (BlueWandSprite == null)
-        {
-            Debug.LogError("BlueWandSprite 못 찾음");
-            return;
-        }
-        if (SwordSprite == null)
-        {
-            Debug.LogError("SwordSprite 못 찾음");
-            return;
-        }
-        if (BoomerangSprite == null)
-        {
-            Debug.LogError("BoomerangSprite 못 찾음");
-            return;
-        }
-
-        // 총알 최대로 장전
-        AmmoCount = AmmoMax;
-
         // TextUI 세팅
-        AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
+        AmmoText.text = WeaponsList[0]._AmmoCount.ToString() + " / " + AmmoMax.ToString();
     }
 
     void Update()
@@ -176,11 +128,10 @@ public class Gun : MonoBehaviour
         LookTarget();
 
         // 무기 종류 따라 다르게 작동
-        switch (W_Type)
+        switch (WeaponsList[WeaponSelectNumber]._W_Type)
         {
             // 마법봉, 칼
-            case WeaponType.BlueWand:
-            case WeaponType.Sword:
+            case WeaponType.Gun:
                 // 쿨다운
                 if (IsCooldown)
                 {
@@ -191,7 +142,7 @@ public class Gun : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     // 총알 발사
-                    if (AmmoCount > 0)
+                    if (WeaponsList[WeaponSelectNumber]._AmmoCount > 0)
                     {
                         if (IsCooldown == false && IsReload == false)
                         {
@@ -208,7 +159,7 @@ public class Gun : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.R))
                 {
                     // 재장전
-                    if (IsReload == false && AmmoCount != AmmoMax)
+                    if (IsReload == false && WeaponsList[WeaponSelectNumber]._AmmoCount != AmmoMax)
                     {
                         IsReload = true;
                     }
@@ -244,10 +195,10 @@ public class Gun : MonoBehaviour
         // Pool에서 켜기
         if (BulletPool.Count > 0)
         {
-            AmmoCount--; // 총알 1개 소모
+            WeaponsList[WeaponSelectNumber]._AmmoCount--; // 총알 1개 소모
 
             // TextUI 세팅
-            AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
+            AmmoText.text = WeaponsList[WeaponSelectNumber]._AmmoCount.ToString() + " / " + AmmoMax.ToString();
 
             // Pool에서 뺌
             GameObject tempBullet = BulletPool[0];
@@ -255,6 +206,9 @@ public class Gun : MonoBehaviour
 
             // 켬
             tempBullet.SetActive(true);
+
+            // 생김새 바꿔줌
+            tempBullet.GetComponentInChildren<SpriteRenderer>().sprite = WeaponsList[WeaponSelectNumber]._BulletSprite;
 
             // 위치 잡아줌
             tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
@@ -296,10 +250,10 @@ public class Gun : MonoBehaviour
             ReloadCount = 0;
 
             // 재장전
-            AmmoCount = AmmoMax;
+            WeaponsList[WeaponSelectNumber]._AmmoCount = AmmoMax;
 
             // TextUI 세팅
-            AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
+            AmmoText.text = WeaponsList[WeaponSelectNumber]._AmmoCount.ToString() + " / " + AmmoMax.ToString();
 
             // 슬라이더 끔
             ReloadSlider.gameObject.SetActive(false);
@@ -392,72 +346,35 @@ public class Gun : MonoBehaviour
     // 무기 변경
     void WeaponChange()
     {
-        // 현재 총알 기억해놓기
-        switch (W_Type)
-        {
-            case WeaponType.BlueWand:
-                TempAmmo[0] = AmmoCount;
-                break;
-            case WeaponType.Sword:
-                TempAmmo[1] = AmmoCount;
-                break;
-        }
-
         // 1개씩 교체
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            W_Type++;
-            if (W_Type == WeaponType.MAX)
+            WeaponSelectNumber++;
+
+            if (WeaponSelectNumber >= WeaponsList.Count)
             {
-                W_Type = WeaponType.MIN + 1;
+                WeaponSelectNumber = 0;
             }
         }
         else
         {
-            W_Type--;
-            if (W_Type == WeaponType.MIN)
+            WeaponSelectNumber--;
+            if (WeaponSelectNumber < 0)
             {
-                W_Type = WeaponType.MAX - 1;
+                WeaponSelectNumber = WeaponsList.Count - 1;
             }
         }
 
-        // 무기마다 이것저것 설정
-        switch (W_Type)
-        {
-            case WeaponType.BlueWand: // 마법봉
-                // 이미지 교체
-                GunImage.sprite = BlueWandSprite;
-                UIGunImage.sprite = BlueWandSprite;
+        // 기본 무기 추가하고 정보 받아옴
+        CooldownTime = WeaponsList[WeaponSelectNumber]._CooldownTime;
+        AmmoMax = WeaponsList[WeaponSelectNumber]._AmmoMax;
+        ReloadSpeed = WeaponsList[WeaponSelectNumber]._ReloadSpeed;
 
-                // 총알 변경
-                AmmoCount = TempAmmo[0];
+        // 이미지 교체
+        GunImage.sprite = WeaponsList[WeaponSelectNumber]._WeaponSprite;
+        UIGunImage.sprite = WeaponsList[WeaponSelectNumber]._WeaponSprite;
 
-                // 
-
-                // 총알 갯수 보이게
-                AmmoText.enabled = true;
-                AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
-                break;
-            case WeaponType.Sword: // 칼
-                // 이미지 교체
-                GunImage.sprite = SwordSprite;
-                UIGunImage.sprite = SwordSprite;
-
-                // 총알 변경
-                AmmoCount = TempAmmo[1];
-
-                // 총알 갯수 보이게
-                AmmoText.enabled = true;
-                AmmoText.text = AmmoCount.ToString() + " / " + AmmoMax.ToString();
-                break;
-            case WeaponType.Boomerang: // 부메랑
-                // 이미지 교체
-                GunImage.sprite = BoomerangSprite;
-                UIGunImage.sprite = BoomerangSprite;
-
-                // 총알 갯수 안 보이게
-                AmmoText.enabled = false;
-                break;
-        }
+        // TextUI 세팅
+        AmmoText.text = WeaponsList[WeaponSelectNumber]._AmmoCount.ToString() + " / " + AmmoMax.ToString();
     }
 }

@@ -20,7 +20,7 @@ public class SetColor : MonoBehaviour
         SR.color = ColorChange();
     }
 
-    public Color RandomColor()
+    Color RandomColor()
     {
         //float r = Random.Range(0f, 200f) / 255f;
         //float g = Random.Range(0f, 200f) / 255f;
