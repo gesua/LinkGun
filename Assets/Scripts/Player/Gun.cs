@@ -88,6 +88,9 @@ public class Gun : MonoBehaviour
         AmmoMax = WeaponsList[0]._AmmoMax;
         ReloadSpeed = WeaponsList[0]._ReloadSpeed;
 
+        // 무기 추가
+        WeaponsList.Add(new Sword());
+
         // AmmoText
         GameObject tempUI = GameObject.Find("UI");
         Transform tempGun = tempUI.transform.Find("Gun");
@@ -370,5 +373,8 @@ public class Gun : MonoBehaviour
         // 이미지 교체
         GunImage.sprite = WeaponsList[WeaponSelectNumber]._WeaponSprite;
         UIGunImage.sprite = WeaponsList[WeaponSelectNumber]._WeaponSprite;
+
+        // TextUI 세팅
+        AmmoText.text = WeaponsList[WeaponSelectNumber]._AmmoCount.ToString() + " / " + AmmoMax.ToString();
     }
 }

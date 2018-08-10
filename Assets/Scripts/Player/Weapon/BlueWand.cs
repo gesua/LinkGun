@@ -23,6 +23,10 @@ public class BlueWand : Weapon {
                 break; // 1개만 찾으면 되니 바로 나옴
             }
         }
+        if(WeaponSprite == null)
+        {
+            Debug.LogError("BlueWand WeaponSprite 못 찾음");
+        }
 
         sprites = Resources.LoadAll<Sprite>("Sprites/BulletImage1");
         for (int i = 0; i < sprites.Length; i++)
@@ -33,6 +37,10 @@ public class BlueWand : Weapon {
                 BulletSprite = sprites[i];
                 break; // 1개만 찾으면 되니 바로 나옴
             }
+        }
+        if (BulletSprite == null)
+        {
+            Debug.LogError("BlueWand BulletSprite 못 찾음");
         }
     }
 }
