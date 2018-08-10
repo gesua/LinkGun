@@ -14,6 +14,8 @@ public class Sword : Weapon
         AmmoMax = 100;
         AmmoCount = AmmoMax;
 
+        Power = 1;
+
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++)
         {
@@ -35,5 +37,7 @@ public class Sword : Weapon
         {
             Debug.LogError("Sword BulletSprite 못 찾음");
         }
+
+        BulletCollider = new Vector3(0.15f, 1, 0.65f);
     }
 }

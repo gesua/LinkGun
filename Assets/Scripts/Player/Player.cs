@@ -357,12 +357,9 @@ public class Player : MonoBehaviour
         // 적 총알일 경우
         if (other.tag.Equals("E_Bullet"))
         {
-            E_Bullet e_Bullet = other.GetComponent<E_Bullet>();
-
             // 체력 깎임
             if (GodMode == false)
             {
-                //HP -= e_Bullet.power;
                 HP--;
             }
 

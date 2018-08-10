@@ -9,18 +9,20 @@ public class Boomerang : Weapon
         Number = 3;
         Name = "Boomerang";
         W_Type = WeaponType.Boomerang;
+        CooldownTime = 0.2f;
+        AmmoMax = 3;
+        AmmoCount = AmmoMax;
+
+        Power = 10;
 
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++)
         {
-            if (sprites[i].name.Equals("Sword"))
+            if (sprites[i].name.Equals("Boomerang"))
             {
                 WeaponSprite = sprites[i];
-            }
-
-            if (sprites[i].name.Equals("SwordBullet"))
-            {
                 BulletSprite = sprites[i];
+                break;
             }
         }
         if (WeaponSprite == null)

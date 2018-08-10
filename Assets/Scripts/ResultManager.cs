@@ -218,6 +218,8 @@ public class ResultManager : MonoSingleton<ResultManager>
         LaserSpawnerScript.enabled = false;
         EnemyScript.AllStop(); // 총알, 애니메이터 다 멈춤
 
+        PlayerSprite.sortingOrder = 11;
+
         // 승리
         if (victory)
         {
@@ -264,7 +266,6 @@ public class ResultManager : MonoSingleton<ResultManager>
             yield return new WaitForSeconds(0.5f);
             PlayerSprite.sprite = VictorySprites[i];
         }
-        //Shadow.gameObject.SetActive(false);
 
         // 승리 화면 띄우기
         for (int i = 0; i < 256; i++)
