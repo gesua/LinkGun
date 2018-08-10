@@ -89,6 +89,7 @@ public class E_Bullet : MonoBehaviour {
  
         if (other.tag.Equals("Wall") || other.tag.Equals("Player")) {
             gameObject.transform.GetChild(0).localScale = new Vector3(5, 5, 1);
+            gameObject.GetComponentInChildren<BulletType>().StopAnimation();
             StartCoroutine("SpriteChange");
             bulletSpeed = 0f;     
         }

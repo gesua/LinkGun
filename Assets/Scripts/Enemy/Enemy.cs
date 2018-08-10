@@ -124,6 +124,8 @@ public class Enemy : MonoBehaviour {
      
         //안튕기게하기
         rigid = gameObject.GetComponent<Rigidbody>();
+        //속도초기화
+        agent.speed = moveSpeed;
     }
 
     // Update is called once per frame
@@ -148,6 +150,8 @@ public class Enemy : MonoBehaviour {
             currAtkTime = 0f;
             //이동상태(0,1)일때 랜덤지정
             setRandomMove = Random.Range(0, 100);
+            //이동속도초기화
+            agent.speed = moveSpeed;
         }
         if (currAtkDyTime > attackDelayTime) {
             //공격딜레이(이동) 끝나서 공격전환
@@ -156,6 +160,10 @@ public class Enemy : MonoBehaviour {
             //이동패턴1시간초기화
             currTimeMov1 = 0f;
             currTimeMov2 = 0f;
+            //네비게이션 밀리는것 없애기
+            agent.speed = 0f;
+            agent.velocity = Vector3.zero;
+            
         }
 
         //상태판단
@@ -176,7 +184,7 @@ public class Enemy : MonoBehaviour {
 
     void SetMovePattern() {
         //체력따라 정해주는 패턴
-        /*if (CurrHP > MaxHP*0.12f) {
+        if (CurrHP > MaxHP*0.12f) {
             if (setRandomMove > 50) {
                 movePattern = 0;
             }
@@ -186,8 +194,9 @@ public class Enemy : MonoBehaviour {
             }
         }
         else {
+            attackDelayTime = respawnTime + Mov2SetTime;
             movePattern = 2;
-        }*/
+        }
 
         Move();
 
@@ -195,9 +204,8 @@ public class Enemy : MonoBehaviour {
         switch (movePattern) {
             case 0:
                 //네비게이션
-                agent.destination = target.position;
                 //플레이어따라감
-                //this.transform.position += dir * moveSpeed * Time.deltaTime;
+                agent.destination = target.position;
                 break;
             case 1:
                 MovePattern1();
@@ -292,11 +300,11 @@ public class Enemy : MonoBehaviour {
         //시간이 0일때만 dir의 방향을 받음
         if (currTimeMov1 <= 0.1) {
             tempPos = target.transform.position;
-            tempDir = tempPos - this.transform.position;
+            //tempDir = tempPos - this.transform.position;
             //Debug.Log("위치재선정1,시간부족");
         }
-
-        this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
+        agent.destination = tempPos;
+        //this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
         if ((this.transform.position.x - 1 < tempPos.x && this.transform.position.x + 1 > tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
             currTimeMov1 = 0;
             //Debug.Log("위치재선정2,플레이어위치도달");
