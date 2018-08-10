@@ -397,6 +397,7 @@ public class Enemy : MonoBehaviour {
         GasterSpawner.Instance.AllGasterOff();
         LaserSpawner.Instance.AllLaserOff();
         EnemyAnimator.enabled = false;
+        agent.enabled = false;
     }
 
     void SetTeleportSprite() {

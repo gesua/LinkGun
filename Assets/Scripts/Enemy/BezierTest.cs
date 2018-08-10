@@ -9,13 +9,7 @@ public class BezierTest: E_Bullet {
     public Transform p2;
     public Transform pEnd;
     float currTime = 0f;
-    private void OnEnable() {
-        // 일단 전부 끔
-        CancelInvoke();
-
-        // 3초 뒤 사라짐
-        Invoke("Off", 7f);
-    }
+    
     private void Start() {
         //p1 = pStart.position + new Vector3(2, -10, 0);
         //p2 = pStart.position + new Vector3(-10, -10, 0);
