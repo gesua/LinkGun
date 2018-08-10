@@ -106,10 +106,10 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         if (deactiveList.Count > 0) {
             GameObject bullet = deactiveList[0];
             deactiveList.RemoveAt(0);
+            bullet.GetComponent<BulletType>().BType = BulletType.B_Type.Basic;
             bullet.SetActive(true);
             bullet.transform.position = this.transform.position;
             bullet.transform.LookAt(target.transform);
-            bullet.GetComponent<BulletType>().BType = BulletType.B_Type.Basic;
         }
 
     }
