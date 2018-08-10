@@ -14,25 +14,30 @@ public class Weapon
     WeaponType W_Type = WeaponType.None;
 
     // 속성
-    private int Number; // 번호
-    private string Name; // 이름
-    private float CooldownTime; // 쿨다운 시간
-    private float ReloadSpeed; // 장전속도
-    private int AmmoMax; // 최대 탄약
-    private int AmmoCount; // 남은 탄약
-    private Sprite WeaponSprite; // 무기 스프라이트
-    private Sprite BulletSprite; // 총알 스프라이트
+    protected int Number; // 번호
+    protected string Name; // 이름
+    protected float CooldownTime; // 쿨다운 시간
+    protected float ReloadSpeed; // 장전속도
+    protected int AmmoMax; // 최대 탄약
+    protected int AmmoCount; // 남은 탄약
+    protected Sprite WeaponSprite; // 무기 스프라이트
+    protected Sprite BulletSprite; // 총알 스프라이트
 
-    Weapon(int _num, string _name, float _cooldown, float _reload, int _ammoMax, int _ammoCount, Sprite _weapon, Sprite _bullet)
+    public Weapon()
     {
-        Number = _num;
-        Name = _name;
-        CooldownTime = _cooldown;
-        ReloadSpeed = _reload;
-        AmmoMax = _ammoMax;
-        AmmoCount = _ammoCount;
-
     }
+
+    //Weapon(int _num, string _name, float _cooldown, float _reload, int _ammoMax, int _ammoCount, Sprite _weapon, Sprite _bullet)
+    //{
+    //    Number = _num;
+    //    Name = _name;
+    //    CooldownTime = _cooldown;
+    //    ReloadSpeed = _reload;
+    //    AmmoMax = _ammoMax;
+    //    AmmoCount = _ammoCount;
+    //    WeaponSprite = _weapon;
+    //    BulletSprite = _bullet;
+    //}
 
     public Sprite _BulletSprite
     {

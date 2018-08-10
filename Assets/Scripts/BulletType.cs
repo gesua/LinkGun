@@ -33,7 +33,7 @@ public class BulletType : MonoBehaviour
     int NabiCount = 0; // 스프라이트 몇 번째 보여줄지
     int NabiAddValue = 1; // 더해질 값
 
-    void Start()
+    private void Awake()
     {
         // 딱 1번만 스프라이트 찾음
         if (IsInitialize == false)
@@ -100,7 +100,10 @@ public class BulletType : MonoBehaviour
             Debug.LogError("BulletCollider 못 찾음");
             return;
         }
+    }
 
+    void OnEnable()
+    {
         switch (BType)
         {
             case B_Type.Basic: // 기본
@@ -154,7 +157,7 @@ public class BulletType : MonoBehaviour
                         BulletSR.sprite = NabiSprite[NabiCount];
                     }
                     break;
-                
+
                 // 수리검
                 case B_Type.Shuriken:
                     CurrentTime -= Time.deltaTime * 1000;
