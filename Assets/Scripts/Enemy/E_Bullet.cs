@@ -6,7 +6,7 @@ public class E_Bullet : MonoBehaviour {
     //총알스피드
     public float bulletSpeed = 3f;
     //총알스피드임시저장
-    float tempSpeed = 3f;
+    protected float tempSpeed = 3f;
     //타겟위치 ->동적으로변경(프리팹)
     //Transform target;
     //위치계산
@@ -15,7 +15,7 @@ public class E_Bullet : MonoBehaviour {
     public int power = 1;
     //총알은 앞으로 날아감
     //동적할당
-    float currTime = 0f;
+    protected float currTime = 0f;
     //방향계산
     //dir.Normalize();
     //총알방향전환 //전환필요없어짐(스폰에넘김)
@@ -24,16 +24,16 @@ public class E_Bullet : MonoBehaviour {
     public float surviveTime = 7f;
 
     //총알 넣어줄 Spawner객체
-    BulletSpawner bulletSpawner;
+    protected BulletSpawner bulletSpawner;
     // Use this for initialization
 
     // 스프라이트
-    SpriteRenderer BulletSR; // 스프라이트 그리는거
-    Sprite BulletSprite; // 총알 이미지
-    Sprite[] BulletEffect; // 총알 이펙트
+    protected SpriteRenderer BulletSR; // 스프라이트 그리는거
+    protected Sprite BulletSprite; // 총알 이미지
+    protected Sprite[] BulletEffect; // 총알 이펙트
     
 
-    private void Awake() {
+    protected void Awake() {
         BulletSR = GetComponentInChildren<SpriteRenderer>();
         if (BulletSR == null) {
             Debug.LogError("BulletSR 못 찾음");
@@ -57,11 +57,11 @@ public class E_Bullet : MonoBehaviour {
        
     }
 
-    private void Start() {
+    protected void Start() {
         tempSpeed = bulletSpeed;
     }
 
-    private void OnEnable() {
+    protected void OnEnable() {
         currTime = 0f;
         bulletSpeed = tempSpeed;
     }
@@ -85,12 +85,13 @@ public class E_Bullet : MonoBehaviour {
         if (currTime > surviveTime) {
             currTime = 0f;
             gameObject.SetActive(false);
-            bulletSpawner.AddBulletPool(gameObject);
+            BulletSpawner.Instance.AddBulletPool(gameObject);
+            
         }
     }
 
-    private void OnTriggerEnter(Collider other) {
- 
+    protected void OnTriggerEnter(Collider other) {
+        
         if (other.tag.Equals("Wall") || other.tag.Equals("Player")) {
             gameObject.transform.GetChild(0).localScale = new Vector3(5, 5, 1);
             gameObject.GetComponentInChildren<BulletType>().StopAnimation();
@@ -101,7 +102,7 @@ public class E_Bullet : MonoBehaviour {
     }
 
     // 이펙트로 변경
-    IEnumerator SpriteChange() {
+    protected IEnumerator SpriteChange() {
         BulletSR.sprite = BulletEffect[0];
         for (int i = 1; i < BulletEffect.Length; i++) {
             yield return new WaitForSeconds(0.05f);
@@ -110,10 +111,10 @@ public class E_Bullet : MonoBehaviour {
 
         // 끄기
         gameObject.SetActive(false);
-
-        // 풀에 넣음
-        bulletSpawner.AddBulletPool(gameObject);
         //속도복구
         bulletSpeed = tempSpeed;
+        // 풀에 넣음
+        BulletSpawner.Instance.AddBulletPool(gameObject);
+        
     }
 }
