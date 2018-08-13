@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class P_Bullet : MonoBehaviour
 {
-    public WeaponType W_Type = WeaponType.None;
+    // 총알 타입
+    WeaponType W_Type = WeaponType.None;
 
     // 속도
-    public float speed = 10f;
+    float Speed = 10f;
 
     // 파워
-    public int power = 1;
+    int Power = 1;
 
     // Pool에 반환할 스크립트
     Gun GunScript;
@@ -24,7 +25,7 @@ public class P_Bullet : MonoBehaviour
     bool IsMove = false;
 
     //총알생존시간(Invoke대체변수)
-    public float SurviveTime = 3f;
+    float SurviveTime = 3f;
     float CurrentTime = 0f; // 누적 시간
 
     private void Awake()
@@ -68,10 +69,17 @@ public class P_Bullet : MonoBehaviour
 
     private void Update()
     {
-        if (IsMove)
+        switch (W_Type)
         {
-            Off();
-            Move();
+            case WeaponType.Gun:
+                if (IsMove)
+                {
+                    Off();
+                    Move();
+                }
+                break;
+            case WeaponType.Boomerang:
+                break;
         }
     }
 
@@ -80,7 +88,7 @@ public class P_Bullet : MonoBehaviour
     {
         // 전방으로 움직임
         Vector3 dir = transform.forward;
-        transform.position += dir * speed * Time.deltaTime;
+        transform.position += dir * Speed * Time.deltaTime;
     }
 
     // Gun 스크립트 세팅
@@ -137,5 +145,20 @@ public class P_Bullet : MonoBehaviour
         {
             Hit();
         }
+    }
+
+    // 속성 세팅
+    public void SetAttribute(WeaponType _w_type, float _speed, int _power, float _surviveTime)
+    {
+        W_Type = _w_type;
+        Speed = _speed;
+        Power = _power;
+        SurviveTime = _surviveTime;
+    }
+
+    // 공격력 반환
+    public int GetPower()
+    {
+        return Power;
     }
 }

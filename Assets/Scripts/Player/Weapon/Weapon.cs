@@ -34,18 +34,6 @@ public class Weapon
     {
     }
 
-    //Weapon(int _num, string _name, float _cooldown, float _reload, int _ammoMax, int _ammoCount, Sprite _weapon, Sprite _bullet)
-    //{
-    //    Number = _num;
-    //    Name = _name;
-    //    CooldownTime = _cooldown;
-    //    ReloadSpeed = _reload;
-    //    AmmoMax = _ammoMax;
-    //    AmmoCount = _ammoCount;
-    //    WeaponSprite = _weapon;
-    //    BulletSprite = _bullet;
-    //}
-
     public Sprite _BulletSprite
     {
         get

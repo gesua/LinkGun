@@ -240,9 +240,8 @@ public class Gun : MonoBehaviour
 
             // 총알 상세 설정
             P_Bullet tempScript = tempBullet.GetComponent<P_Bullet>();
-            tempScript.power = WeaponsList[WeaponSelectNumber]._Power;
-            tempScript.speed = WeaponsList[WeaponSelectNumber]._BulletSpeed;
-            tempScript.SurviveTime = WeaponsList[WeaponSelectNumber]._BulletTime;
+            Weapon tempWeapon = WeaponsList[WeaponSelectNumber];
+            tempScript.SetAttribute(tempWeapon._W_Type, tempWeapon._BulletSpeed, tempWeapon._Power, tempWeapon._BulletTime);
 
             // 생김새 바꿔줌
             tempBullet.GetComponentInChildren<SpriteRenderer>().sprite = WeaponsList[WeaponSelectNumber]._BulletSprite;
