@@ -3598,7 +3598,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &755703967
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5091,6 +5091,8 @@ MonoBehaviour:
   bulletDegree2: 20
   startDegree3: 0
   bulletDegree3: 0.5
+  bulletCount4: 18
+  bulletDegree4: 20
 --- !u!1 &983093732
 GameObject:
   m_ObjectHideFlags: 0
