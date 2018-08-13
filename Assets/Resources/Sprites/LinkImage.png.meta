@@ -346,7 +346,7 @@ TextureImporter:
     21300678: LinkImage_339
     21300680: LinkImage_340
     21300682: LinkImage_341
-    21300684: LinkImage_342
+    21300684: BossArrow
     21300686: LinkImage_343
     21300688: LinkImage_344
     21300690: LinkImage_345
@@ -357,8 +357,8 @@ TextureImporter:
     21300700: LinkImage_350
     21300702: Boomerang
     21300704: BoomerangBullet
-    21300706: LinkImage_353
-    21300708: LinkImage_354
+    21300706: BigBoomerang
+    21300708: BigBoomerangBullet
     21300710: LinkImage_355
     21300712: LinkImage_356
     21300714: LinkImage_357
@@ -5374,7 +5374,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_342
+      name: BossArrow
       rect:
         serializedVersion: 2
         x: 47
@@ -5528,21 +5528,21 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_353
+      name: BigBoomerang
       rect:
         serializedVersion: 2
         x: 222
         y: 63
         width: 8
         height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.25, y: 0.17}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_354
+      name: BigBoomerangBullet
       rect:
         serializedVersion: 2
         x: 234

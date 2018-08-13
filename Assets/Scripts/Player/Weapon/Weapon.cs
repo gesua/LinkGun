@@ -21,6 +21,7 @@ public class Weapon
     protected int Power; // 공격력
     protected float BulletSpeed; // 총알 속도
     protected float BulletTime; // 총알 살아있는 시간
+    protected Vector3 BulletSize; // 총알 크기
 
     protected float CooldownTime; // 쿨다운 시간
     protected float ReloadSpeed; // 장전속도
@@ -140,6 +141,14 @@ public class Weapon
         get
         {
             return BulletTime;
+        }
+    }
+
+    public Vector3 _BulletSize
+    {
+        get
+        {
+            return BulletSize;
         }
     }
 }

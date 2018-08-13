@@ -93,6 +93,7 @@ public class Gun : MonoBehaviour
         // 무기 추가
         WeaponsList.Add(new Sword());
         WeaponsList.Add(new Boomerang());
+        WeaponsList.Add(new BigBoomerang());
 
         // AmmoText
         GameObject tempUI = GameObject.Find("UI");
@@ -252,6 +253,9 @@ public class Gun : MonoBehaviour
 
             // 생김새 바꿔줌
             tempBullet.GetComponentInChildren<SpriteRenderer>().sprite = NowWeapon._BulletSprite;
+
+            // 크기 바꿔줌
+            tempBullet.transform.GetChild(0).localScale = NowWeapon._BulletSize;
 
             // 콜라이더 잡아줌
             tempBullet.GetComponent<BoxCollider>().size = NowWeapon._BulletCollider;
@@ -434,6 +438,16 @@ public class Gun : MonoBehaviour
 
         // 무기 정보 받음
         NowWeapon = WeaponsList[WeaponSelectNumber];
+
+        // 큰 부메랑일 경우 크기 키우기
+        if (NowWeapon._Number == 4)
+        {
+            GunImage.transform.localScale = new Vector3(5, 5, 1);
+        }
+        else
+        {
+            GunImage.transform.localScale = new Vector3(3, 3, 1);
+        }
 
         // 이미지 교체
         GunImage.sprite = NowWeapon._WeaponSprite;

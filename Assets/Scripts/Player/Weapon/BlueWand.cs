@@ -18,6 +18,9 @@ public class BlueWand : Weapon {
         BulletSpeed = 20f;
         BulletTime = 3f;
 
+        BulletCollider = new Vector3(0.3f, 1, 0.5f);
+        BulletSize = new Vector3(5, 5, 1);
+
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++) {
             // 마법봉
@@ -45,7 +48,5 @@ public class BlueWand : Weapon {
         {
             Debug.LogError("BlueWand BulletSprite 못 찾음");
         }
-
-        BulletCollider = new Vector3(0.3f, 1, 0.5f);
     }
 }

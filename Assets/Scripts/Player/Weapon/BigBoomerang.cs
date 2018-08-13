@@ -2,44 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boomerang : Weapon
+public class BigBoomerang : Weapon
 {
-    public Boomerang()
+    public BigBoomerang()
     {
-        Number = 3;
-        Name = "Boomerang";
+        Number = 4;
+        Name = "BigBoomerang";
         W_Type = WeaponType.Boomerang;
         CooldownTime = 0.2f;
-        AmmoMax = 3;
+        AmmoMax = 1;
         AmmoCount = AmmoMax;
 
-        Power = 10;
-        BulletSpeed = 10f;
-        BulletTime = 1f;
+        Power = 50;
+        BulletSpeed = 5f;
+        BulletTime = 100f;
 
-        BulletCollider = new Vector3(0.3f, 1, 0.3f);
-        BulletSize = new Vector3(3, 3, 1);
+        BulletCollider = new Vector3(0.5f, 1, 0.5f);
+        BulletSize = new Vector3(5, 5, 1);
 
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++)
         {
-            if (sprites[i].name.Equals("Boomerang"))
+            if (sprites[i].name.Equals("BigBoomerang"))
             {
                 WeaponSprite = sprites[i];
             }
 
-            if (sprites[i].name.Equals("BoomerangBullet"))
+            if (sprites[i].name.Equals("BigBoomerangBullet"))
             {
                 BulletSprite = sprites[i];
             }
         }
         if (WeaponSprite == null)
         {
-            Debug.LogError("Boomerang WeaponSprite 못 찾음");
+            Debug.LogError("BigBoomerang WeaponSprite 못 찾음");
         }
         if (BulletSprite == null)
         {
-            Debug.LogError("Boomerang BulletSprite 못 찾음");
+            Debug.LogError("BigBoomerang BulletSprite 못 찾음");
         }
     }
 }
