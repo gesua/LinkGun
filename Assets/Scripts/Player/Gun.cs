@@ -18,11 +18,12 @@ public class Gun : MonoBehaviour
     // 총알 Pool
     GameObject[] AllBullet; // 모든 총알
     List<GameObject> BulletPool; // Pool 리스트
-    int BulletPoolSize = 1000; // Pool 최대 갯수
+    int BulletPoolSize = 500; // Pool 최대 갯수
 
     // 무기
     List<Weapon> WeaponsList = new List<Weapon>(); // 현재 갖고 있는 무기 리스트
     int WeaponSelectNumber = 0; // 현재 사용중인 무기 위치
+    Weapon NowWeapon; // 지금 사용중인 무기
 
     // 탄약
     int AmmoMax; // 최대 탄약
@@ -47,6 +48,13 @@ public class Gun : MonoBehaviour
             Debug.LogError("GunImage 못 찾음");
             return;
         }
+
+        // 기본 무기 추가하고 값 복사하고 정보 받아옴
+        WeaponsList.Add(new BlueWand());
+        CooldownTime = WeaponsList[0]._CooldownTime;
+        AmmoMax = WeaponsList[0]._AmmoMax;
+        ReloadSpeed = WeaponsList[0]._ReloadSpeed;
+        NowWeapon = WeaponsList[0];
     }
 
     private void Start()
@@ -82,12 +90,6 @@ public class Gun : MonoBehaviour
             AllBullet[i] = tempBullet;
         }
 
-        // 기본 무기 추가하고 정보 받아옴
-        WeaponsList.Add(new BlueWand());
-        CooldownTime = WeaponsList[0]._CooldownTime;
-        AmmoMax = WeaponsList[0]._AmmoMax;
-        ReloadSpeed = WeaponsList[0]._ReloadSpeed;
-
         // 무기 추가
         WeaponsList.Add(new Sword());
         WeaponsList.Add(new Boomerang());
@@ -120,7 +122,7 @@ public class Gun : MonoBehaviour
         }
 
         // TextUI 세팅
-        AmmoText.text = WeaponsList[0]._AmmoCount.ToString() + " / " + AmmoMax.ToString();
+        UpdateAmmoTextUI();
     }
 
     void Update()
@@ -129,7 +131,7 @@ public class Gun : MonoBehaviour
         LookTarget();
 
         // 무기 종류 따라 다르게 작동
-        switch (WeaponsList[WeaponSelectNumber]._W_Type)
+        switch (NowWeapon._W_Type)
         {
             // 일반 총
             case WeaponType.Gun:
@@ -166,7 +168,7 @@ public class Gun : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             // 총알 발사
-            if (WeaponsList[WeaponSelectNumber]._AmmoCount > 0)
+            if (NowWeapon._AmmoCount > 0)
             {
                 if (IsCooldown == false && IsReload == false)
                 {
@@ -183,7 +185,7 @@ public class Gun : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             // 재장전
-            if (IsReload == false && WeaponsList[WeaponSelectNumber]._AmmoCount != AmmoMax)
+            if (IsReload == false && NowWeapon._AmmoCount != AmmoMax)
             {
                 IsReload = true;
             }
@@ -209,7 +211,7 @@ public class Gun : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             // 부메랑 날림
-            if (WeaponsList[WeaponSelectNumber]._AmmoCount > 0)
+            if (NowWeapon._AmmoCount > 0)
             {
                 if (IsCooldown == false)
                 {
@@ -226,28 +228,33 @@ public class Gun : MonoBehaviour
         // Pool에서 켜기
         if (BulletPool.Count > 0)
         {
-            WeaponsList[WeaponSelectNumber]._AmmoCount--; // 총알 1개 소모
+            NowWeapon._AmmoCount--; // 총알 1개 소모
+
+            // 부메랑 다 날리면 손에서 사라짐(보여지는 건 회수하는 부분에 있음)
+            if (NowWeapon._W_Type == WeaponType.Boomerang)
+            {
+                if (NowWeapon._AmmoCount <= 0)
+                {
+                    if (GunImage.enabled) GunImage.enabled = false;
+                }
+            }
 
             // TextUI 세팅
-            AmmoText.text = WeaponsList[WeaponSelectNumber]._AmmoCount.ToString() + " / " + AmmoMax.ToString();
+            UpdateAmmoTextUI();
 
             // Pool에서 뺌
             GameObject tempBullet = BulletPool[0];
             BulletPool.RemoveAt(0);
 
-            // 켬
-            tempBullet.SetActive(true);
-
             // 총알 상세 설정
             P_Bullet tempScript = tempBullet.GetComponent<P_Bullet>();
-            Weapon tempWeapon = WeaponsList[WeaponSelectNumber];
-            tempScript.SetAttribute(tempWeapon._W_Type, tempWeapon._BulletSpeed, tempWeapon._Power, tempWeapon._BulletTime);
+            tempScript.SetAttribute(NowWeapon._W_Type, NowWeapon._BulletSpeed, NowWeapon._Power, NowWeapon._BulletTime);
 
             // 생김새 바꿔줌
-            tempBullet.GetComponentInChildren<SpriteRenderer>().sprite = WeaponsList[WeaponSelectNumber]._BulletSprite;
+            tempBullet.GetComponentInChildren<SpriteRenderer>().sprite = NowWeapon._BulletSprite;
 
             // 콜라이더 잡아줌
-            tempBullet.GetComponent<BoxCollider>().size = WeaponsList[WeaponSelectNumber]._BulletCollider;
+            tempBullet.GetComponent<BoxCollider>().size = NowWeapon._BulletCollider;
 
             // 위치 잡아줌
             tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
@@ -260,6 +267,9 @@ public class Gun : MonoBehaviour
 
             // 쿨다운 시작
             IsCooldown = true;
+
+            // 총알 켬
+            tempBullet.SetActive(true);
         }
         else
         {
@@ -289,10 +299,10 @@ public class Gun : MonoBehaviour
             ReloadCount = 0;
 
             // 재장전
-            WeaponsList[WeaponSelectNumber]._AmmoCount = AmmoMax;
+            NowWeapon._AmmoCount = AmmoMax;
 
             // TextUI 세팅
-            AmmoText.text = WeaponsList[WeaponSelectNumber]._AmmoCount.ToString() + " / " + AmmoMax.ToString();
+            UpdateAmmoTextUI();
 
             // 슬라이더 끔
             ReloadSlider.gameObject.SetActive(false);
@@ -366,10 +376,28 @@ public class Gun : MonoBehaviour
         }
     }
 
-    // 꺼진거 Pool에 넣기
-    public void AddBulletPool(GameObject bullet)
+    // 총알 회수
+    public void BulletCollect(GameObject bullet, WeaponType w_type)
     {
         BulletPool.Add(bullet);
+
+        // 부메랑 회수
+        if (w_type == WeaponType.Boomerang)
+        {
+            NowWeapon._AmmoCount++;
+
+            // 전부 회수
+            if(NowWeapon._AmmoCount == AmmoMax)
+            {
+                IsReload = false;
+            }
+
+            // 부메랑 들고 있기(없애는 건 총알 발사에 있음)
+            if (GunImage.enabled == false) GunImage.enabled = true;
+
+            // AmmoTextUI 세팅
+            UpdateAmmoTextUI();
+        }
     }
 
     // 모든 총알 멈추기
@@ -404,30 +432,39 @@ public class Gun : MonoBehaviour
             }
         }
 
+        // 무기 정보 받음
+        NowWeapon = WeaponsList[WeaponSelectNumber];
+
         // 이미지 교체
-        GunImage.sprite = WeaponsList[WeaponSelectNumber]._WeaponSprite;
-        UIGunImage.sprite = WeaponsList[WeaponSelectNumber]._WeaponSprite;
+        GunImage.sprite = NowWeapon._WeaponSprite;
+        UIGunImage.sprite = NowWeapon._WeaponSprite;
 
         // 타입에 따라 다름
-        switch (WeaponsList[WeaponSelectNumber]._W_Type)
+        switch (NowWeapon._W_Type)
         {
             // 일반 총
             case WeaponType.Gun:
-                // 정보 받아옴
-                CooldownTime = WeaponsList[WeaponSelectNumber]._CooldownTime;
-                AmmoMax = WeaponsList[WeaponSelectNumber]._AmmoMax;
-                ReloadSpeed = WeaponsList[WeaponSelectNumber]._ReloadSpeed;
+                // 필요한 값 복사
+                CooldownTime = NowWeapon._CooldownTime;
+                AmmoMax = NowWeapon._AmmoMax;
+                ReloadSpeed = NowWeapon._ReloadSpeed;
                 break;
 
             // 부메랑
             case WeaponType.Boomerang:
-                // 정보 받아옴
-                CooldownTime = WeaponsList[WeaponSelectNumber]._CooldownTime;
-                AmmoMax = WeaponsList[WeaponSelectNumber]._AmmoMax;
+                // 필요한 값 복사
+                CooldownTime = NowWeapon._CooldownTime;
+                AmmoMax = NowWeapon._AmmoMax;
                 break;
         }
 
         // AmmoTextUI 세팅
-        AmmoText.text = WeaponsList[WeaponSelectNumber]._AmmoCount.ToString() + " / " + AmmoMax.ToString();
+        UpdateAmmoTextUI();
+    }
+
+    // AmmoTextUI 세팅
+    void UpdateAmmoTextUI()
+    {
+        AmmoText.text = NowWeapon._AmmoCount.ToString() + " / " + AmmoMax.ToString();
     }
 }

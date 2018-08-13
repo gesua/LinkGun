@@ -14,8 +14,8 @@ public class Boomerang : Weapon
         AmmoCount = AmmoMax;
 
         Power = 10;
-        BulletSpeed = 20f;
-        BulletTime = 100f;
+        BulletSpeed = 10f;
+        BulletTime = 1f;
 
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++)
@@ -23,8 +23,11 @@ public class Boomerang : Weapon
             if (sprites[i].name.Equals("Boomerang"))
             {
                 WeaponSprite = sprites[i];
+            }
+
+            if (sprites[i].name.Equals("BoomerangBullet"))
+            {
                 BulletSprite = sprites[i];
-                break;
             }
         }
         if (WeaponSprite == null)

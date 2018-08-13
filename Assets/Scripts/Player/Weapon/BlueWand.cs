@@ -35,7 +35,6 @@ public class BlueWand : Weapon {
         sprites = Resources.LoadAll<Sprite>("Sprites/BulletImage1");
         for (int i = 0; i < sprites.Length; i++)
         {
-            // 마법봉
             if (sprites[i].name.Equals("BlueBullet"))
             {
                 BulletSprite = sprites[i];

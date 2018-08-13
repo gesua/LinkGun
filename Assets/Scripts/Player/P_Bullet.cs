@@ -18,11 +18,16 @@ public class P_Bullet : MonoBehaviour
 
     // 스프라이트
     SpriteRenderer BulletSR; // 스프라이트 그리는거
-    Sprite BulletSprite; // 총알 이미지
     Sprite[] BulletEffect; // 총알 이펙트
 
-    // 움직이는지(이펙트와 총알을 구분)
-    bool IsMove = false;
+    // 부딪혔는지(이펙트와 총알을 구분/부메랑 돌아오는거)
+    bool IsHit = false;
+
+    // 날아갈 방향
+    Vector3 Dir;
+
+    // 플레이어 위치
+    Transform PlayerTF;
 
     //총알생존시간(Invoke대체변수)
     float SurviveTime = 3f;
@@ -37,19 +42,18 @@ public class P_Bullet : MonoBehaviour
             return;
         }
 
-        // 총알 스프라이트
-        BulletSprite = BulletSR.sprite;
-        if (BulletSprite == null)
-        {
-            Debug.LogError("BulletSprite 못 찾음");
-            return;
-        }
-
         // 총알 이펙트
         BulletEffect = Resources.LoadAll<Sprite>("Sprites/BulletEffect");
         if (BulletEffect == null)
         {
             Debug.LogError("BulletEffect 못 찾음");
+            return;
+        }
+
+        PlayerTF = GameObject.Find("Player").transform;
+        if (PlayerTF == null)
+        {
+            Debug.LogError("PlayerTF 못 찾음");
             return;
         }
     }
@@ -60,11 +64,11 @@ public class P_Bullet : MonoBehaviour
         // 시간 초기화
         CurrentTime = 0;
 
-        // 총알 스프라이트로 변경
-        BulletSR.sprite = BulletSprite;
+        // 방향 설정
+        Dir = transform.forward;
 
         // 움직이게
-        IsMove = true;
+        IsHit = false;
     }
 
     private void Update()
@@ -72,13 +76,15 @@ public class P_Bullet : MonoBehaviour
         switch (W_Type)
         {
             case WeaponType.Gun:
-                if (IsMove)
+                if (IsHit == false)
                 {
-                    Off();
+                    SurviveTimeCheck();
                     Move();
                 }
                 break;
             case WeaponType.Boomerang:
+                SurviveTimeCheck();
+                Move();
                 break;
         }
     }
@@ -86,9 +92,25 @@ public class P_Bullet : MonoBehaviour
     // 움직임
     private void Move()
     {
-        // 전방으로 움직임
-        Vector3 dir = transform.forward;
-        transform.position += dir * Speed * Time.deltaTime;
+        switch (W_Type)
+        {
+            case WeaponType.Gun:
+                transform.position += Dir * Speed * Time.deltaTime;
+                break;
+            case WeaponType.Boomerang:
+                // 뭔가에 부딪히면 플레이어에게 돌아옴
+                if (IsHit)
+                {
+                    Dir = PlayerTF.position - transform.position;
+                    Dir.Normalize();
+                }
+
+                transform.position += Dir * Speed * Time.deltaTime;
+
+                // 회전
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + Time.deltaTime * 1000f, 0);
+                break;
+        }
     }
 
     // Gun 스크립트 세팅
@@ -97,28 +119,29 @@ public class P_Bullet : MonoBehaviour
         GunScript = gun;
     }
 
-    // 걍 끄기
-    public void Off()
+    // 살아있는 시간 체크
+    void SurviveTimeCheck()
     {
         //Invoke대체 if문
         CurrentTime += Time.deltaTime;
 
         // 일정시간 뒤 끔
-        if (CurrentTime >= SurviveTime) {
-            // 끄기
-            gameObject.SetActive(false);
-
-            // 풀에 넣음
-            GunScript.AddBulletPool(gameObject);
+        if (CurrentTime >= SurviveTime)
+        {
+            Hit();
         }
     }
 
     // 맞음
     public void Hit()
     {
-        IsMove = false; // 안 움직이게
+        IsHit = true; // 뭔가에 부딪힘
 
-        StartCoroutine("SpriteChange");
+        // 터지는 이펙트
+        if (W_Type == WeaponType.Gun)
+        {
+            StartCoroutine("SpriteChange");
+        }
     }
 
     // 이펙트로 변경
@@ -135,7 +158,7 @@ public class P_Bullet : MonoBehaviour
         gameObject.SetActive(false);
 
         // 풀에 넣음
-        GunScript.AddBulletPool(gameObject);
+        GunScript.BulletCollect(gameObject, W_Type);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -144,6 +167,18 @@ public class P_Bullet : MonoBehaviour
         if (other.tag.Equals("Wall"))
         {
             Hit();
+        }
+
+        // 부메랑 돌아오면 회수
+        if(W_Type == WeaponType.Boomerang && IsHit)
+        {
+            if (other.tag.Equals("Player"))
+            {
+                // 끄기
+                gameObject.SetActive(false);
+                // 풀에 넣음
+                GunScript.BulletCollect(gameObject, W_Type);
+            }
         }
     }
 
