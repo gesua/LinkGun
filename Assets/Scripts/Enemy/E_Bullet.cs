@@ -66,7 +66,7 @@ public class E_Bullet : MonoBehaviour {
         bulletSpeed = tempSpeed;
     }
     // Update is called once per frame
-    void Update() {
+    private void Update() {
         
         Off();
         dir = this.transform.forward;

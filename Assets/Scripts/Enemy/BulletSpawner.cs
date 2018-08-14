@@ -290,6 +290,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i].SetActive(false);
             AddBulletPool(bulletPool[i]);
+            Destroy(bulletPool[i].GetComponent<E_Bullet>());
         }
     }
 
