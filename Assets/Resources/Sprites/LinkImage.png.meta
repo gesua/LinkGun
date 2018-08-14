@@ -360,10 +360,10 @@ TextureImporter:
     21300706: BigBoomerang
     21300708: BigBoomerangBullet
     21300710: LinkImage_355
-    21300712: LinkImage_356
+    21300712: Bow
     21300714: LinkImage_357
     21300716: LinkImage_358
-    21300718: LinkImage_359
+    21300718: BowBullet
     21300720: LinkImage_360
     21300722: LinkImage_361
     21300724: LinkImage_362
@@ -5570,15 +5570,15 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_356
+      name: Bow
       rect:
         serializedVersion: 2
         x: 265
         y: 62
         width: 16
         height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -5612,7 +5612,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_359
+      name: BowBullet
       rect:
         serializedVersion: 2
         x: 309

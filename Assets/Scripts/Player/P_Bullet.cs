@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class P_Bullet : MonoBehaviour
 {
+    int Number = -1; // 총 종류
+
     // 총알 타입
     WeaponType W_Type = WeaponType.None;
 
@@ -98,10 +100,20 @@ public class P_Bullet : MonoBehaviour
                 transform.position += Dir * Speed * Time.deltaTime;
                 break;
             case WeaponType.Boomerang:
-                // 뭔가에 부딪히면 플레이어에게 돌아옴
+                // 뭔가에 부딪히면 플레이어 돌아옴
                 if (IsHit)
                 {
                     Dir = PlayerTF.position - transform.position;
+
+                    // 플레이어와 엄청 가까이 있는 경우엔 그냥 회수
+                    if (Dir.magnitude <= 0.03f)
+                    {
+                        // 끄기
+                        gameObject.SetActive(false);
+                        // 풀에 넣음
+                        GunScript.BulletCollect(gameObject, W_Type);
+                    }
+
                     Dir.Normalize();
                 }
 
@@ -170,7 +182,7 @@ public class P_Bullet : MonoBehaviour
         }
 
         // 부메랑 돌아오면 회수
-        if(W_Type == WeaponType.Boomerang && IsHit)
+        if (W_Type == WeaponType.Boomerang && IsHit)
         {
             if (other.tag.Equals("Player"))
             {
@@ -183,8 +195,9 @@ public class P_Bullet : MonoBehaviour
     }
 
     // 속성 세팅
-    public void SetAttribute(WeaponType _w_type, float _speed, int _power, float _surviveTime)
+    public void SetAttribute(int _num, WeaponType _w_type, float _speed, int _power, float _surviveTime)
     {
+        Number = _num;
         W_Type = _w_type;
         Speed = _speed;
         Power = _power;

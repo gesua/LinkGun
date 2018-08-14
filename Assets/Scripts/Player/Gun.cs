@@ -22,7 +22,7 @@ public class Gun : MonoBehaviour
 
     // 무기
     List<Weapon> WeaponsList = new List<Weapon>(); // 현재 갖고 있는 무기 리스트
-    int WeaponSelectNumber = 0; // 현재 사용중인 무기 위치
+    int WeaponSelectIndex = 0; // 현재 사용중인 무기 위치
     Weapon NowWeapon; // 지금 사용중인 무기
 
     // 탄약
@@ -217,7 +217,9 @@ public class Gun : MonoBehaviour
                 if (IsCooldown == false)
                 {
                     Shoot();
-                    IsReload = true; // 부메랑 회수 전까진 무기변경 불가
+
+                    // 부메랑 회수 전까진 무기변경 불가
+                    IsReload = true;
                 }
             }
         }
@@ -249,7 +251,7 @@ public class Gun : MonoBehaviour
 
             // 총알 상세 설정
             P_Bullet tempScript = tempBullet.GetComponent<P_Bullet>();
-            tempScript.SetAttribute(NowWeapon._W_Type, NowWeapon._BulletSpeed, NowWeapon._Power, NowWeapon._BulletTime);
+            tempScript.SetAttribute(NowWeapon._Number, NowWeapon._W_Type, NowWeapon._BulletSpeed, NowWeapon._Power, NowWeapon._BulletTime);
 
             // 생김새 바꿔줌
             tempBullet.GetComponentInChildren<SpriteRenderer>().sprite = NowWeapon._BulletSprite;
@@ -391,7 +393,7 @@ public class Gun : MonoBehaviour
             NowWeapon._AmmoCount++;
 
             // 전부 회수
-            if(NowWeapon._AmmoCount == AmmoMax)
+            if (NowWeapon._AmmoCount == AmmoMax)
             {
                 IsReload = false;
             }
@@ -420,24 +422,24 @@ public class Gun : MonoBehaviour
         // 1개씩 교체
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            WeaponSelectNumber++;
+            WeaponSelectIndex++;
 
-            if (WeaponSelectNumber >= WeaponsList.Count)
+            if (WeaponSelectIndex >= WeaponsList.Count)
             {
-                WeaponSelectNumber = 0;
+                WeaponSelectIndex = 0;
             }
         }
         else
         {
-            WeaponSelectNumber--;
-            if (WeaponSelectNumber < 0)
+            WeaponSelectIndex--;
+            if (WeaponSelectIndex < 0)
             {
-                WeaponSelectNumber = WeaponsList.Count - 1;
+                WeaponSelectIndex = WeaponsList.Count - 1;
             }
         }
 
         // 무기 정보 받음
-        NowWeapon = WeaponsList[WeaponSelectNumber];
+        NowWeapon = WeaponsList[WeaponSelectIndex];
 
         // 큰 부메랑일 경우 크기 키우기
         if (NowWeapon._Number == 4)

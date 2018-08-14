@@ -41,7 +41,7 @@ public class BossArrow : MonoBehaviour
         Vector3 bossPos = Camera.main.WorldToScreenPoint(BossTF.position);
 
         // 보스가 화면에 안 잡히면 화살표 표시
-        if (bossPos.x < -40 || bossPos.x > 1260 || bossPos.y < -40 || bossPos.y > 750)
+        if (bossPos.x < -30 || bossPos.x > 1250 || bossPos.y < -30 || bossPos.y > 740)
         {
             // 화살표 방향 잡음
             Vector3 dir = BossTF.position - PlayerTF.position;

@@ -5,9 +5,10 @@ using UnityEngine;
 // 무기 타입
 public enum WeaponType
 {
-    None,     // 없음
-    Gun,      // 총
-    Boomerang // 부메랑
+    None,      // 없음
+    Gun,       // 총
+    Boomerang, // 부메랑
+    Bow        // 활
 }
 
 public class Weapon
