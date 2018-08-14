@@ -286,7 +286,7 @@ TextureImporter:
     21300558: BulletImage1_279
     21300560: BulletImage1_280
     21300562: BulletImage1_281
-    21300564: BulletImage1_282
+    21300564: ItemEffect
     21300566: BulletImage1_283
     21300568: BulletImage1_284
     21300570: BulletImage1_285
@@ -4292,7 +4292,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletImage1_282
+      name: ItemEffect
       rect:
         serializedVersion: 2
         x: 241

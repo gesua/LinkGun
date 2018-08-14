@@ -33,6 +33,9 @@ public class BulletType : MonoBehaviour
     int NabiCount = 0; // 스프라이트 몇 번째 보여줄지
     int NabiAddValue = 1; // 더해질 값
 
+    Color temp;
+    bool btemp = false;
+
     private void Awake()
     {
         // 딱 1번만 스프라이트 찾음

@@ -50,11 +50,11 @@ public class Gun : MonoBehaviour
         }
 
         // 기본 무기 추가하고 값 복사하고 정보 받아옴
-        WeaponsList.Add(new BlueWand());
-        CooldownTime = WeaponsList[0]._CooldownTime;
-        AmmoMax = WeaponsList[0]._AmmoMax;
-        ReloadSpeed = WeaponsList[0]._ReloadSpeed;
-        NowWeapon = WeaponsList[0];
+        WeaponsList.Add(new Sword());
+        //CooldownTime = WeaponsList[0]._CooldownTime;
+        //AmmoMax = WeaponsList[0]._AmmoMax;
+        //ReloadSpeed = WeaponsList[0]._ReloadSpeed;
+        //NowWeapon = WeaponsList[0];
     }
 
     private void Start()
@@ -91,9 +91,9 @@ public class Gun : MonoBehaviour
         }
 
         // 무기 추가
-        WeaponsList.Add(new Sword());
-        WeaponsList.Add(new Boomerang());
-        WeaponsList.Add(new BigBoomerang());
+        //WeaponsList.Add(new Sword());
+        //WeaponsList.Add(new Boomerang());
+        //WeaponsList.Add(new BigBoomerang());
 
         // AmmoText
         GameObject tempUI = GameObject.Find("UI");
@@ -122,8 +122,8 @@ public class Gun : MonoBehaviour
             return;
         }
 
-        // TextUI 세팅
-        UpdateAmmoTextUI();
+        // 무기 세팅
+        WeaponChange();
     }
 
     void Update()
@@ -482,5 +482,11 @@ public class Gun : MonoBehaviour
     void UpdateAmmoTextUI()
     {
         AmmoText.text = NowWeapon._AmmoCount.ToString() + " / " + AmmoMax.ToString();
+    }
+
+    // 무기 획득
+    public void TakeWeapon(Weapon weapon)
+    {
+        WeaponsList.Add(weapon);
     }
 }

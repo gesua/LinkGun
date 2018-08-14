@@ -6,7 +6,7 @@ public class BlueWand : Weapon {
 
     public BlueWand()
     {
-        Number = 1;
+        Number = 2;
         Name = "BlueWand";
         W_Type = WeaponType.Gun;
         CooldownTime = 0.2f;

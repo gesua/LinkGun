@@ -6,7 +6,7 @@ public class Sword : Weapon
 {
     public Sword()
     {
-        Number = 2;
+        Number = 1;
         Name = "Sword";
         W_Type = WeaponType.Gun;
         CooldownTime = 0.01f;

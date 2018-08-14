@@ -9,6 +9,9 @@ public class MousePoint : MonoBehaviour
     void Start()
     {
         MainCam = Camera.main;
+
+        Cursor.lockState = CursorLockMode.Confined; // 마우스 화면 안 벗어나게
+        Cursor.visible = false; // 마우스 커서 안 보이게
     }
 
     void Update()

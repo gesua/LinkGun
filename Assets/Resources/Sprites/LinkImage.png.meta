@@ -362,7 +362,7 @@ TextureImporter:
     21300710: LinkImage_355
     21300712: Bow
     21300714: LinkImage_357
-    21300716: LinkImage_358
+    21300716: 123456
     21300718: BowBullet
     21300720: LinkImage_360
     21300722: LinkImage_361
@@ -5598,7 +5598,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_358
+      name: 123456
       rect:
         serializedVersion: 2
         x: 300
