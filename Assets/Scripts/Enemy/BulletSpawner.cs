@@ -54,10 +54,9 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         //싱글톤
         SetInstance(this);
     }
-
+  
     // Use this for initialization
     void Start() {
-
         bulletPool = new GameObject[poolSize];
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i] = Instantiate(bulletFactory);
@@ -66,8 +65,8 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             bulletPool[i].SetActive(false);
             //Spawner의자식
             bulletPool[i].transform.parent = GameObject.Find("E_Bullet").transform;
-            Destroy(bulletPool[i].GetComponent<E_Bullet>());
             deactiveList.Add(bulletPool[i]);
+            Destroy(bulletPool[i].GetComponent<E_Bullet>());
         }
     }
 
@@ -275,7 +274,11 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     }
 
     public void AddBulletPool(GameObject bullet) {
+        //스크립트가 삭제된객체를 리스트에넣어줌
         Destroy(bullet.GetComponent<E_Bullet>());
+        //액티브펄스
+        bullet.SetActive(false);
+        //스크립트삭제
         deactiveList.Add(bullet);
     }
 
@@ -288,8 +291,9 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     public void AllBulletDisable() {
         //Bomb
         for (int i = 0; i < poolSize; i++) {
-            AddBulletPool(bulletPool[i]);
-            bulletPool[i].SetActive(false);
+            if (bulletPool[i].activeSelf) {
+                AddBulletPool(bulletPool[i]);
+            }
         }
     }
 

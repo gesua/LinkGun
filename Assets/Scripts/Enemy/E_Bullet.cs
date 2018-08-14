@@ -59,6 +59,7 @@ public class E_Bullet : MonoBehaviour {
     protected void OnEnable() {
         currTime = 0f;
         bulletSpeed = tempSpeed;
+     
     }
 
     protected void Start() {
@@ -83,7 +84,6 @@ public class E_Bullet : MonoBehaviour {
         currTime += Time.deltaTime;
         if (currTime > surviveTime) {
             currTime = 0f;
-            gameObject.SetActive(false);
             BulletSpawner.Instance.AddBulletPool(gameObject);    
         }
     }
@@ -108,8 +108,6 @@ public class E_Bullet : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
             BulletSR.sprite = BulletEffect[i];
         }
-        // 끄기
-        gameObject.SetActive(false);
         //속도복구
         bulletSpeed = tempSpeed;
         // 풀에 넣음
