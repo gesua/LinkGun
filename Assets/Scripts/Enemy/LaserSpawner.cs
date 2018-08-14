@@ -39,6 +39,7 @@ public class LaserSpawner : MonoSingleton<LaserSpawner> {
 
 
     public void AddLaserPool(GameObject laser) {
+        laser.SetActive(false);
         deactiveList.Add(laser);
     }
 
@@ -50,7 +51,9 @@ public class LaserSpawner : MonoSingleton<LaserSpawner> {
     public void AllLaserDisable() {
         //Bomb
         for (int i = 0; i < poolSize; i++) {
-            laserPool[i].SetActive(false);
+            if (laserPool[i].activeSelf) {
+                AddLaserPool(laserPool[i]);
+            }
         }
     }
 }

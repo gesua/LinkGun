@@ -103,6 +103,7 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
 
 
     public void AddGasterPool(GameObject gaster) {
+        gaster.SetActive(false);
         deactiveList.Add(gaster);
     }
 
@@ -115,7 +116,10 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
     public void AllGasterDisable() {
         //Bomb
         for (int i = 0; i < poolSize; i++) {
-            gasterPool[i].SetActive(false);
+            if(gasterPool[i].activeSelf) {
+                AddGasterPool(gasterPool[i]);
+            }
+       
         }
     }
 }

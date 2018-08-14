@@ -5084,7 +5084,7 @@ MonoBehaviour:
   poolSize: 500
   b_spawnTime: 0.3
   target: {fileID: 188518}
-  bulletState: 0
+  bulletState: 5
   bulletCount1: 5
   bulletDegree1: 10
   bulletCount2: 18
