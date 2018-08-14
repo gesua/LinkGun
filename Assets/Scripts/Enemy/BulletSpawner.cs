@@ -44,12 +44,11 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     //베지어한발씩
     //////////////////탄막 5번 베지어
     //베지어두발씩
-
+    
     public int bulletCount4 = 18;
     public float bulletDegree4 = 20f;
 
-    
-
+   
     private void Awake() {
         //싱글톤
         SetInstance(this);
@@ -107,6 +106,9 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
                 case 5:
                     ShootMode5();
                     break;
+                case 6:
+                    break;
+
                 default:
                     break;
 

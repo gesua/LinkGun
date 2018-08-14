@@ -65,8 +65,9 @@ public class E_Gaster : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
             gasterSprite.sprite = sprite[i];
             tempLaser.GetComponentInChildren<SpriteRenderer>().enabled = true;
-            tempLaser.transform.localScale = new Vector3((i + 1) * 0.25f, this.transform.localScale.y, this.transform.localScale.z*10);
+            tempLaser.transform.localScale = new Vector3((i + 1) * 0.25f, this.transform.localScale.y, this.transform.localScale.z * 10);
         }
+      
         tempLaser.GetComponent<BoxCollider>().enabled = true;
         tempLaser.GetComponent<BoxCollider>().size = new Vector3(tempLaser.GetComponent<BoxCollider>().size.x, tempLaser.GetComponent<BoxCollider>().size.y, 2.5f);
         tempLaser.GetComponent<BoxCollider>().center = new Vector3(tempLaser.GetComponent<BoxCollider>().center.x, tempLaser.GetComponent<BoxCollider>().center.y, 1.2f);

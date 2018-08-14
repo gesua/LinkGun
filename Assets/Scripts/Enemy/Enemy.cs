@@ -84,6 +84,9 @@ public class Enemy : MonoBehaviour {
     //공격패턴3 베지어곡선
 
     //공격패턴4(돌리기) 발사조건 -> 체력%이하
+    int atPat4;
+    //패턴5가스터
+    //변수를 여기서 넘겨줌
 
 
     /// <summary>
@@ -162,7 +165,8 @@ public class Enemy : MonoBehaviour {
             //네비게이션 밀리는것 없애기
             agent.speed = 0f;
             agent.velocity = Vector3.zero;
-            
+            //체력이12퍼센트 이하일때 발악패턴 랜덤지정
+            atPat4 = Random.Range(0, 100); 
         }
 
         //상태판단
@@ -289,7 +293,15 @@ public class Enemy : MonoBehaviour {
             //애니메이션1
             aniState = ANI_STATE.E_AP1;
         } else if (CurrHP <= MaxHP * 0.12) {
-            BulletSpawner.Instance.bulletState = 3;
+            if (atPat4 >= 76) {
+                BulletSpawner.Instance.bulletState = 2;
+            } else if (atPat4 < 76 && atPat4 >= 51) {
+                BulletSpawner.Instance.bulletState = 3;
+            } else if (atPat4 < 51 && atPat4 >= 26) {
+                BulletSpawner.Instance.bulletState = 4;
+            } else {
+                BulletSpawner.Instance.bulletState = 5;
+            }
             aniState = ANI_STATE.E_AP2;
         }
 
