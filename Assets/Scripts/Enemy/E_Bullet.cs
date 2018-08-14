@@ -91,9 +91,10 @@ public class E_Bullet : MonoBehaviour {
     }
 
     protected void OnTriggerEnter(Collider other) {
-        
+        //히트되면
         if (other.tag.Equals("Wall") || other.tag.Equals("Player")) {
             gameObject.transform.GetChild(0).localScale = new Vector3(5, 5, 1);
+            //애니메이션멈춰주기
             gameObject.GetComponentInChildren<BulletType>().StopAnimation();
             StartCoroutine("SpriteChange");
             bulletSpeed = 0f;     

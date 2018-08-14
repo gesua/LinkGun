@@ -56,6 +56,7 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
             case 0:
                 //꺼진상태
                 break;
+
             case 1:
                 //랜덤출현
                 SpawnPat1();

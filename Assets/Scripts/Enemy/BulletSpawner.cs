@@ -252,6 +252,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     void BulletPoolActive(Vector3 fireVector, BulletType.B_Type type) {
         GameObject tempBullet = deactiveList[0];
         deactiveList.RemoveAt(0);
+        //타입지정
         tempBullet.GetComponent<BulletType>().BType = type;
         tempBullet.AddComponent<E_Bullet>();
         tempBullet.SetActive(true);
@@ -288,6 +289,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         //Bomb
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i].SetActive(false);
+            AddBulletPool(bulletPool[i]);
         }
     }
 

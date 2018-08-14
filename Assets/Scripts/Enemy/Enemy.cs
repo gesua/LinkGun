@@ -56,7 +56,6 @@ public class Enemy : MonoBehaviour {
     ////////////////패턴1 -> 플레이어의 위치를 지정시간마다 따라감
     //사용시간
     float currTimeMov1 = 0f;
-    Vector3 tempDir;
     Vector3 tempPos;
 
     ////////////////패턴2 ->지정방향으로 순간이동,순간이동지정시에 플레이어 위치 주변반경 일정범위 내에 랜덤으로 나옴
@@ -194,7 +193,6 @@ public class Enemy : MonoBehaviour {
             }
         }
         else {
-            agent.destination = Vector3.zero;
             attackDelayTime = respawnTime + Mov2SetTime;
             movePattern = 2;
         }
@@ -206,7 +204,9 @@ public class Enemy : MonoBehaviour {
             case 0:
                 //네비게이션
                 //플레이어따라감
-                agent.destination = target.position;
+                if (agent.enabled) {
+                    agent.destination = target.position;
+                }
                 break;
             case 1:
                 MovePattern1();
@@ -304,7 +304,9 @@ public class Enemy : MonoBehaviour {
             //tempDir = tempPos - this.transform.position;
             //Debug.Log("위치재선정1,시간부족");
         }
-        agent.destination = tempPos;
+        if (agent.enabled) {
+            agent.destination = tempPos;
+        }
         //this.transform.position += tempDir.normalized * moveSpeed * Time.deltaTime;
         if ((this.transform.position.x - 1 < tempPos.x && this.transform.position.x + 1 > tempPos.x) && (this.transform.position.z - 1 < tempPos.z && this.transform.position.z + 1 > tempPos.z)) {
             currTimeMov1 = 0;
@@ -314,6 +316,7 @@ public class Enemy : MonoBehaviour {
     }
     void MovePattern2() {
         //텔레포트
+        agent.enabled = false;
         //위치지정시간
         currTimeMov2 += Time.deltaTime;
         if (currTimeMov2 > Mov2SetTime) {
@@ -329,7 +332,7 @@ public class Enemy : MonoBehaviour {
                 //순간이동위치에 찍어주기
                 teleport.transform.position = tempTelPos;
                 teleportSprite.enabled = true;
-                StartCoroutine("teleportAlert");
+                StartCoroutine("TeleportAlert");
                 Debug.Log("순간이동위치지정");
             }
         }
@@ -413,7 +416,7 @@ public class Enemy : MonoBehaviour {
     }
 
     
-    IEnumerator teleportAlert() {
+    IEnumerator TeleportAlert() {
         teleportSprite.sprite = telSprite[0];
         for (int i = 1; i < telSprite.Length; i++) {
             yield return new WaitForSeconds(respawnTime/telSprite.Length);
