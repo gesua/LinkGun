@@ -288,9 +288,8 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     public void AllBulletDisable() {
         //Bomb
         for (int i = 0; i < poolSize; i++) {
-            bulletPool[i].SetActive(false);
-            Destroy(bulletPool[i].GetComponent<E_Bullet>());
             AddBulletPool(bulletPool[i]);
+            bulletPool[i].SetActive(false);
         }
     }
 
