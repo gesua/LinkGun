@@ -30,7 +30,7 @@ public class E_Gaster : MonoBehaviour {
     }
 
 
-
+    //가스터 스프라이트 이미지 지정
     void SetGasterSprite() {
         Sprite[] tempSprite = Resources.LoadAll<Sprite>("Sprites/gaster");
         int gasterCount = 0;
@@ -42,6 +42,7 @@ public class E_Gaster : MonoBehaviour {
         }
     }
 
+    //가스터 스폰시 이미지 작게했다가 늘려주기
     IEnumerator GasterSpawn() {
         for (int i = 0; i < 5; i++) {
             yield return new WaitForSeconds(0.05f);
@@ -66,7 +67,7 @@ public class E_Gaster : MonoBehaviour {
         yield return new WaitForSeconds(0.25f);
         //가스터를 풀에 집어넣음
         gameObject.SetActive(false);
-        gasterSpawner.AddGasterPool(gameObject);
+        GasterSpawner.Instance.AddGasterPool(gameObject);
         //레이저를 풀에 집어넣음
         tempLaser.SetActive(false);
         LaserSpawner.Instance.AddLaserPool(tempLaser);

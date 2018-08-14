@@ -275,8 +275,8 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     }
 
     public void AddBulletPool(GameObject bullet) {
-        deactiveList.Add(bullet);
         Destroy(bullet.GetComponent<E_Bullet>());
+        deactiveList.Add(bullet);
     }
 
     public void AllBulletOff() {
@@ -289,8 +289,8 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         //Bomb
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i].SetActive(false);
-            AddBulletPool(bulletPool[i]);
             Destroy(bulletPool[i].GetComponent<E_Bullet>());
+            AddBulletPool(bulletPool[i]);
         }
     }
 

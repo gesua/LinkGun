@@ -39,8 +39,9 @@ public class E_Bullet_Bezier : E_Bullet {
     }
 
     // Update is called once per frame
-    void Update () {
+    private void Update () {
         //총알끄기
+        //시간제어호출
         Off();
         flagCurrTime += Time.deltaTime*bulletSpeed;
         this.transform.position = BezierMove(p0, p1, p2, flagCurrTime);

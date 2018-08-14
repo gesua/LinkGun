@@ -56,18 +56,17 @@ public class E_Bullet : MonoBehaviour {
 
        
     }
+    protected void OnEnable() {
+        currTime = 0f;
+        bulletSpeed = tempSpeed;
+    }
 
     protected void Start() {
         tempSpeed = bulletSpeed;
     }
 
-    protected void OnEnable() {
-        currTime = 0f;
-        bulletSpeed = tempSpeed;
-    }
     // Update is called once per frame
     private void Update() {
-        
         Off();
         dir = this.transform.forward;
         //총알 앞으로 날리기
@@ -85,8 +84,7 @@ public class E_Bullet : MonoBehaviour {
         if (currTime > surviveTime) {
             currTime = 0f;
             gameObject.SetActive(false);
-            BulletSpawner.Instance.AddBulletPool(gameObject);
-            
+            BulletSpawner.Instance.AddBulletPool(gameObject);    
         }
     }
 
@@ -103,19 +101,18 @@ public class E_Bullet : MonoBehaviour {
     }
 
     // 이펙트로 변경
+    //충돌시 이펙트 코루틴 호출
     protected IEnumerator SpriteChange() {
         BulletSR.sprite = BulletEffect[0];
         for (int i = 1; i < BulletEffect.Length; i++) {
             yield return new WaitForSeconds(0.05f);
             BulletSR.sprite = BulletEffect[i];
         }
-
         // 끄기
         gameObject.SetActive(false);
         //속도복구
         bulletSpeed = tempSpeed;
         // 풀에 넣음
-        BulletSpawner.Instance.AddBulletPool(gameObject);
-        
+        BulletSpawner.Instance.AddBulletPool(gameObject); 
     }
 }
