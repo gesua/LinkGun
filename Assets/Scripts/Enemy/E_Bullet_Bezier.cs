@@ -21,7 +21,7 @@ public class E_Bullet_Bezier : E_Bullet {
     //오른쪽 왼쪽 체크 변수
     bool flagRight = false;
     
-    new private void Start() {
+    private void Start() {
         //총알속도 다시지정
         bulletSpeed = 1f;
         //속도임의로다시받음

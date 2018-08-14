@@ -66,10 +66,8 @@ public class E_Gaster : MonoBehaviour {
         }
         yield return new WaitForSeconds(0.25f);
         //가스터를 풀에 집어넣음
-        gameObject.SetActive(false);
         GasterSpawner.Instance.AddGasterPool(gameObject);
         //레이저를 풀에 집어넣음
-        tempLaser.SetActive(false);
         LaserSpawner.Instance.AddLaserPool(tempLaser);
 
     }

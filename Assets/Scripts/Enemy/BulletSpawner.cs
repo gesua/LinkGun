@@ -274,6 +274,8 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     }
 
     public void AddBulletPool(GameObject bullet) {
+        //객체이름이 bullet때만
+        if(bullet.name.Contains("E_Bullet"))
         //스크립트가 삭제된객체를 리스트에넣어줌
         Destroy(bullet.GetComponent<E_Bullet>());
         //액티브펄스
@@ -296,5 +298,4 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             }
         }
     }
-
 }

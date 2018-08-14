@@ -11,11 +11,15 @@ public class E_Laser : E_Bullet {
     public void SetSpawner(LaserSpawner spawner) {
         laserSpawner = spawner;
     }
+   
+    private void Update() {
+        
+    }
 
 
     new private void OnTriggerEnter(Collider other) {
         if (other.tag.Equals("Player")) {
-            Debug.Log("플레이어에닿음");
+          
         }
     }
 }
