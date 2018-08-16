@@ -408,11 +408,7 @@ public class Enemy : MonoBehaviour {
         }
 
     }
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag.Equals("P_Bullet")) {
-            Damage(other.GetComponent<P_Bullet>().GetPower());
-        }
-    }
+  
 
     //데미지받는것
     public void Damage(int power) {
