@@ -136,6 +136,11 @@ public class Gun : MonoBehaviour
                 break;
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3)  )
+        {
+            
+        }
+
         // 마우스 휠
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
