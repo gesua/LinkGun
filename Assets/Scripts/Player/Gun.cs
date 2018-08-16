@@ -139,7 +139,8 @@ public class Gun : MonoBehaviour
         // 마우스 휠
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
         {
-            if (IsReload == false)
+            // 무기가 1개 이상일 때
+            if (WeaponsList.Count > 1)
             {
                 // 무기 변경
                 WeaponChange();
@@ -328,6 +329,17 @@ public class Gun : MonoBehaviour
         }
     }
 
+    // 재장전 취소
+    void ReloadCancel()
+    {
+        // 초기화
+        ReloadCount = 0;
+        // 슬라이더 끔
+        ReloadSlider.gameObject.SetActive(false);
+        // 재장전 끝
+        IsReload = false;
+    }
+
     // 마우스 포인터 바라봄
     void LookTarget()
     {
@@ -397,23 +409,31 @@ public class Gun : MonoBehaviour
     {
         BulletPool.Add(bullet);
 
+        // 큰 부메랑 회수
+        if (number == 4)
+        {
+            WeaponsList.Add(new BigBoomerang());
+            return;
+        }
+
         // 부메랑 회수
         if (w_type == WeaponType.Boomerang)
         {
-            // 큰 부메랑 회수
-            if (number == 4)
+            // 지금 사용중인 무기가 부메랑이 아니면 부메랑 위치 찾기
+            if (NowWeapon._Number != 3)
             {
-                WeaponsList.Add(new BigBoomerang());
-                return;
+                for (int i = 0; i < WeaponsList.Count; i++)
+                {
+                    if (WeaponsList[i]._Number == 3)
+                    {
+                        WeaponsList[i]._AmmoCount++;
+                        return;
+                    }
+                }
             }
 
+            // 회수
             NowWeapon._AmmoCount++;
-
-            // 전부 회수
-            if (NowWeapon._AmmoCount == AmmoMax)
-            {
-                IsReload = false;
-            }
 
             // 부메랑 들고 있기(없애는 건 총알 발사에 있음)
             if (GunImage.enabled == false) GunImage.enabled = true;
@@ -436,6 +456,9 @@ public class Gun : MonoBehaviour
     // 무기 변경
     void WeaponChange()
     {
+        // 재장전 취소
+        ReloadCancel();
+
         // 1개씩 교체
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
@@ -459,20 +482,40 @@ public class Gun : MonoBehaviour
         NowWeapon = WeaponsList[WeaponSelectIndex];
 
         // 총 크기 변경
-        if (NowWeapon._Number != 4)
+        if (NowWeapon._Number == 4)
+        {
+            // 큰 부메랑일 경우 크기 키우기
+            GunImage.transform.localScale = new Vector3(5, 5, 1);
+        }
+        else
         {
             // 일반 총
             GunImage.transform.localScale = new Vector3(3, 3, 1);
-        }
-        else
-        {   
-            // 큰 부메랑일 경우 크기 키우기
-            GunImage.transform.localScale = new Vector3(5, 5, 1);
         }
 
         // 이미지 교체
         GunImage.sprite = NowWeapon._WeaponSprite;
         UIGunImage.sprite = NowWeapon._WeaponSprite;
+
+        // 무기 보이기
+        if (NowWeapon._Number == 3)
+        {
+            // 부메랑이면 탄약 있을 때만 보이기
+            if (NowWeapon._AmmoCount > 0)
+            {
+                GunImage.enabled = true;
+            }
+            else
+            {
+                GunImage.enabled = false;
+            }
+
+        }
+        // 일반 무기
+        else if (GunImage.enabled == false)
+        {
+            GunImage.enabled = true;
+        }
 
         // 타입에 따라 다름
         switch (NowWeapon._W_Type)
@@ -494,18 +537,18 @@ public class Gun : MonoBehaviour
         }
 
         // AmmoTextUI 세팅
-        if (NowWeapon._Number != 4)
+        if (NowWeapon._Number == 4)
+        {
+            // 큰 부메랑은 탄약 안 보여줘도 됨
+            AmmoText.enabled = false;
+        }
+        else
         {
             // 꺼져있으면 켜기
             if (AmmoText.enabled == false) AmmoText.enabled = true;
 
             // UI 세팅
             UpdateAmmoTextUI();
-        }
-        else
-        {
-            // 큰 부메랑은 탄약 안 보여줘도 됨
-            AmmoText.enabled = false;
         }
     }
 

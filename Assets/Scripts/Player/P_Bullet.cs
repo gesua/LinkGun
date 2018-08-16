@@ -192,9 +192,11 @@ public class P_Bullet : MonoBehaviour
             {
                 Hit();
             }
-
+        }
+        else
+        {
             // 부메랑 돌아오면 회수
-            if (W_Type == WeaponType.Boomerang && IsHit)
+            if (W_Type == WeaponType.Boomerang)
             {
                 if (other.tag.Equals("Player"))
                 {
