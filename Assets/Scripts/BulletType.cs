@@ -111,12 +111,14 @@ public class BulletType : MonoBehaviour
                 BulletCollider.center = Vector3.zero;
                 BulletCollider.size = new Vector3(0.25f, 1, 0.3f);
                 BulletSR.transform.localScale = new Vector3(3, 3, 1);
+                BulletSR.transform.eulerAngles = new Vector3(90f, 0, 0);
                 break;
             case B_Type.Knife: // 나이프
                 BulletSR.sprite = KnifeSprite;
                 BulletCollider.center = Vector3.zero;
                 BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
                 BulletSR.transform.localScale = new Vector3(3, 3, 1);
+                BulletSR.transform.eulerAngles = new Vector3(90f, 0, 0);
                 break;
             case B_Type.Nabi: // 나비
                 IsAnimation = true;
@@ -124,12 +126,14 @@ public class BulletType : MonoBehaviour
                 BulletCollider.center = new Vector3(0.02f, 0, -0.03f);
                 BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
                 BulletSR.transform.localScale = new Vector3(3, 3, 1);
+                BulletSR.transform.eulerAngles = new Vector3(90f, 0, 0);
                 break;
             case B_Type.Shuriken: // 수리검
                 IsAnimation = true;
                 BulletSR.sprite = ShurikenSprite;
                 BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
                 BulletSR.transform.localScale = new Vector3(3, 3, 1);
+                BulletSR.transform.eulerAngles = new Vector3(90f, 0, 0);
                 break;
         }
     }

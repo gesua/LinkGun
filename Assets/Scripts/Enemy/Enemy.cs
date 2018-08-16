@@ -74,6 +74,13 @@ public class Enemy : MonoBehaviour {
     ////////////////공격패턴위한 수치값
     public float currPatCheck = 0f;
     int onDamagedCount = 0;
+    //패턴 1,2 에서 시간재서 특정공격필요
+    //public float patOneTwoCheckTime = 10f;
+    //public float patOneTwoCurrTime = 0f;
+    //bool attackCheck = true;
+    //랜덤변수
+    int atPat4;
+
     //공격패턴1(부채꼴) 발사조건 -> ~ 초내에 5이상을 맞았을경우
     public float atPat1Check = 1.5f;
     public int CheckPat1Dam = 5;
@@ -81,10 +88,9 @@ public class Enemy : MonoBehaviour {
     //50퍼센트 이하일땐 기본 공격이 부채꼴로 바뀜
     public float atPat2Check = 1.5f;
     public int CheckPat2Dam = 5;
-    //공격패턴3 베지어곡선
-
+    //공격패턴3,4
     //공격패턴4(돌리기) 발사조건 -> 체력%이하
-    int atPat4;
+    
     //패턴5가스터
     //변수를 여기서 넘겨줌
 
@@ -132,6 +138,7 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        
         //안튕겨나가게
         if (rigid.velocity != Vector3.zero) {
             rigid.velocity = Vector3.zero;
@@ -166,7 +173,8 @@ public class Enemy : MonoBehaviour {
             agent.speed = 0f;
             agent.velocity = Vector3.zero;
             //체력이12퍼센트 이하일때 발악패턴 랜덤지정
-            atPat4 = Random.Range(0, 100); 
+            atPat4 = Random.Range(0, 100);
+           
         }
 
         //상태판단
@@ -186,6 +194,8 @@ public class Enemy : MonoBehaviour {
 
 
     void SetMovePattern() {
+        //패턴1,2랜덤체크(이동상태일때만)
+        //patOneTwoCurrTime += Time.deltaTime;
         //체력따라 정해주는 패턴
         if (CurrHP > MaxHP*0.12f) {
             if (setRandomMove > 50) {

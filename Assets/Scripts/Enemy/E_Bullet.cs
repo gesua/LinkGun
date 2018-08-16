@@ -21,6 +21,9 @@ public class E_Bullet : MonoBehaviour {
     //총알방향전환 //전환필요없어짐(스폰에넘김)
     //this.transform.LookAt(target);
 
+    //자신의 기본 로테이션을 저장
+    Quaternion tempRotate;
+
     public float surviveTime = 7f;
 
     //총알 넣어줄 Spawner객체
@@ -59,7 +62,7 @@ public class E_Bullet : MonoBehaviour {
     protected void OnEnable() {
         currTime = 0f;
         bulletSpeed = tempSpeed;
-     
+        tempRotate = this.transform.rotation;
     }
 
     protected void Start() {
@@ -84,7 +87,9 @@ public class E_Bullet : MonoBehaviour {
         currTime += Time.deltaTime;
         if (currTime > surviveTime) {
             currTime = 0f;
-            BulletSpawner.Instance.AddBulletPool(gameObject);    
+            gameObject.transform.rotation = tempRotate;
+            BulletSpawner.Instance.AddBulletPool(gameObject);
+            
         }
     }
 
@@ -111,6 +116,7 @@ public class E_Bullet : MonoBehaviour {
         //속도복구
         bulletSpeed = tempSpeed;
         // 풀에 넣음
+        gameObject.transform.rotation = tempRotate;
         BulletSpawner.Instance.AddBulletPool(gameObject); 
     }
 }
