@@ -5,6 +5,7 @@ using UnityEngine;
 public class GasterSpawner : MonoSingleton<GasterSpawner> {
     //플레이어의 위치를 받음
     public Transform player;
+
     //가스터 블래스터 모드 지정
     public int patState = 0;
     //가스터블래스터 스폰타임
@@ -49,7 +50,8 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
     // Update is called once per frame
     void Update() {
         //위치지정
-        gasterPivot = new Vector3(player.position.x + (spawnRadius*Mathf.Cos(radius)), player.position.y, player.position.z + (spawnRadius * Mathf.Sin(radius)));
+        //gasterPivot = new Vector3(player.position.x + (spawnRadius*Mathf.Cos(radius)), player.position.y, player.position.z + (spawnRadius * Mathf.Sin(radius)));
+        gasterPivot = new Vector3(Camera.main.transform.position.x + (spawnRadius * Mathf.Cos(radius)), Camera.main.transform.position.y-10, Camera.main.transform.position.z + (spawnRadius * Mathf.Sin(radius)));
         //스폰타임 넘으면 생성
 
         switch (patState) {
@@ -97,6 +99,7 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
         tempGaster.SetActive(true);
         tempGaster.transform.position = gasterPivot;
         tempGaster.transform.LookAt(player.transform);
+        //tempGaster.transform.LookAt(Camera.main.transform.position);
         tempGaster.transform.localScale = new Vector3(0, this.transform.localScale.y, this.transform.localScale.z);
     
     }
