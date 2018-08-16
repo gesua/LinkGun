@@ -49,12 +49,8 @@ public class Gun : MonoBehaviour
             return;
         }
 
-        // 기본 무기 추가하고 값 복사하고 정보 받아옴
+        // 기본 무기 추가
         WeaponsList.Add(new Sword());
-        //CooldownTime = WeaponsList[0]._CooldownTime;
-        //AmmoMax = WeaponsList[0]._AmmoMax;
-        //ReloadSpeed = WeaponsList[0]._ReloadSpeed;
-        //NowWeapon = WeaponsList[0];
     }
 
     private void Start()
@@ -89,11 +85,6 @@ public class Gun : MonoBehaviour
             BulletPool.Add(tempBullet);
             AllBullet[i] = tempBullet;
         }
-
-        // 무기 추가
-        //WeaponsList.Add(new Sword());
-        //WeaponsList.Add(new Boomerang());
-        //WeaponsList.Add(new BigBoomerang());
 
         // AmmoText
         GameObject tempUI = GameObject.Find("UI");
@@ -219,7 +210,17 @@ public class Gun : MonoBehaviour
                     Shoot();
 
                     // 부메랑 회수 전까진 무기변경 불가
-                    IsReload = true;
+                    if (NowWeapon._Number == 3)
+                    {
+                        IsReload = true;
+                    }
+                    // 큰 부메랑은 날리면 사라짐
+                    else if (NowWeapon._Number == 4)
+                    {
+                        WeaponsList.RemoveAt(WeaponSelectIndex); // 현재 무기 사라짐
+                        WeaponSelectIndex--; // 기본 무기가 0이라 0보다 작은 값이 나올 수 없음
+                        WeaponChange(); // 무기 변경
+                    }
                 }
             }
         }
@@ -263,7 +264,16 @@ public class Gun : MonoBehaviour
             tempBullet.GetComponent<BoxCollider>().size = NowWeapon._BulletCollider;
 
             // 위치 잡아줌
-            tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
+            if (NowWeapon._Number != 4)
+            {
+                // 일반 총알
+                tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
+            }
+            else
+            {
+                // 큰 부메랑은 플레이어 몸에서 나가게(안 그러면 벽에 끼임)
+                tempBullet.transform.position = transform.position;
+            }
             tempBullet.transform.LookAt(Target);
 
             // x축 회전 없앰
@@ -383,13 +393,20 @@ public class Gun : MonoBehaviour
     }
 
     // 총알 회수
-    public void BulletCollect(GameObject bullet, WeaponType w_type)
+    public void BulletCollect(GameObject bullet, WeaponType w_type, int number)
     {
         BulletPool.Add(bullet);
 
         // 부메랑 회수
         if (w_type == WeaponType.Boomerang)
         {
+            // 큰 부메랑 회수
+            if (number == 4)
+            {
+                WeaponsList.Add(new BigBoomerang());
+                return;
+            }
+
             NowWeapon._AmmoCount++;
 
             // 전부 회수
@@ -429,7 +446,7 @@ public class Gun : MonoBehaviour
                 WeaponSelectIndex = 0;
             }
         }
-        else
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             WeaponSelectIndex--;
             if (WeaponSelectIndex < 0)
@@ -441,14 +458,16 @@ public class Gun : MonoBehaviour
         // 무기 정보 받음
         NowWeapon = WeaponsList[WeaponSelectIndex];
 
-        // 큰 부메랑일 경우 크기 키우기
-        if (NowWeapon._Number == 4)
+        // 총 크기 변경
+        if (NowWeapon._Number != 4)
         {
-            GunImage.transform.localScale = new Vector3(5, 5, 1);
+            // 일반 총
+            GunImage.transform.localScale = new Vector3(3, 3, 1);
         }
         else
-        {
-            GunImage.transform.localScale = new Vector3(3, 3, 1);
+        {   
+            // 큰 부메랑일 경우 크기 키우기
+            GunImage.transform.localScale = new Vector3(5, 5, 1);
         }
 
         // 이미지 교체
@@ -475,7 +494,19 @@ public class Gun : MonoBehaviour
         }
 
         // AmmoTextUI 세팅
-        UpdateAmmoTextUI();
+        if (NowWeapon._Number != 4)
+        {
+            // 꺼져있으면 켜기
+            if (AmmoText.enabled == false) AmmoText.enabled = true;
+
+            // UI 세팅
+            UpdateAmmoTextUI();
+        }
+        else
+        {
+            // 큰 부메랑은 탄약 안 보여줘도 됨
+            AmmoText.enabled = false;
+        }
     }
 
     // AmmoTextUI 세팅
@@ -488,5 +519,9 @@ public class Gun : MonoBehaviour
     public void TakeWeapon(Weapon weapon)
     {
         WeaponsList.Add(weapon);
+
+        // 바로 장착
+        WeaponSelectIndex = WeaponsList.Count - 1;
+        WeaponChange();
     }
 }

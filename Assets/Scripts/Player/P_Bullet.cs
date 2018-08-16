@@ -35,6 +35,9 @@ public class P_Bullet : MonoBehaviour
     float SurviveTime = 3f;
     float CurrentTime = 0f; // 누적 시간
 
+    // 자신의 콜라이더
+    BoxCollider Collider;
+
     private void Awake()
     {
         BulletSR = GetComponentInChildren<SpriteRenderer>();
@@ -56,6 +59,13 @@ public class P_Bullet : MonoBehaviour
         if (PlayerTF == null)
         {
             Debug.LogError("PlayerTF 못 찾음");
+            return;
+        }
+
+        Collider = GetComponent<BoxCollider>();
+        if (Collider == null)
+        {
+            Debug.LogError("Collider 못 찾음");
             return;
         }
     }
@@ -108,11 +118,11 @@ public class P_Bullet : MonoBehaviour
                     // 플레이어와 엄청 가까이 있는 경우엔 그냥 회수
                     if (Dir.magnitude <= 0.03f)
                     {
-                        // 끄기
-                        gameObject.SetActive(false);
-                        // 풀에 넣음
-                        GunScript.BulletCollect(gameObject, W_Type);
+                        SetOff();
                     }
+
+                    // 큰 부메랑은 그 자리에 멈춤
+                    if (Number == 4) break;
 
                     Dir.Normalize();
                 }
@@ -149,6 +159,10 @@ public class P_Bullet : MonoBehaviour
     {
         IsHit = true; // 뭔가에 부딪힘
 
+        // 콜라이더 껐다켜기(플레이어한테 딱 붙어있으면 바로 회수)
+        Collider.enabled = false;
+        Collider.enabled = true;
+
         // 터지는 이펙트
         if (W_Type == WeaponType.Gun)
         {
@@ -166,11 +180,7 @@ public class P_Bullet : MonoBehaviour
             BulletSR.sprite = BulletEffect[i];
         }
 
-        // 끄기
-        gameObject.SetActive(false);
-
-        // 풀에 넣음
-        GunScript.BulletCollect(gameObject, W_Type);
+        SetOff();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -186,12 +196,18 @@ public class P_Bullet : MonoBehaviour
         {
             if (other.tag.Equals("Player"))
             {
-                // 끄기
-                gameObject.SetActive(false);
-                // 풀에 넣음
-                GunScript.BulletCollect(gameObject, W_Type);
+                SetOff();
             }
         }
+    }
+
+    // 총알 끄기
+    void SetOff()
+    {
+        // 끄기
+        gameObject.SetActive(false);
+        // 풀에 넣음
+        GunScript.BulletCollect(gameObject, W_Type, Number);
     }
 
     // 속성 세팅
