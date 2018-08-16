@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour {
 
     /// <summary>
     /// //////////////////////////////////////////////////////////////이동관련
-
+    
     //캐릭터의 방향을 체크해줄 값
     bool checkRight = false;
     //네비게이션
@@ -71,15 +71,16 @@ public class Enemy : MonoBehaviour {
 
     /// <summary>
     /// //////////////////////////////////////////////////////////////공격관련
-    //랜덤변수 (뿌리기4개기준)
-    int atPatRand;
     ////////////////공격패턴위한 수치값
     public float currPatCheck = 0f;
     int onDamagedCount = 0;
     //패턴 1,2 에서 시간재서 특정공격필요
-    public float atPat12Check = 8f;
-    public float atPat12CurrTime = 0f;
-    bool atPat12 = false;
+    //public float patOneTwoCheckTime = 10f;
+    //public float patOneTwoCurrTime = 0f;
+    //bool attackCheck = true;
+    //랜덤변수
+    int atPat4;
+
     //공격패턴1(부채꼴) 발사조건 -> ~ 초내에 5이상을 맞았을경우
     public float atPat1Check = 1.5f;
     public int CheckPat1Dam = 5;
@@ -89,7 +90,7 @@ public class Enemy : MonoBehaviour {
     public int CheckPat2Dam = 5;
     //공격패턴3,4
     //공격패턴4(돌리기) 발사조건 -> 체력%이하
-
+    
     //패턴5가스터
     //변수를 여기서 넘겨줌
 
@@ -128,7 +129,7 @@ public class Enemy : MonoBehaviour {
         teleportSprite = teleport.GetComponent<SpriteRenderer>();
         teleportSprite.enabled = false;
         SetTeleportSprite();
-
+     
         //안튕기게하기
         rigid = gameObject.GetComponent<Rigidbody>();
         //속도초기화
@@ -137,7 +138,7 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        
         //안튕겨나가게
         if (rigid.velocity != Vector3.zero) {
             rigid.velocity = Vector3.zero;
@@ -148,8 +149,7 @@ public class Enemy : MonoBehaviour {
         if (attackState) {
             //공격중
             currAtkTime += Time.deltaTime;
-        }
-        else {
+        } else {
             currAtkDyTime += Time.deltaTime;
         }
         //공격상태 이동상태 구분
@@ -161,11 +161,6 @@ public class Enemy : MonoBehaviour {
             setRandomMove = Random.Range(0, 100);
             //이동속도초기화
             agent.speed = moveSpeed;
-            //랜덤패턴1,2시간초기화
-            if (atPat12) {
-                atPat12CurrTime = 0f;
-                atPat12 = false;
-            }
         }
         if (currAtkDyTime > attackDelayTime) {
             //공격딜레이(이동) 끝나서 공격전환
@@ -178,8 +173,8 @@ public class Enemy : MonoBehaviour {
             agent.speed = 0f;
             agent.velocity = Vector3.zero;
             //체력이12퍼센트 이하일때 발악패턴 랜덤지정
-            atPatRand = Random.Range(0, 100);
-
+            atPat4 = Random.Range(0, 100);
+           
         }
 
         //상태판단
@@ -200,10 +195,9 @@ public class Enemy : MonoBehaviour {
 
     void SetMovePattern() {
         //패턴1,2랜덤체크(이동상태일때만)
-        //시간더해주기
-        atPat12CurrTime += Time.deltaTime;
+        //patOneTwoCurrTime += Time.deltaTime;
         //체력따라 정해주는 패턴
-        if (CurrHP > MaxHP * 0.12f) {
+        if (CurrHP > MaxHP*0.12f) {
             if (setRandomMove > 50) {
                 movePattern = 0;
             }
@@ -271,59 +265,53 @@ public class Enemy : MonoBehaviour {
     }
 
     void SetAttackPattern() {
-        //공격패턴판단(데미지받은것기준)//히트수계산시간
         currPatCheck += Time.deltaTime;
+        //공격패턴판단(데미지받은것기준)
         //패턴1기준
-        //체력이 50이상일때
         if (CurrHP > MaxHP * 0.50) {
-            //시간계산을 패턴체크보다 우선적으로함
-            if (atPat12CurrTime > atPat12Check) {
-                AtPatRand();
-            }
-            if (currPatCheck < atPat1Check && atPat12CurrTime < atPat12Check) {
+            if (currPatCheck < atPat1Check) {
                 //데미지축적치이상일때
                 if (onDamagedCount > CheckPat1Dam) {
                     //부채꼴
                     BulletSpawner.Instance.bulletState = 1;
-
-                }
-                else {
+                    
+                } else {
                     //직선
                     BulletSpawner.Instance.bulletState = 0;
                 }
-            }
-            else {
+            } else {
                 onDamagedCount = 0;
                 currPatCheck = 0;
             }
             //애니메이션1
             aniState = ANI_STATE.E_AP1;
-        }
-        else if (CurrHP <= MaxHP * 0.50 && CurrHP > MaxHP * 0.12) {
-            if (atPat12CurrTime > atPat12Check) {
-                AtPatRand();
-            }
-            if (currPatCheck < atPat2Check && atPat12CurrTime < atPat12Check) {
+        } else if (CurrHP <= MaxHP * 0.50 && CurrHP > MaxHP * 0.12) {
+            if (currPatCheck < atPat2Check) {
                 //데미지축적치이상일때
                 if (onDamagedCount > CheckPat2Dam) {
                     //원형
                     BulletSpawner.Instance.bulletState = 2;
 
-                }
-                else {
+                } else {
                     //부채꼴
                     BulletSpawner.Instance.bulletState = 1;
                 }
-            }
-            else {
+            } else {
                 onDamagedCount = 0;
                 currPatCheck = 0;
             }
             //애니메이션1
             aniState = ANI_STATE.E_AP1;
-        }
-        else if (CurrHP <= MaxHP * 0.12) {
-            AtPatRand();
+        } else if (CurrHP <= MaxHP * 0.12) {
+            if (atPat4 >= 76) {
+                BulletSpawner.Instance.bulletState = 2;
+            } else if (atPat4 < 76 && atPat4 >= 51) {
+                BulletSpawner.Instance.bulletState = 3;
+            } else if (atPat4 < 51 && atPat4 >= 26) {
+                BulletSpawner.Instance.bulletState = 4;
+            } else {
+                BulletSpawner.Instance.bulletState = 5;
+            }
             aniState = ANI_STATE.E_AP2;
         }
 
@@ -408,17 +396,12 @@ public class Enemy : MonoBehaviour {
         }
 
     }
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag.Equals("P_Bullet")) {
-            Damage(other.GetComponent<P_Bullet>().GetPower());
-        }
-    }
 
     //데미지받는것
     public void Damage(int power) {
         onDamagedCount += power;
         this.CurrHP -= power;
-        BossHp.fillAmount = (float)this.CurrHP / this.MaxHP;
+        BossHp.fillAmount = (float) this.CurrHP / this.MaxHP ;
         blink.BlinkStart();
 
         if (CurrHP <= 0) {
@@ -448,11 +431,11 @@ public class Enemy : MonoBehaviour {
 
     }
 
-
+    
     IEnumerator TeleportAlert() {
         teleportSprite.sprite = telSprite[0];
         for (int i = 1; i < telSprite.Length; i++) {
-            yield return new WaitForSeconds(respawnTime / telSprite.Length);
+            yield return new WaitForSeconds(respawnTime/telSprite.Length);
             teleportSprite.sprite = telSprite[i];
         }
         yield return new WaitForSeconds(0.15f);
@@ -461,24 +444,5 @@ public class Enemy : MonoBehaviour {
         tempTel = false;
         teleportSprite.enabled = false;
 
-    }
-
-    private void AtPatRand() {
-        if (atPatRand >= 76) {
-            BulletSpawner.Instance.bulletState = 2;
-        }
-        else if (atPatRand < 76 && atPatRand >= 51) {
-            BulletSpawner.Instance.bulletState = 3;
-        }
-        else if (atPatRand < 51 && atPatRand >= 26) {
-            BulletSpawner.Instance.bulletState = 4;
-        }
-        else {
-            BulletSpawner.Instance.bulletState = 5;
-        }
-
-        if(currAtkTime > attackContinuousTime-0.5f) {
-            atPat12 = true;
-        }
     }
 }
