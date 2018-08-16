@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 188519}
-  patState: 3
+  patState: 1
   spawnTimePat1: 1
   spawnTimePat2: 0.2
   gasterFactory: {fileID: 1032346278309140, guid: 2f83e07713fc9484da0fa690fc9da714,
@@ -10849,6 +10849,8 @@ MonoBehaviour:
   Mov2SetTime: 1
   respawnTime: 1.5
   currPatCheck: 0
+  atPat12Check: 8
+  atPat12CurrTime: 0
   atPat1Check: 1.5
   CheckPat1Dam: 5
   atPat2Check: 1.5
