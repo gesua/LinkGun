@@ -188,7 +188,7 @@ public class P_Bullet : MonoBehaviour
         if (IsHit == false)
         {
             // 벽과 부딪히면 사라짐
-            if (other.tag.Equals("Wall"))
+            if (other.tag.Equals("Wall") || other.tag.Equals("Enemy"))
             {
                 Hit();
             }
