@@ -188,9 +188,16 @@ public class P_Bullet : MonoBehaviour
         if (IsHit == false)
         {
             // 벽과 부딪히면 사라짐
-            if (other.tag.Equals("Wall") || other.tag.Equals("Enemy"))
+            if (other.tag.Equals("Wall"))
             {
                 Hit();
+            }
+
+            // 적과 부딪힘
+            if (other.tag.Equals("Enemy"))
+            {
+                Hit();
+                other.GetComponent<Enemy>().Damage(Power); // 데미지 줌
             }
         }
         else
