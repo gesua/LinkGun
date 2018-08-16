@@ -8,7 +8,7 @@ public enum WeaponType
     None,      // 없음
     Gun,       // 총
     Boomerang, // 부메랑
-    Bow        // 활
+    TimeBomb   // 시한폭탄
 }
 
 public class Weapon

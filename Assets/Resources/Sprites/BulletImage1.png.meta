@@ -26,7 +26,7 @@ TextureImporter:
     21300038: BulletImage1_19
     21300040: BulletImage1_20
     21300042: GasterLaser1
-    21300044: BulletImage1_22
+    21300044: TimeBombBullet
     21300046: BulletImage1_23
     21300048: BulletImage1_24
     21300050: BulletImage1_25
@@ -694,7 +694,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletImage1_22
+      name: TimeBombBullet
       rect:
         serializedVersion: 2
         x: 444

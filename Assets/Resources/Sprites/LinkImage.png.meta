@@ -443,7 +443,7 @@ TextureImporter:
     21300872: LinkImage_436
     21300874: LinkImage_437
     21300876: LinkImage_438
-    21300878: LinkImage_439
+    21300878: TimeBomb
     21300880: LinkImage_440
     21300882: LinkImage_441
     21300884: LinkImage_442
@@ -6732,7 +6732,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: LinkImage_439
+      name: TimeBomb
       rect:
         serializedVersion: 2
         x: 18

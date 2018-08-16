@@ -155,7 +155,7 @@ public class P_Bullet : MonoBehaviour
     }
 
     // 맞음
-    public void Hit()
+    void Hit()
     {
         IsHit = true; // 뭔가에 부딪힘
 
@@ -185,18 +185,21 @@ public class P_Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // 벽과 부딪히면 사라짐
-        if (other.tag.Equals("Wall"))
+        if (IsHit == false)
         {
-            Hit();
-        }
-
-        // 부메랑 돌아오면 회수
-        if (W_Type == WeaponType.Boomerang && IsHit)
-        {
-            if (other.tag.Equals("Player"))
+            // 벽과 부딪히면 사라짐
+            if (other.tag.Equals("Wall"))
             {
-                SetOff();
+                Hit();
+            }
+
+            // 부메랑 돌아오면 회수
+            if (W_Type == WeaponType.Boomerang && IsHit)
+            {
+                if (other.tag.Equals("Player"))
+                {
+                    SetOff();
+                }
             }
         }
     }
