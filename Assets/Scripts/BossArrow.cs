@@ -47,10 +47,10 @@ public class BossArrow : MonoBehaviour
             Vector3 dir = BossTF.position - PlayerTF.position;
 
             float rotateDegree = Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg;
-            Arrow.transform.rotation = Quaternion.Euler(0f, 0f, rotateDegree + 90f);
+            Arrow.transform.rotation = Quaternion.Euler(90f, 0f, rotateDegree + 90f);
 
             // 화살표 위치 잡음
-            transform.position = Camera.main.WorldToScreenPoint(PlayerTF.position + dir.normalized);
+            transform.position = PlayerTF.position + dir.normalized;
 
             // 화살표 띄움
             Arrow.SetActive(true);
