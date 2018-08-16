@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     Sprite DamageHPSprite; // 데미지 입은 HP 이미지
 
     // 폭탄
+    bool IsBomb = false; // 폭탄 사용중인지
     int BombCount = 2; // 갯수
     Image[] BombImage; // 폭탄 이미지 위치
     SpriteRenderer BombSR; // 폭탄 랜더러
@@ -210,7 +211,7 @@ public class Player : MonoBehaviour
         }
 
         // 폭탄
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && IsBomb == false)
         {
             if (BombCount > 0)
             {
@@ -489,6 +490,8 @@ public class Player : MonoBehaviour
     // 폭탄
     void Bomb()
     {
+        IsBomb = true;
+
         BombCount--;
         BombImage[BombCount].enabled = false;
 
@@ -512,6 +515,7 @@ public class Player : MonoBehaviour
         }
 
         BombSR.gameObject.SetActive(false);
+        IsBomb = false;
     }
 
     // 피격점 보여줄지 말지
