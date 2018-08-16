@@ -532,4 +532,12 @@ public class Player : MonoBehaviour
             HitPoint.SetActive(false);
         }
     }
+
+    // 폭탄 추가
+    public void AddBomb()
+    {
+        BombImage[BombCount].enabled = true;
+
+        BombCount++;
+    }
 }
