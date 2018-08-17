@@ -136,10 +136,8 @@ public class Gun : MonoBehaviour
                 break;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3)  )
-        {
-            
-        }
+        // 키보드(1~5)로 무기 변경
+        KeyWeaponChange();
 
         // 마우스 휠
         if (Input.GetAxis("Mouse ScrollWheel") != 0)
@@ -554,6 +552,36 @@ public class Gun : MonoBehaviour
 
             // UI 세팅
             UpdateAmmoTextUI();
+        }
+    }
+
+    // 키보드(1~5)로 무기 변경
+    void KeyWeaponChange()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && WeaponsList.Count > 1)
+        {
+            WeaponSelectIndex = 0;
+            WeaponChange();
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2) && WeaponsList.Count > 1)
+        {
+            WeaponSelectIndex = 1;
+            WeaponChange();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && WeaponsList.Count > 2)
+        {
+            WeaponSelectIndex = 2;
+            WeaponChange();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4) && WeaponsList.Count > 3)
+        {
+            WeaponSelectIndex = 3;
+            WeaponChange();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5) && WeaponsList.Count > 4)
+        {
+            WeaponSelectIndex = 4;
+            WeaponChange();
         }
     }
 
