@@ -16,6 +16,9 @@ public class MousePoint : MonoBehaviour
 
     void Update()
     {
+        // 마우스 커서 안 보이게
+        if (Cursor.visible == true) Cursor.visible = false; 
+
         // 마우스 포인터가 마우스 따라다님
         Vector3 tempPos = MainCam.ScreenToWorldPoint(Input.mousePosition);
         tempPos.y = -10;

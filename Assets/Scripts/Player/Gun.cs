@@ -538,12 +538,11 @@ public class Gun : MonoBehaviour
             GunImage.enabled = true;
         }
 
-        // 타입에 따라 다름
+        // 타입에 따라 다르게 필요한 값 복사
         switch (NowWeapon._W_Type)
         {
             // 일반 총
             case WeaponType.Gun:
-                // 필요한 값 복사
                 CooldownTime = NowWeapon._CooldownTime;
                 AmmoMax = NowWeapon._AmmoMax;
                 ReloadSpeed = NowWeapon._ReloadSpeed;
@@ -551,7 +550,11 @@ public class Gun : MonoBehaviour
 
             // 부메랑
             case WeaponType.Boomerang:
-                // 필요한 값 복사
+                CooldownTime = NowWeapon._CooldownTime;
+                AmmoMax = NowWeapon._AmmoMax;
+                break;
+            // 시한 폭탄
+            case WeaponType.TimeBomb:
                 CooldownTime = NowWeapon._CooldownTime;
                 AmmoMax = NowWeapon._AmmoMax;
                 break;

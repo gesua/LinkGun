@@ -18,6 +18,8 @@ public class TimeBomb : Weapon {
         BulletCollider = new Vector3(0.3f, 1, 0.3f);
         BulletSize = new Vector3(3, 3, 1);
 
+        WeaponUISize = new Vector3(13, 14, 1);
+
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++)
         {
