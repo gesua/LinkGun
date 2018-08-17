@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 188519}
-  patState: 1
+  patState: 3
   spawnTimePat1: 1
   spawnTimePat2: 0.2
   gasterFactory: {fileID: 1032346278309140, guid: 2f83e07713fc9484da0fa690fc9da714,
@@ -9920,7 +9920,7 @@ GameObject:
   - component: {fileID: 1759040779}
   - component: {fileID: 1759040778}
   - component: {fileID: 1759040777}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Colider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
