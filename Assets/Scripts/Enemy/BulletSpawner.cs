@@ -292,7 +292,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         deactiveList.RemoveAt(0);
         //타입지정
         tempBullet.AddComponent<E_Bullet>();
-        tempBullet.SetActive(true);
+        
         return tempBullet;
     }
 
