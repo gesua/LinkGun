@@ -34,7 +34,11 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
                 spawnCurrTime = 0f;
                 //위치지정
                 GameObject tempMob = MobPoolActive();
-                tempMob.transform.position = spawnPos[Random.Range(1, spawnPos.Length)].position;
+                if (tempMob.activeSelf == false)
+                {
+                    tempMob.transform.position = spawnPos[Random.Range(1, spawnPos.Length)].position;
+                    tempMob.SetActive(true);
+                }
             }
         }
 	}
@@ -58,7 +62,7 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
         tempMob.GetComponentInChildren<Animator>().enabled = true;
         tempMob.GetComponent<BoxCollider>().enabled = true;
         tempMob.GetComponent<SphereCollider>().enabled = true;
-        tempMob.SetActive(true);
+        //tempMob.SetActive(true);
         return tempMob;
     }
 

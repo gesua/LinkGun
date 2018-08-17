@@ -128,7 +128,7 @@ public class BulletType : MonoBehaviour
                 IsAnimation = false;
                 BulletSR.sprite = KnifeSprite;
                 BulletCollider.center = Vector3.zero;
-                BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
+                BulletCollider.size = new Vector3(0.15f, 1, 0.6f);
                 break;
             case B_Type.Nabi: // 나비
                 IsAnimation = true;
@@ -144,7 +144,7 @@ public class BulletType : MonoBehaviour
             case B_Type.Amulet: // 부적
                 IsAnimation = false;
                 BulletSR.sprite = AmuletSprite;
-                BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
+                BulletCollider.size = new Vector3(0.25f, 1, 0.35f);
                 break;
         }
         BulletSR.transform.localScale = new Vector3(3, 3, 1);

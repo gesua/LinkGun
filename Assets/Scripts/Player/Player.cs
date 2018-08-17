@@ -492,8 +492,11 @@ public class Player : MonoBehaviour
     {
         IsBomb = true;
 
-        BombCount--;
-        BombImage[BombCount].enabled = false;
+        if (GodMode == false)
+        {
+            BombCount--;
+            BombImage[BombCount].enabled = false;
+        }
 
         BulletSpawner.Instance.AllBulletDisable();
         GasterSpawner.Instance.AllGasterDisable();

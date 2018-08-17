@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     // 화면 넘어갈 수 있는 크기
-    float MinX = -4;
-    float MaxX = 4;
-    float MinZ = -2;
-    float MaxZ = 2;
+    float MinX = -3;
+    float MaxX = 3;
+    float MinZ = -1;
+    float MaxZ = 1;
 
     Transform target; // 플레이어 위치
 

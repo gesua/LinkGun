@@ -12,7 +12,8 @@ public class TimeBomb : Weapon {
         AmmoMax = 3;
         AmmoCount = AmmoMax;
 
-        Power = 50;
+        Power = 30;
+        BulletSpeed = 0;
         BulletTime = 3f;
 
         BulletCollider = new Vector3(0.3f, 1, 0.3f);
