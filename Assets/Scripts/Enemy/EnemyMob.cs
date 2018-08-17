@@ -70,6 +70,7 @@ public class EnemyMob : MonoBehaviour {
             b_currTime += Time.deltaTime; //시간계산
             if(b_currTime > b_spawnTime) {
                 GameObject bullet = BulletSpawner.Instance.ShootBullet();
+                bullet.GetComponent<BulletType>().BType = BulletType.B_Type.Amulet;
                 bullet.transform.position = this.transform.position;
                 bullet.transform.LookAt(target.transform);
                 b_currTime = 0f;
