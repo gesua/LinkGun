@@ -21,6 +21,8 @@ public class BlueWand : Weapon {
         BulletCollider = new Vector3(0.3f, 1, 0.5f);
         BulletSize = new Vector3(5, 5, 1);
 
+        WeaponUISize = new Vector3(8, 16, 1);
+
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++) {
             // 마법봉

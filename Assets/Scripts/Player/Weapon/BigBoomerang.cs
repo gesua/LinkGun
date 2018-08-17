@@ -20,6 +20,8 @@ public class BigBoomerang : Weapon
         BulletCollider = new Vector3(0.5f, 1, 0.5f);
         BulletSize = new Vector3(5, 5, 1);
 
+        WeaponUISize = new Vector3(8, 12, 1);
+
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++)
         {

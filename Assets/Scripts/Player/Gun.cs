@@ -515,6 +515,9 @@ public class Gun : MonoBehaviour
         GunImage.sprite = NowWeapon._WeaponSprite;
         UIGunImage.sprite = NowWeapon._WeaponSprite;
 
+        // UI 크기 변경
+        UIGunImage.transform.localScale = NowWeapon._WeaponUISize * 10;
+
         // 무기 보이기
         if (NowWeapon._Number == 3)
         {

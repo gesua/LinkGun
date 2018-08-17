@@ -28,9 +28,11 @@ public class Weapon
     protected float ReloadSpeed; // 장전속도
     protected int AmmoMax; // 최대 탄약
     protected int AmmoCount; // 남은 탄약
+
     protected Sprite WeaponSprite; // 무기 스프라이트
     protected Sprite BulletSprite; // 총알 스프라이트
     protected Vector3 BulletCollider; // 총알 콜라이더 크기
+    protected Vector3 WeaponUISize; // 무기 UI 크기
 
     public Weapon()
     {
@@ -150,6 +152,14 @@ public class Weapon
         get
         {
             return BulletSize;
+        }
+    }
+
+    public Vector3 _WeaponUISize
+    {
+        get
+        {
+            return WeaponUISize;
         }
     }
 }

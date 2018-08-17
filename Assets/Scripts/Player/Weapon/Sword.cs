@@ -21,6 +21,8 @@ public class Sword : Weapon
         BulletCollider = new Vector3(0.15f, 1, 0.65f);
         BulletSize = new Vector3(5, 5, 1);
 
+        WeaponUISize = new Vector3(6, 13, 1);
+
         Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/LinkImage");
         for (int i = 0; i < sprites.Length; i++)
         {
