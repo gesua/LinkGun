@@ -44,16 +44,16 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     //베지어한발씩
     //////////////////탄막 5번 베지어
     //베지어두발씩
-    
+
     public int bulletCount4 = 18;
     public float bulletDegree4 = 20f;
 
-   
+
     private void Awake() {
         //싱글톤
         SetInstance(this);
     }
-  
+
     // Use this for initialization
     void Start() {
         bulletPool = new GameObject[poolSize];
@@ -107,6 +107,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
                     ShootMode5();
                     break;
                 case 6:
+                    ShootMode6();
                     break;
 
                 default:
@@ -154,7 +155,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             }
             //해당 각도 (X,Z축)
             Vector3 fireVector = new Vector3(-Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
-            BulletPoolActive(fireVector,BulletType.B_Type.Nabi);
+            BulletPoolActive(fireVector, BulletType.B_Type.Nabi);
         }
 
     }
@@ -179,7 +180,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             }
             //해당 각도 (X,Z축)
             Vector3 fireVector = new Vector3(-Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
-            BulletPoolActive(fireVector,BulletType.B_Type.Knife);
+            BulletPoolActive(fireVector, BulletType.B_Type.Knife);
         }
     }
     void ShootMode3() {
@@ -238,15 +239,49 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             if (target.transform.position.z > this.transform.position.z) {
                 fireDegree *= -1;
             }
-            for(int j = 0; j < 2; j++) {
+            for (int j = 0; j < 2; j++) {
                 //해당 각도 (X,Z축)
                 if (j == 0) {
                     BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Knife, true);
-                } else {
+                }
+                else {
                     BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Knife, false);
                 }
             }
         }
+    }
+
+    void ShootMode6() {
+        b_spawnTime = 0.3f;
+        for (int i = 0; i < bulletCount4; i++) {
+            //방향백터값 계산필요
+            Vector3 dir = target.transform.position - this.transform.position;
+            //방향백터 정규화
+            dir.Normalize();
+            //코사인값의 세타값을 구해줘야 하므로 x값(x/R)을 넣어줘야함
+            float inner = Mathf.Acos(dir.x);
+            //해당라디안 결과값을 디그리로 바꿔주고 정면이 아니므로 180도를 더해 꺽어줌
+            inner = Mathf.Rad2Deg * inner + 180;
+            //기본 각도 계산
+            float startDegree = -(bulletDegree4 / 2) * (bulletCount4 - 1) + inner;
+            float fireDegree = startDegree + (bulletDegree4 * i);
+            if (target.transform.position.z > this.transform.position.z) {
+                fireDegree *= -1;
+            }
+            for (int j = 0; j < 3; j++) {
+                //해당 각도 (X,Z축)
+                if (j == 0) {
+                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Knife, true);
+                }
+                else if (j == 1) {
+                    BulletPoolActiveBezierForward(fireDegree, BulletType.B_Type.Knife);
+                }
+                else {
+                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Knife, false);
+                }
+            }
+        }
+
     }
 
 
@@ -262,7 +297,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     }
 
     //베지어곡선생성
-    void BulletPoolActiveBezier(float fireDeg, BulletType.B_Type type,bool dirRight) {
+    void BulletPoolActiveBezier(float fireDeg, BulletType.B_Type type, bool dirRight) {
         GameObject tempBullet = deactiveList[0];
         deactiveList.RemoveAt(0);
         tempBullet.GetComponent<BulletType>().BType = type;
@@ -272,6 +307,19 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         tempBullet.transform.position = this.transform.position;
         tempBullet.GetComponent<E_Bullet_Bezier>().spawnerPos = this.transform;
         tempBullet.GetComponent<E_Bullet_Bezier>().fireDegree = fireDeg;
+
+    }
+    //가운데(샷6)
+    void BulletPoolActiveBezierForward(float fireDeg, BulletType.B_Type type) {
+        float radDegree = Mathf.Deg2Rad * fireDeg;
+        Vector3 fireVector = new Vector3(Mathf.Cos(radDegree), 0, Mathf.Sin(radDegree));
+        GameObject tempBullet = deactiveList[0];
+        deactiveList.RemoveAt(0);
+        tempBullet.GetComponent<BulletType>().BType = type;
+        tempBullet.AddComponent<E_Bullet>();
+        tempBullet.SetActive(true);
+        tempBullet.transform.position = this.transform.position;
+        tempBullet.transform.rotation = Quaternion.LookRotation(fireVector);
 
     }
 
@@ -292,7 +340,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         deactiveList.RemoveAt(0);
         //타입지정
         tempBullet.AddComponent<E_Bullet>();
-        
+
         return tempBullet;
     }
 
