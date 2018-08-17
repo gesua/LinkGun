@@ -9,7 +9,8 @@ public class BulletType : MonoBehaviour
         Basic,
         Knife,
         Nabi,
-        Shuriken
+        Shuriken,
+        Amulet
     };
     public B_Type BType = B_Type.Basic;
 
@@ -19,6 +20,7 @@ public class BulletType : MonoBehaviour
     static Sprite KnifeSprite;
     static Sprite[] NabiSprite;
     static Sprite ShurikenSprite;
+    static Sprite AmuletSprite;
 
     // 랜더러
     SpriteRenderer BulletSR;
@@ -65,6 +67,11 @@ public class BulletType : MonoBehaviour
                 {
                     ShurikenSprite = temp[i];
                 }
+                // 부적
+                else if (temp[i].name.Equals("Amulet"))
+                {
+                    AmuletSprite = temp[i];
+                }
             }
             if (KnifeSprite == null)
             {
@@ -79,6 +86,11 @@ public class BulletType : MonoBehaviour
             if (ShurikenSprite == null)
             {
                 Debug.LogError("ShurikenSprite 못 찾음");
+                return;
+            }
+            if (AmuletSprite == null)
+            {
+                Debug.LogError("AmuletSprite 못 찾음");
                 return;
             }
 
@@ -107,11 +119,13 @@ public class BulletType : MonoBehaviour
         switch (BType)
         {
             case B_Type.Basic: // 기본
+                IsAnimation = false;
                 BulletSR.sprite = BasicSprite;
                 BulletCollider.center = Vector3.zero;
                 BulletCollider.size = new Vector3(0.25f, 1, 0.3f);
                 break;
             case B_Type.Knife: // 나이프
+                IsAnimation = false;
                 BulletSR.sprite = KnifeSprite;
                 BulletCollider.center = Vector3.zero;
                 BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
@@ -124,6 +138,11 @@ public class BulletType : MonoBehaviour
                 break;
             case B_Type.Shuriken: // 수리검
                 IsAnimation = true;
+                BulletSR.sprite = ShurikenSprite;
+                BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
+                break;
+            case B_Type.Amulet: // 부적
+                IsAnimation = false;
                 BulletSR.sprite = ShurikenSprite;
                 BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
                 break;

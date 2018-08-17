@@ -12,6 +12,7 @@ TextureImporter:
     21300010: WhiteKnife
     21300012: Basic
     21300014: Shuriken
+    21300016: Amulet
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -190,6 +191,20 @@ TextureImporter:
         y: 141
         width: 21
         height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Amulet
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 105
+        width: 9
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

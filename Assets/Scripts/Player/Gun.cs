@@ -38,6 +38,9 @@ public class Gun : MonoBehaviour
     // 무기 스프라이트
     Image UIGunImage; // UI상 이미지 위치
 
+    // 무기 바꾸는 키(1~9)
+    KeyCode[] NumKeyCode;
+
     Camera MainCam;
 
     private void Awake()
@@ -113,6 +116,18 @@ public class Gun : MonoBehaviour
             return;
         }
 
+        // 무기 바꾸는 키 세팅
+        NumKeyCode = new KeyCode[9];
+        NumKeyCode[0] = KeyCode.Alpha1;
+        NumKeyCode[1] = KeyCode.Alpha2;
+        NumKeyCode[2] = KeyCode.Alpha3;
+        NumKeyCode[3] = KeyCode.Alpha4;
+        NumKeyCode[4] = KeyCode.Alpha5;
+        NumKeyCode[5] = KeyCode.Alpha6;
+        NumKeyCode[6] = KeyCode.Alpha7;
+        NumKeyCode[7] = KeyCode.Alpha8;
+        NumKeyCode[8] = KeyCode.Alpha9;
+
         // 무기 세팅
         WeaponChange();
     }
@@ -136,14 +151,14 @@ public class Gun : MonoBehaviour
                 break;
         }
 
-        // 키보드(1~5)로 무기 변경
-        KeyWeaponChange();
-
-        // 마우스 휠
-        if (Input.GetAxis("Mouse ScrollWheel") != 0)
+        // 무기가 2개 이상일 때
+        if (WeaponsList.Count > 1)
         {
-            // 무기가 1개 이상일 때
-            if (WeaponsList.Count > 1)
+            // 키보드(1~5)로 무기 변경
+            KeyWeaponChange();
+
+            // 마우스 휠로 무기 변경
+            if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
                 // 무기 변경
                 WeaponChange();
@@ -558,30 +573,13 @@ public class Gun : MonoBehaviour
     // 키보드(1~5)로 무기 변경
     void KeyWeaponChange()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && WeaponsList.Count > 1)
+        for (int i = 0; i < NumKeyCode.Length; i++)
         {
-            WeaponSelectIndex = 0;
-            WeaponChange();
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha2) && WeaponsList.Count > 1)
-        {
-            WeaponSelectIndex = 1;
-            WeaponChange();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && WeaponsList.Count > 2)
-        {
-            WeaponSelectIndex = 2;
-            WeaponChange();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4) && WeaponsList.Count > 3)
-        {
-            WeaponSelectIndex = 3;
-            WeaponChange();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha5) && WeaponsList.Count > 4)
-        {
-            WeaponSelectIndex = 4;
-            WeaponChange();
+            if (Input.GetKeyDown(NumKeyCode[i]) && WeaponsList.Count > i)
+            {
+                WeaponSelectIndex = i;
+                WeaponChange();
+            }
         }
     }
 

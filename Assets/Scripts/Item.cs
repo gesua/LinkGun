@@ -77,6 +77,9 @@ public class Item : MonoBehaviour
                 case 4: // 큰 부메랑
                     PlayerGun.TakeWeapon(new BigBoomerang());
                     break;
+                case 5: // 시한 폭탄
+                    PlayerGun.TakeWeapon(new TimeBomb());
+                    break;
                 case 1000: // 폭탄
                     PlayerScript.AddBomb();
                     break;
