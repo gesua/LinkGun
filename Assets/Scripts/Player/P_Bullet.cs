@@ -193,14 +193,16 @@ public class P_Bullet : MonoBehaviour
                 Hit();
             }
 
-            // 적과 부딪힘
+            // 보스와 부딪힘
             if (other.tag.Equals("Enemy"))
             {
                 Hit();
                 other.GetComponent<Enemy>().Damage(Power); // 데미지 줌
             }
-            // 몹과 부딪힘
-            if (other.tag.Equals("Mob")) {
+
+            // 잡몹과 부딪힘
+            if (other.tag.Equals("Mob"))
+            {
                 Hit();
                 other.GetComponent<EnemyMob>().Damage(Power); // 데미지 줌
             }

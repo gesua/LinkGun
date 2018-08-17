@@ -143,7 +143,7 @@ public class BulletType : MonoBehaviour
                 break;
             case B_Type.Amulet: // 부적
                 IsAnimation = false;
-                BulletSR.sprite = ShurikenSprite;
+                BulletSR.sprite = AmuletSprite;
                 BulletCollider.size = new Vector3(0.15f, 1, 0.16f);
                 break;
         }
