@@ -80,6 +80,7 @@ public class EnemyMob : MonoBehaviour {
                 bullet.GetComponent<BulletType>().BType = BulletType.B_Type.Amulet;
                 bullet.transform.position = this.transform.position;
                 bullet.transform.LookAt(target.transform);
+                bullet.SetActive(true);
                 b_currTime = 0f;
             }
 
@@ -131,6 +132,7 @@ public class EnemyMob : MonoBehaviour {
             gameObject.GetComponentInChildren<Animator>().enabled = false;
             StartCoroutine("MobDeadEffect");
             agent.speed = 0f;//멈추고
+            agent.velocity = Vector3.zero; //가속도0
             gameObject.GetComponent<BoxCollider>().enabled = false;
             gameObject.GetComponent<SphereCollider>().enabled = false;
         }

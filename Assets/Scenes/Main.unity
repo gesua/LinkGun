@@ -4111,9 +4111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c3a645bbdaca941a1ed8df2bb17c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobSpawnTime: 3
+  mobSpawnTime: 5
   mobFactory: {fileID: 1569871702021182, guid: 7348e77d5c521fd478632fb3c2648f12, type: 2}
-  poolSize: 50
+  poolSize: 10
 --- !u!4 &720924181
 Transform:
   m_ObjectHideFlags: 0
