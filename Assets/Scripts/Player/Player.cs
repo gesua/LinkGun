@@ -181,6 +181,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            transform.position = new Vector3(1000, -10, 0);
+            Camera.main.transform.position = new Vector3(1000, 0, 2);
+            Camera.main.GetComponent<PlayerCamera>().enabled = false;
+        }
+
+
         // 리지드바디 안 튕기게
         if (Rigid.velocity != Vector3.zero)
         {
