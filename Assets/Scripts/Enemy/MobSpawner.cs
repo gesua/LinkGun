@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class MobSpawner : MonoSingleton<MobSpawner> {
     //스포너위치를받을배열
     Transform[] spawnPos;
@@ -14,6 +14,7 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
     GameObject[] mobPool;
     List<GameObject> deactiveList = new List<GameObject>();
     public int poolSize = 100;
+    public int ableCount = 15;
 
     private void Awake() {
         //싱글톤
@@ -29,14 +30,11 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
 	void Update () {
         spawnCurrTime += Time.deltaTime;
         if(spawnCurrTime > mobSpawnTime) {
-            if (deactiveList.Count > 0) {
+            if (deactiveList.Count > 0 && deactiveList.Count > poolSize - ableCount) {
                 spawnCurrTime = 0f;
                 //위치지정
                 GameObject tempMob = MobPoolActive();
                 tempMob.transform.position = spawnPos[Random.Range(1, spawnPos.Length)].position;
-            }
-            else {
-                Debug.Log("모든몹나옴");
             }
         }
 	}
@@ -71,6 +69,16 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
     public void AllMobOff() {
         for (int i = 0; i < poolSize; i++) {
             mobPool[i].GetComponent<EnemyMob>().enabled = false;
+            mobPool[i].GetComponent<NavMeshAgent>().enabled = false;
+            mobPool[i].GetComponentInChildren<Animator>().enabled = false;
+        }
+    }
+    public void AllMobDisable() {
+        for (int i = 0; i < poolSize; i++) {
+            if(mobPool[i].activeSelf) {
+                mobPool[i].GetComponent<EnemyMob>().Dead();
+                
+            }
         }
     }
 }

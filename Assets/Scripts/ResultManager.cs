@@ -30,6 +30,8 @@ public class ResultManager : MonoSingleton<ResultManager>
     GasterSpawner GasterSpawnerScript;
 
     LaserSpawner LaserSpawnerScript;
+
+    MobSpawner MobSpawnerScript;
     //패배
     SpriteRenderer deadSpirte;
     Sprite[] dieSprite;
@@ -187,6 +189,12 @@ public class ResultManager : MonoSingleton<ResultManager>
             return;
         }
 
+        MobSpawnerScript = GameObject.Find("E_MobSpawner").GetComponent<MobSpawner>();
+        if (MobSpawnerScript == null) {
+            Debug.LogError("MobSpawnerScript 못 찾음");
+            return;
+        }
+
         //패배스프라이트
         deadSpirte = GameObject.Find("Enemy").GetComponentInChildren<SpriteRenderer>();
         if (deadSpirte == null) {
@@ -216,6 +224,9 @@ public class ResultManager : MonoSingleton<ResultManager>
         GasterSpawnerScript.enabled = false;
         //레이저
         LaserSpawnerScript.enabled = false;
+        //몹
+        MobSpawnerScript.enabled = false;
+        MobSpawner.Instance.AllMobOff();
         EnemyScript.AllStop(); // 총알, 애니메이터 다 멈춤
 
         PlayerSprite.sortingOrder = 11;

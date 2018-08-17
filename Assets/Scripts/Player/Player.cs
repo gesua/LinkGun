@@ -498,6 +498,7 @@ public class Player : MonoBehaviour
         BulletSpawner.Instance.AllBulletDisable();
         GasterSpawner.Instance.AllGasterDisable();
         LaserSpawner.Instance.AllLaserDisable();
+        MobSpawner.Instance.AllMobDisable();
 
         StartCoroutine("BombEffect");
     }

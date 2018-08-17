@@ -29,9 +29,12 @@ public class EnemyMob : MonoBehaviour {
     SpriteRenderer mobSprite;
     Sprite[] sprites;
 
+    private void OnEnable() {
+        CurrHP = MaxHP; //HP초기화
+    }
+
     // Use this for initialization
     void Start() {
-        CurrHP = MaxHP; //HP초기화
         //할당
         mobSprite = gameObject.GetComponentInChildren<SpriteRenderer>(); //스프라이트지정
         SetDeadSprite();
@@ -129,12 +132,7 @@ public class EnemyMob : MonoBehaviour {
         blink.BlinkStart();
 
         if (CurrHP <= 0) {
-            gameObject.GetComponentInChildren<Animator>().enabled = false;
-            StartCoroutine("MobDeadEffect");
-            agent.speed = 0f;//멈추고
-            agent.velocity = Vector3.zero; //가속도0
-            gameObject.GetComponent<BoxCollider>().enabled = false;
-            gameObject.GetComponent<SphereCollider>().enabled = false;
+            Dead();
         }
     }
     IEnumerator MobDeadEffect() {
@@ -158,5 +156,13 @@ public class EnemyMob : MonoBehaviour {
                 sprites[DeadCount++] = tempSprite[i];
             }
         }
+    }
+    public void Dead() {
+        gameObject.GetComponentInChildren<Animator>().enabled = false;
+        StartCoroutine("MobDeadEffect");
+        agent.speed = 0f;//멈추고
+        agent.velocity = Vector3.zero; //가속도0
+        gameObject.GetComponent<BoxCollider>().enabled = false;
+        gameObject.GetComponent<SphereCollider>().enabled = false;
     }
 }

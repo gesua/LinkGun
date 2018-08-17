@@ -4094,7 +4094,7 @@ GameObject:
   - component: {fileID: 720924181}
   - component: {fileID: 720924180}
   m_Layer: 0
-  m_Name: EnemyMobSpawner
+  m_Name: E_MobSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4111,9 +4111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c3a645bbdaca941a1ed8df2bb17c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobSpawnTime: 5
+  mobSpawnTime: 3
   mobFactory: {fileID: 1569871702021182, guid: 7348e77d5c521fd478632fb3c2648f12, type: 2}
-  poolSize: 10
+  poolSize: 35
+  ableCount: 15
 --- !u!4 &720924181
 Transform:
   m_ObjectHideFlags: 0
