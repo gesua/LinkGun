@@ -286,6 +286,16 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         deactiveList.Add(bullet);
     }
 
+    //총알빼오기(잡몹)
+    public GameObject ShootBullet() {
+        GameObject tempBullet = deactiveList[0];
+        deactiveList.RemoveAt(0);
+        //타입지정
+        tempBullet.AddComponent<E_Bullet>();
+        tempBullet.SetActive(true);
+        return tempBullet;
+    }
+
     public void AllBulletOff() {
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i].GetComponent<BulletType>().StopAnimation();

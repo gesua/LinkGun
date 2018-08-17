@@ -8,6 +8,7 @@ TagManager:
   - P_Bullet
   - Wall
   - Enemy
+  - Mob
   layers:
   - Default
   - TransparentFX
