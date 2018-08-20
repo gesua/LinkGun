@@ -13,7 +13,7 @@ public class BigBoomerang : Weapon
         AmmoMax = 1;
         AmmoCount = AmmoMax;
 
-        Power = 50;
+        Power = 100;
         BulletSpeed = 5f;
         BulletTime = 100f;
 

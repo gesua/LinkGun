@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  MaxHP: 15
+  MaxHP: 1
   CurrHP: 0
   attackContinuousTime: 3
   attackDelayTime: 2.5

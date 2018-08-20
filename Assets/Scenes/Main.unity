@@ -164,7 +164,7 @@ MonoBehaviour:
   Speed: 3
   BlinkDelayTime: 0.1
   BlinkDistance: 1
-  GodMode: 1
+  GodMode: 0
 --- !u!135 &188521
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -613,6 +613,7 @@ MonoBehaviour:
   gasterFactory: {fileID: 1032346278309140, guid: 2f83e07713fc9484da0fa690fc9da714,
     type: 2}
   spawnRadius: 3
+  pat2Check: 0
   poolSize: 50
 --- !u!4 &69258089
 Transform:
@@ -1629,7 +1630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &308350455
 Transform:
   m_ObjectHideFlags: 0
@@ -4111,10 +4112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c3a645bbdaca941a1ed8df2bb17c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobSpawnTime: 3
+  mobSpawnTime: 5
   mobFactory: {fileID: 1569871702021182, guid: 7348e77d5c521fd478632fb3c2648f12, type: 2}
   poolSize: 35
-  ableCount: 15
+  ableCount: 5
   phase2Flag: 0
 --- !u!4 &720924181
 Transform:
@@ -11289,7 +11290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  MaxHP: 3000
+  MaxHP: 2000
   CurrHP: 0
   target: {fileID: 188519}
   attackContinuousTime: 4

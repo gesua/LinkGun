@@ -16,7 +16,7 @@ public class Sword : Weapon
 
         Power = 1;
         BulletSpeed = 10f;
-        BulletTime = 1f;
+        BulletTime = 3f;
 
         BulletCollider = new Vector3(0.15f, 1, 0.65f);
         BulletSize = new Vector3(5, 5, 1);
