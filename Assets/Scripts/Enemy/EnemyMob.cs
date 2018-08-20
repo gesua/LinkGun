@@ -9,7 +9,6 @@ public class EnemyMob : MonoBehaviour {
     public int MaxHP = 50; //최대체력
     public int CurrHP = 0; //현재체력
     Transform target; //플레이어의 위치를 받을값
-    bool checkRight = false; //오른쪽체크
     NavMeshAgent agent; //네비
     Rigidbody rigid; //충돌체 밀림방지
     Vector3 dir;//플레이어와의방향
