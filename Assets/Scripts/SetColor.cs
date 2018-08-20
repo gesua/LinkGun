@@ -22,9 +22,9 @@ public class SetColor : MonoBehaviour
 
     Color RandomColor()
     {
-        //float r = Random.Range(0f, 200f) / 255f;
-        //float g = Random.Range(0f, 200f) / 255f;
-        //float b = Random.Range(0f, 200f) / 255f;
+        //float r = Random.Range(200f, 256f) / 255f;
+        //float g = Random.Range(200f, 256f) / 255f;
+        //float b = Random.Range(200f, 256f) / 255f;
         float r = Random.value;
         float g = Random.value;
         float b = Random.value;
