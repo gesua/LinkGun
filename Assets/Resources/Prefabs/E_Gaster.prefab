@@ -94,8 +94,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240a978fc6ecd6d4cb2142bf3833875f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gasterLaser: {fileID: 1872174724196656, guid: 40c190971f8e574488a6d93c76abd3c9,
-    type: 2}
 --- !u!212 &212247835514717982
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -45,6 +45,8 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     //////////////////탄막 5번 베지어
     //베지어두발씩
 
+    //탄막10번 총알안쏨
+
     public int bulletCount4 = 18;
     public float bulletDegree4 = 20f;
 

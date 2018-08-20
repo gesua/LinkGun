@@ -15,6 +15,8 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
     List<GameObject> deactiveList = new List<GameObject>();
     public int poolSize = 100;
     public int ableCount = 15;
+    //페이즈2일때는 멈춰줌
+    public bool phase2Flag = false;
 
     private void Awake() {
         //싱글톤
@@ -24,24 +26,24 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
     void Start() {
         SetPool(); //풀지정
         spawnPos = GetComponentsInChildren<Transform>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        spawnCurrTime += Time.deltaTime;
-        if(spawnCurrTime > mobSpawnTime) {
-            if (deactiveList.Count > 0 && deactiveList.Count > poolSize - ableCount) {
-                spawnCurrTime = 0f;
-                //위치지정
-                GameObject tempMob = MobPoolActive();
-                if (tempMob.activeSelf == false)
-                {
+    }
+
+    // Update is called once per frame
+    void Update() {
+        if (phase2Flag == false) {
+            spawnCurrTime += Time.deltaTime;
+            if (spawnCurrTime > mobSpawnTime) {
+                if (deactiveList.Count > 0 && deactiveList.Count > poolSize - ableCount) {
+                    spawnCurrTime = 0f;
+                    //위치지정
+                    GameObject tempMob = MobPoolActive();
                     tempMob.transform.position = spawnPos[Random.Range(1, spawnPos.Length)].position;
                     tempMob.SetActive(true);
+
                 }
             }
         }
-	}
+    }
     //몹풀
     void SetPool() {
         mobPool = new GameObject[poolSize];
@@ -52,17 +54,17 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
             deactiveList.Add(mobPool[i]);
         }
     }
-    
+
     //풀액티브
     GameObject MobPoolActive() {
-       
+
         GameObject tempMob = deactiveList[0];
         deactiveList.RemoveAt(0);
         //꺼졌던 액티브 다시온
+        tempMob.GetComponent<NavMeshAgent>().enabled = true;
         tempMob.GetComponentInChildren<Animator>().enabled = true;
         tempMob.GetComponent<BoxCollider>().enabled = true;
         tempMob.GetComponent<SphereCollider>().enabled = true;
-        //tempMob.SetActive(true);
         return tempMob;
     }
 
@@ -79,9 +81,8 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
     }
     public void AllMobDisable() {
         for (int i = 0; i < poolSize; i++) {
-            if(mobPool[i].activeSelf) {
+            if (mobPool[i].activeSelf) {
                 mobPool[i].GetComponent<EnemyMob>().Dead();
-                
             }
         }
     }

@@ -100,8 +100,9 @@ public class EnemyMob : MonoBehaviour {
             agent.velocity = Vector3.zero; //가속도0
         }
         else {
-            agent.SetDestination(target.transform.position);//위치지정
-
+            if (gameObject.GetComponent<NavMeshAgent>().enabled) {
+                agent.SetDestination(target.transform.position);//위치지정
+            }
         }
 
     }
@@ -162,6 +163,7 @@ public class EnemyMob : MonoBehaviour {
         StartCoroutine("MobDeadEffect");
         agent.speed = 0f;//멈추고
         agent.velocity = Vector3.zero; //가속도0
+        gameObject.GetComponent<NavMeshAgent>().enabled = false;
         gameObject.GetComponent<BoxCollider>().enabled = false;
         gameObject.GetComponent<SphereCollider>().enabled = false;
     }

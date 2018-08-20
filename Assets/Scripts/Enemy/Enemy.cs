@@ -28,8 +28,8 @@ public class Enemy : MonoBehaviour {
     //애니메이터
     Animator EnemyAnimator;
 
-    /// <summary>
-    /// //////////////////////////////////////////////////////////////이동관련
+
+    //////////////////////////////////////////////////////////////이동관련
 
     //캐릭터의 방향을 체크해줄 값
     bool checkRight = false;
@@ -66,10 +66,8 @@ public class Enemy : MonoBehaviour {
     public float respawnTime = 1f;
     bool tempTel = false;
     Vector3 tempTelPos = Vector3.zero;
-    /// </summary>
 
 
-    /// <summary>
     /// //////////////////////////////////////////////////////////////공격관련
     //랜덤변수 (뿌리기4개기준)
     int atPatRand;
@@ -94,8 +92,6 @@ public class Enemy : MonoBehaviour {
     //변수를 여기서 넘겨줌
 
 
-    /// <summary>
-
     //이펙트
     GameObject teleport;
     //스프라이트이미지
@@ -112,7 +108,11 @@ public class Enemy : MonoBehaviour {
     //충돌체밀림방지
     Rigidbody rigid;
 
-    // Use this for initialization
+
+    /////////////////////////////////////////////페이즈2 넘어갈시
+    bool phase2Flag = false;
+
+
     void Start() {
         //네비
         agent = gameObject.GetComponent<NavMeshAgent>();
@@ -137,7 +137,9 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        if (CurrHP <= MaxHP * 0.27) {
+            StageChange();
+        }
         //안튕겨나가게
         if (rigid.velocity != Vector3.zero) {
             rigid.velocity = Vector3.zero;
@@ -203,39 +205,48 @@ public class Enemy : MonoBehaviour {
         //시간더해주기
         atPat12CurrTime += Time.deltaTime;
         //체력따라 정해주는 패턴
-        if (CurrHP > MaxHP * 0.12f) {
-            if (setRandomMove > 50) {
-                movePattern = 0;
+        //주황색이하일때(수정날짜 180820)
+        //페이즈1일때만
+        if (phase2Flag == false) {
+            if (CurrHP > MaxHP * 0.56f) {
+                if (setRandomMove > 50) {
+                    movePattern = 0;
+                }
+                else {
+                    //위치재선정재필요
+                    movePattern = 1;
+                }
             }
             else {
-                //위치재선정재필요
-                movePattern = 1;
+                attackDelayTime = respawnTime + Mov2SetTime;
+                movePattern = 2;
+            }
+
+            Move();
+
+            //보스의이동
+            switch (movePattern) {
+                case 0:
+                    //네비게이션
+                    //플레이어따라감
+                    if (agent.enabled) {
+                        agent.destination = target.position;
+                    }
+                    break;
+                case 1:
+                    MovePattern1();
+                    break;
+
+                case 2:
+                    MovePattern2();
+                    break;
+
             }
         }
         else {
-            attackDelayTime = respawnTime + Mov2SetTime;
-            movePattern = 2;
-        }
-
-        Move();
-
-        //보스의이동
-        switch (movePattern) {
-            case 0:
-                //네비게이션
-                //플레이어따라감
-                if (agent.enabled) {
-                    agent.destination = target.position;
-                }
-                break;
-            case 1:
-                MovePattern1();
-                break;
-
-            case 2:
-                MovePattern2();
-                break;
-
+            //페이즈2일때
+            //총알잠시딜레이
+            BulletSpawner.Instance.bulletState = 10;
         }
 
     }
@@ -275,7 +286,7 @@ public class Enemy : MonoBehaviour {
         currPatCheck += Time.deltaTime;
         //패턴1기준
         //체력이 50이상일때
-        if (CurrHP > MaxHP * 0.50) {
+        if (CurrHP > MaxHP * 0.85) {
             //시간계산을 패턴체크보다 우선적으로함
             if (atPat12CurrTime > atPat12Check) {
                 AtPatRand();
@@ -285,7 +296,6 @@ public class Enemy : MonoBehaviour {
                 if (onDamagedCount > CheckPat1Dam) {
                     //부채꼴
                     BulletSpawner.Instance.bulletState = 1;
-
                 }
                 else {
                     //직선
@@ -299,7 +309,7 @@ public class Enemy : MonoBehaviour {
             //애니메이션1
             aniState = ANI_STATE.E_AP1;
         }
-        else if (CurrHP <= MaxHP * 0.50 && CurrHP > MaxHP * 0.12) {
+        else if (CurrHP <= MaxHP * 0.85 && CurrHP > MaxHP * 0.56) {
             if (atPat12CurrTime > atPat12Check) {
                 AtPatRand();
             }
@@ -322,13 +332,18 @@ public class Enemy : MonoBehaviour {
             //애니메이션1
             aniState = ANI_STATE.E_AP1;
         }
-        else if (CurrHP <= MaxHP * 0.12) {
+        else if (CurrHP <= MaxHP * 0.56 && CurrHP > MaxHP * 0.27) {
             AtPatRand();
             aniState = ANI_STATE.E_AP2;
+        }
+        else if (CurrHP <= MaxHP * 0.27) {
+            //페이즈2갔을때
+
         }
 
     }
     void MovePattern1() {
+        
         //패턴1의 시간 계산
         currTimeMov1 += Time.deltaTime;
         //Debug.Log("위치재선정패턴(무브패턴1)");
@@ -408,7 +423,7 @@ public class Enemy : MonoBehaviour {
         }
 
     }
-  
+
 
     //데미지받는것
     public void Damage(int power) {
@@ -473,8 +488,36 @@ public class Enemy : MonoBehaviour {
             BulletSpawner.Instance.bulletState = 5;
         }
 
-        if(currAtkTime > attackContinuousTime-0.5f) {
+        if (currAtkTime > attackContinuousTime - 0.5f) {
             atPat12 = true;
         }
+    }
+
+    //페이즈2이동
+    void StageChange() {
+        //페이즈2플래그온
+        SetPhase2BossState();
+        //위치이동
+        this.transform.position = new Vector3(1000, -10, 5);
+        //플레이어위치이동
+        Debug.Log("스테이지2이동,플레이어이동시킴");
+        target.GetComponent<Player>().MapTeleport();
+
+    }
+
+    //페이즈2일때 보스상태 설정하는 함수
+    void SetPhase2BossState() {
+        //페이즈2 플래그 온
+        phase2Flag = true;
+        //네비게이션오프
+        agent.enabled = false;
+        //최대체력 현재체력변환
+        MaxHP = CurrHP;
+        //공격관련시간초기화
+        attackDelayTime = 0.5f;
+        atPat12Check = 2f;
+        //몹생성중단
+        MobSpawner.Instance.AllMobDisable();
+        MobSpawner.Instance.phase2Flag = true;
     }
 }
