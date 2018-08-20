@@ -27,22 +27,13 @@ public class TimeBomb : Weapon {
             if (sprites[i].name.Equals("TimeBomb"))
             {
                 WeaponSprite = sprites[i];
+                BulletSprite = sprites[i];
                 break;
             }
         }
         if (WeaponSprite == null)
         {
             Debug.LogError("TimeBombBullet WeaponSprite 못 찾음");
-        }
-
-        sprites = Resources.LoadAll<Sprite>("Sprites/BulletImage1");
-        for (int i = 0; i < sprites.Length; i++)
-        {
-            if (sprites[i].name.Equals("TimeBombBullet"))
-            {
-                BulletSprite = sprites[i];
-                break; // 1개만 찾으면 되니 바로 나옴
-            }
         }
         if (BulletSprite == null)
         {
