@@ -140,6 +140,10 @@ public class Enemy : MonoBehaviour {
         if (CurrHP <= MaxHP * 0.27 && phase2Flag == false) {
             StageChange();
         }
+        if (phase2Flag == true && this.transform.position != new Vector3(1000, -10, 5)) {
+            //위치이동
+            this.transform.position = new Vector3(1000, -10, 5);
+        }
         //안튕겨나가게
         if (rigid.velocity != Vector3.zero) {
             rigid.velocity = Vector3.zero;
@@ -343,7 +347,7 @@ public class Enemy : MonoBehaviour {
 
     }
     void MovePattern1() {
-        
+
         //패턴1의 시간 계산
         currTimeMov1 += Time.deltaTime;
         //Debug.Log("위치재선정패턴(무브패턴1)");
@@ -488,7 +492,8 @@ public class Enemy : MonoBehaviour {
             else {
                 BulletSpawner.Instance.bulletState = 5;
             }
-        } else {
+        }
+        else {
             if (atPatRand >= 85) {
                 BulletSpawner.Instance.bulletState = 2;
             }
@@ -516,8 +521,7 @@ public class Enemy : MonoBehaviour {
     void StageChange() {
         //페이즈2플래그온
         SetPhase2BossState();
-        //위치이동
-        this.transform.position = new Vector3(1000, -10, 5);
+
         //플레이어위치이동
         Debug.Log("스테이지2이동,플레이어이동시킴");
         target.GetComponent<Player>().MapTeleport();
