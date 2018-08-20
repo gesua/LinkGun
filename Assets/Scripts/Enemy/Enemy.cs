@@ -561,6 +561,7 @@ public class Enemy : MonoBehaviour {
         agent.enabled = false;
         //최대체력 현재체력변환
         MaxHP = CurrHP;
+        BossHp.fillAmount = 1;
         //공격관련시간초기화
         attackDelayTime = 0.5f;
         atPat12Check = 2f;
