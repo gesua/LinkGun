@@ -71,11 +71,15 @@ public class E_Gaster : MonoBehaviour {
         tempLaser.GetComponent<BoxCollider>().enabled = true;
         tempLaser.GetComponent<BoxCollider>().size = new Vector3(tempLaser.GetComponent<BoxCollider>().size.x, tempLaser.GetComponent<BoxCollider>().size.y, 2.5f);
         tempLaser.GetComponent<BoxCollider>().center = new Vector3(tempLaser.GetComponent<BoxCollider>().center.x, tempLaser.GetComponent<BoxCollider>().center.y, 1.2f);
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.15f);
+        LaserSpawner.Instance.AddLaserPool(tempLaser);
+        for (int i = 3; i > 0; i--) {
+            this.transform.localScale = new Vector3((i + 1) * 0.25f, this.transform.localScale.y, this.transform.localScale.z);
+            yield return new WaitForSeconds(0.05f);
+        }
         //가스터를 풀에 집어넣음
         GasterSpawner.Instance.AddGasterPool(gameObject);
         //레이저를 풀에 집어넣음
-        LaserSpawner.Instance.AddLaserPool(tempLaser);
 
     }
     public void GameSetCoroutine() {

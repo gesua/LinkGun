@@ -19,6 +19,8 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
     //플레이어 위치 기준으로 radius로 원형반경 계산하여 그밖으로 띄워줌
     public float spawnRadius = 5f;
     float radius = 0f;
+    public bool pat2Check = false;
+    float pat2TempRadius = 0f;
     //Vector3 기준위치
     Vector3 gasterPivot;
     // Use this for initialization
@@ -51,7 +53,8 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
     void Update() {
         //위치지정
         //gasterPivot = new Vector3(player.position.x + (spawnRadius*Mathf.Cos(radius)), player.position.y, player.position.z + (spawnRadius * Mathf.Sin(radius)));
-        gasterPivot = new Vector3(Camera.main.transform.position.x + (spawnRadius * Mathf.Cos(radius)), Camera.main.transform.position.y-10, Camera.main.transform.position.z + (spawnRadius * Mathf.Sin(radius)));
+        radius = Random.Range(0f, 360f);
+        
         //스폰타임 넘으면 생성
 
         switch (patState) {
@@ -77,8 +80,8 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
     void SpawnPat1() {
         currTimePat1 += Time.deltaTime;
         if (currTimePat1 > spawnTimePat1) {
+            gasterPivot = new Vector3(1000 + (spawnRadius * Mathf.Cos(radius)), Camera.main.transform.position.y - 10, 0 + (spawnRadius * Mathf.Sin(radius)));
             GasterSpawn();
-            radius += Random.Range(0, 360);
             currTimePat1 = 0f;
         }
     }
@@ -86,8 +89,13 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
     void SpawnPat2() {
         currTimePat2 += Time.deltaTime;
         if (currTimePat2 > spawnTimePat2) {
+            if (pat2Check == false) {
+                pat2TempRadius = radius;
+                pat2Check = true;
+            }
+            gasterPivot = new Vector3(1000 + (spawnRadius * Mathf.Cos(pat2TempRadius)), Camera.main.transform.position.y - 10, 0 + (spawnRadius * Mathf.Sin(pat2TempRadius)));
             GasterSpawn();
-            radius += 0.3f;
+            pat2TempRadius += 0.3f;
             currTimePat2 = 0f;
         }
     }
@@ -98,7 +106,12 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
         deactiveList.RemoveAt(0);
         tempGaster.SetActive(true);
         tempGaster.transform.position = gasterPivot;
-        tempGaster.transform.LookAt(player.transform);
+        if(patState == 1) {
+            tempGaster.transform.LookAt(player);
+        }
+        if (patState == 2) {
+            tempGaster.transform.LookAt(new Vector3(1000, -10, 0));
+        }
         //tempGaster.transform.LookAt(Camera.main.transform.position);
         tempGaster.transform.localScale = new Vector3(0, this.transform.localScale.y, this.transform.localScale.z);
     

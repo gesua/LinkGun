@@ -44,6 +44,9 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
     //베지어한발씩
     //////////////////탄막 5번 베지어
     //베지어두발씩
+    //////////////////탄막 6번 베지어
+    //베지어세발씩
+
 
     //탄막10번 총알안쏨
 
@@ -103,12 +106,15 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
                     ShootMode3();
                     break;
                 case 4:
+                    //베지어1
                     ShootMode4();
                     break;
                 case 5:
+                    //베지어2
                     ShootMode5();
                     break;
                 case 6:
+                    //베지어3
                     ShootMode6();
                     break;
 
@@ -171,7 +177,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             //코사인값의 세타값을 구해줘야 하므로 x값(x/R)을 넣어줘야함
             float inner = Mathf.Acos(dir.x);
             //해당라디안 결과값을 디그리로 바꿔주고 정면이 아니므로 180도를 더해 꺽어줌
-            inner = Mathf.Rad2Deg * inner + 180;
+            inner = Mathf.Rad2Deg * inner + 170;
             //기본 각도 계산
             float startDegree = -(bulletDegree2 / 2) * (bulletCount2 - 1) + inner;
             float fireDegree = startDegree + (bulletDegree2 * i);
@@ -214,7 +220,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             //해당라디안 결과값을 디그리로 바꿔주고 정면이 아니므로 180도를 더해 꺽어줌
             inner = Mathf.Rad2Deg * inner + 180;
             //기본 각도 계산
-            float startDegree = -(bulletDegree4 / 2) * (bulletCount4 - 1) + inner;
+            float startDegree = -(bulletDegree4 / 2) * (bulletCount4 - 1) + inner + 175;
             float fireDegree = startDegree + (bulletDegree4 * i);
             if (target.transform.position.z > this.transform.position.z) {
                 fireDegree *= -1;
@@ -236,7 +242,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             //해당라디안 결과값을 디그리로 바꿔주고 정면이 아니므로 180도를 더해 꺽어줌
             inner = Mathf.Rad2Deg * inner + 180;
             //기본 각도 계산
-            float startDegree = -(bulletDegree4 / 2) * (bulletCount4 - 1) + inner;
+            float startDegree = -(bulletDegree4 / 2) * (bulletCount4 - 1) + inner + 175;
             float fireDegree = startDegree + (bulletDegree4 * i);
             if (target.transform.position.z > this.transform.position.z) {
                 fireDegree *= -1;
@@ -257,15 +263,15 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         b_spawnTime = 0.3f;
         for (int i = 0; i < bulletCount4; i++) {
             //방향백터값 계산필요
-            Vector3 dir = target.transform.position - this.transform.position;
             //방향백터 정규화
+            Vector3 dir = target.transform.position - this.transform.position;
             dir.Normalize();
             //코사인값의 세타값을 구해줘야 하므로 x값(x/R)을 넣어줘야함
             float inner = Mathf.Acos(dir.x);
             //해당라디안 결과값을 디그리로 바꿔주고 정면이 아니므로 180도를 더해 꺽어줌
             inner = Mathf.Rad2Deg * inner + 180;
             //기본 각도 계산
-            float startDegree = -(bulletDegree4 / 2) * (bulletCount4 - 1) + inner;
+            float startDegree = -(bulletDegree4 / 2) * (bulletCount4 - 1) + inner +175;
             float fireDegree = startDegree + (bulletDegree4 * i);
             if (target.transform.position.z > this.transform.position.z) {
                 fireDegree *= -1;
@@ -273,13 +279,13 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             for (int j = 0; j < 3; j++) {
                 //해당 각도 (X,Z축)
                 if (j == 0) {
-                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Nabi, true);
+                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Basic, true);
                 }
                 else if (j == 1) {
-                    BulletPoolActiveBezierForward(fireDegree, BulletType.B_Type.Shuriken);
+                    BulletPoolActiveBezierForward(fireDegree, BulletType.B_Type.Basic);
                 }
                 else {
-                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Nabi, false);
+                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Basic, false);
                 }
             }
         }

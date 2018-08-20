@@ -112,6 +112,9 @@ public class Enemy : MonoBehaviour {
     /////////////////////////////////////////////페이즈2 넘어갈시
     bool phase2Flag = false;
 
+    //가스터패턴(스테이지2갔을때 기준 3번당한번)
+    int count = 0;
+
 
     void Start() {
         //네비
@@ -172,6 +175,9 @@ public class Enemy : MonoBehaviour {
                 atPat12CurrTime = 0f;
                 atPat12 = false;
             }
+            if(count == 3) {
+                count = 0;
+            }
         }
         if (currAtkDyTime > attackDelayTime) {
             //공격딜레이(이동) 끝나서 공격전환
@@ -185,6 +191,9 @@ public class Enemy : MonoBehaviour {
             agent.velocity = Vector3.zero;
             //체력이12퍼센트 이하일때 발악패턴 랜덤지정
             atPatRand = Random.Range(0, 100);
+            if(phase2Flag == true) {
+                count++;
+            }
 
         }
 
@@ -251,6 +260,10 @@ public class Enemy : MonoBehaviour {
             //페이즈2일때
             //총알잠시딜레이
             BulletSpawner.Instance.bulletState = 10;
+            //가스터 잠시 딜레이
+            GasterSpawner.Instance.patState = 0;
+            //패턴2초기화
+            GasterSpawner.Instance.pat2Check = false;
         }
 
     }
@@ -290,59 +303,71 @@ public class Enemy : MonoBehaviour {
         currPatCheck += Time.deltaTime;
         //패턴1기준
         //체력이 50이상일때
-        if (CurrHP > MaxHP * 0.85) {
-            //시간계산을 패턴체크보다 우선적으로함
-            if (atPat12CurrTime > atPat12Check) {
-                AtPatRand();
-            }
-            if (currPatCheck < atPat1Check && atPat12CurrTime < atPat12Check) {
-                //데미지축적치이상일때
-                if (onDamagedCount > CheckPat1Dam) {
-                    //부채꼴
-                    BulletSpawner.Instance.bulletState = 1;
+        if (count != 3) {
+            if (CurrHP > MaxHP * 0.85) {
+                //시간계산을 패턴체크보다 우선적으로함
+                if (atPat12CurrTime > atPat12Check) {
+                    AtPatRand();
+                }
+                if (currPatCheck < atPat1Check && atPat12CurrTime < atPat12Check) {
+                    //데미지축적치이상일때
+                    if (onDamagedCount > CheckPat1Dam) {
+                        //부채꼴
+                        BulletSpawner.Instance.bulletState = 1;
+                    }
+                    else {
+                        //직선
+                        BulletSpawner.Instance.bulletState = 0;
+                    }
                 }
                 else {
-                    //직선
-                    BulletSpawner.Instance.bulletState = 0;
+                    onDamagedCount = 0;
+                    currPatCheck = 0;
                 }
+                //애니메이션1
+                aniState = ANI_STATE.E_AP1;
             }
-            else {
-                onDamagedCount = 0;
-                currPatCheck = 0;
-            }
-            //애니메이션1
-            aniState = ANI_STATE.E_AP1;
-        }
-        else if (CurrHP <= MaxHP * 0.85 && CurrHP > MaxHP * 0.56) {
-            if (atPat12CurrTime > atPat12Check) {
-                AtPatRand();
-            }
-            if (currPatCheck < atPat2Check && atPat12CurrTime < atPat12Check) {
-                //데미지축적치이상일때
-                if (onDamagedCount > CheckPat2Dam) {
-                    //원형
-                    BulletSpawner.Instance.bulletState = 2;
+            else if (CurrHP <= MaxHP * 0.85 && CurrHP > MaxHP * 0.56) {
+                if (atPat12CurrTime > atPat12Check) {
+                    AtPatRand();
+                }
+                if (currPatCheck < atPat2Check && atPat12CurrTime < atPat12Check) {
+                    //데미지축적치이상일때
+                    if (onDamagedCount > CheckPat2Dam) {
+                        //원형
+                        BulletSpawner.Instance.bulletState = 2;
 
+                    }
+                    else {
+                        //부채꼴
+                        BulletSpawner.Instance.bulletState = 1;
+                    }
                 }
                 else {
-                    //부채꼴
-                    BulletSpawner.Instance.bulletState = 1;
+                    onDamagedCount = 0;
+                    currPatCheck = 0;
                 }
+                //애니메이션1
+                aniState = ANI_STATE.E_AP1;
             }
-            else {
-                onDamagedCount = 0;
-                currPatCheck = 0;
+            else if (CurrHP <= MaxHP * 0.56 && CurrHP > MaxHP * 0.27) {
+                AtPatRand();
+                aniState = ANI_STATE.E_AP2;
             }
-            //애니메이션1
-            aniState = ANI_STATE.E_AP1;
-        }
-        else if (CurrHP <= MaxHP * 0.56 && CurrHP > MaxHP * 0.27) {
-            AtPatRand();
-            aniState = ANI_STATE.E_AP2;
-        }
-        else if (CurrHP <= MaxHP * 0.27) {
-            //페이즈2갔을때
-            AtPatRand();
+            else if (CurrHP <= MaxHP * 0.27) {
+                //페이즈2갔을때
+                AtPatRand();
+            }
+        } else {
+            //총알안뿌려줌
+            BulletSpawner.Instance.bulletState = 10;
+            if (atPatRand > 50) {
+                GasterSpawner.Instance.patState = 1;
+                GasterSpawner.Instance.spawnTimePat1 = 0.5f;
+            } else {
+                GasterSpawner.Instance.patState = 2;
+                GasterSpawner.Instance.spawnTimePat2 = 0.1f;
+            }
         }
 
     }
