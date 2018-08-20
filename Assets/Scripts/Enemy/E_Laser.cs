@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class E_Laser : E_Bullet {
-    LaserSpawner laserSpawner;
+    //LaserSpawner laserSpawner;
 
     new private void OnEnable() {
         bulletSpeed = 0f;
     }
-    public void SetSpawner(LaserSpawner spawner) {
+    /*public void SetSpawner(LaserSpawner spawner) {
         laserSpawner = spawner;
-    }
+    }*/
    
     private void Update() {
         

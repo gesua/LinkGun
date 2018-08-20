@@ -65,7 +65,7 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
         for (int i = 0; i < poolSize; i++) {
             bulletPool[i] = Instantiate(bulletFactory);
             bulletPool[i].AddComponent<E_Bullet>();
-            bulletPool[i].GetComponent<E_Bullet>().SetSpawner(this);
+            //bulletPool[i].GetComponent<E_Bullet>().SetSpawner(this);
             bulletPool[i].SetActive(false);
             //Spawner의자식
             bulletPool[i].transform.parent = GameObject.Find("E_Bullet").transform;

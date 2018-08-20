@@ -41,7 +41,7 @@ public class GasterSpawner : MonoSingleton<GasterSpawner> {
         gasterPool = new GameObject[poolSize];
         for (int i = 0; i < poolSize; i++) {
             gasterPool[i] = Instantiate(gasterFactory);
-            gasterPool[i].GetComponent<E_Gaster>().SetSpawner(this);
+            //gasterPool[i].GetComponent<E_Gaster>().SetSpawner(this);
             gasterPool[i].SetActive(false);
             //Spawner의자식
             gasterPool[i].transform.parent = GameObject.Find("E_Gaster").transform;

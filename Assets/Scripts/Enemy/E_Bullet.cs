@@ -27,7 +27,7 @@ public class E_Bullet : MonoBehaviour {
     public float surviveTime = 7f;
 
     //총알 넣어줄 Spawner객체
-    protected BulletSpawner bulletSpawner;
+    //protected BulletSpawner bulletSpawner;
     // Use this for initialization
 
     // 스프라이트
@@ -78,9 +78,9 @@ public class E_Bullet : MonoBehaviour {
         
     }
 
-    public void SetSpawner(BulletSpawner spawner) {
+    /*public void SetSpawner(BulletSpawner spawner) {
         bulletSpawner = spawner;
-    }
+    }*/
 
     // 끄고 Pool에 넣음
     public void Off() {

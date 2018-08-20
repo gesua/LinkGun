@@ -23,7 +23,7 @@ public class LaserSpawner : MonoSingleton<LaserSpawner> {
         laserPool = new GameObject[poolSize];
         for (int i = 0; i < poolSize; i++) {
             laserPool[i] = Instantiate(laserFactory);
-            laserPool[i].GetComponent<E_Laser>().SetSpawner(this);
+            //laserPool[i].GetComponent<E_Laser>().SetSpawner(this);
             laserPool[i].SetActive(false);
             //Spawner의자식
             laserPool[i].transform.parent = GameObject.Find("E_Laser").transform;

@@ -12,13 +12,13 @@ public class E_Gaster : MonoBehaviour {
     Sprite[] sprite;
     //레이저받기
 
-    GasterSpawner gasterSpawner;
+    //GasterSpawner gasterSpawner;
 
     
 
-    public void SetSpawner(GasterSpawner spawner) {
+    /*public void SetSpawner(GasterSpawner spawner) {
         gasterSpawner = spawner;
-    }
+    }*/
 
     void Start() {
         //가스터이미지지정
