@@ -137,7 +137,7 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (CurrHP <= MaxHP * 0.27) {
+        if (CurrHP <= MaxHP * 0.27 && phase2Flag == false) {
             StageChange();
         }
         //안튕겨나가게
@@ -338,7 +338,7 @@ public class Enemy : MonoBehaviour {
         }
         else if (CurrHP <= MaxHP * 0.27) {
             //페이즈2갔을때
-
+            AtPatRand();
         }
 
     }
@@ -475,17 +475,36 @@ public class Enemy : MonoBehaviour {
     }
 
     private void AtPatRand() {
-        if (atPatRand >= 76) {
-            BulletSpawner.Instance.bulletState = 2;
-        }
-        else if (atPatRand < 76 && atPatRand >= 51) {
-            BulletSpawner.Instance.bulletState = 3;
-        }
-        else if (atPatRand < 51 && atPatRand >= 26) {
-            BulletSpawner.Instance.bulletState = 4;
-        }
-        else {
-            BulletSpawner.Instance.bulletState = 5;
+        if (phase2Flag == false) {
+            if (atPatRand >= 76) {
+                BulletSpawner.Instance.bulletState = 2;
+            }
+            else if (atPatRand < 76 && atPatRand >= 51) {
+                BulletSpawner.Instance.bulletState = 3;
+            }
+            else if (atPatRand < 51 && atPatRand >= 26) {
+                BulletSpawner.Instance.bulletState = 4;
+            }
+            else {
+                BulletSpawner.Instance.bulletState = 5;
+            }
+        } else {
+            if (atPatRand >= 85) {
+                BulletSpawner.Instance.bulletState = 2;
+            }
+            else if (atPatRand < 85 && atPatRand >= 65) {
+                BulletSpawner.Instance.bulletState = 3;
+            }
+            else if (atPatRand < 65 && atPatRand >= 45) {
+                BulletSpawner.Instance.bulletState = 4;
+            }
+            else if (atPatRand < 45 && atPatRand >= 25) {
+                BulletSpawner.Instance.bulletState = 5;
+            }
+            else {
+                BulletSpawner.Instance.bulletState = 6;
+            }
+
         }
 
         if (currAtkTime > attackContinuousTime - 0.5f) {
