@@ -498,8 +498,24 @@ public class Gun : MonoBehaviour
     {
         for (int i = 0; i < BulletPoolSize; i++)
         {
-            P_Bullet temp = AllBullet[i].GetComponent<P_Bullet>();
-            temp.enabled = false;
+            if (AllBullet[i].activeSelf == true)
+            {
+                P_Bullet temp = AllBullet[i].GetComponent<P_Bullet>();
+                temp.enabled = false;
+            }
+        }
+    }
+
+    // 모든 총알 회수
+    public void AllBulletCollect()
+    {
+        for (int i = 0; i < BulletPoolSize; i++)
+        {
+            if (AllBullet[i].activeSelf == true)
+            {
+                P_Bullet temp = AllBullet[i].GetComponent<P_Bullet>();
+                temp.SetOff();
+            }
         }
     }
 

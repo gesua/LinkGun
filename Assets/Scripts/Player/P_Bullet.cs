@@ -106,6 +106,12 @@ public class P_Bullet : MonoBehaviour
 
         // 움직이게
         IsHit = false;
+
+        // 시한폭탄은 콜라이더 끔
+        if(W_Type == WeaponType.TimeBomb)
+        {
+            Collider.enabled = false;
+        }
     }
 
     private void Update()
@@ -123,6 +129,9 @@ public class P_Bullet : MonoBehaviour
                 SurviveTimeCheck();
                 Move();
                 break;
+            case WeaponType.TimeBomb:
+                SurviveTimeCheck();
+                break;
         }
     }
 
@@ -138,16 +147,10 @@ public class P_Bullet : MonoBehaviour
                 // 뭔가에 부딪히면 플레이어 돌아옴
                 if (IsHit)
                 {
-                    Dir = PlayerTF.position - transform.position;
-
-                    // 플레이어와 엄청 가까이 있는 경우엔 그냥 회수
-                    if (Dir.magnitude <= 0.03f)
-                    {
-                        SetOff();
-                    }
-
                     // 큰 부메랑은 그 자리에 멈춤
                     if (Number == 4) break;
+
+                    Dir = PlayerTF.position - transform.position;
 
                     Dir.Normalize();
                 }
@@ -204,7 +207,6 @@ public class P_Bullet : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
             BulletSR.sprite = BulletEffect[i];
         }
-
         SetOff();
     }
 
@@ -246,8 +248,10 @@ public class P_Bullet : MonoBehaviour
     }
 
     // 총알 끄기
-    void SetOff()
+    public void SetOff()
     {
+        // 코루틴 끄기
+        StopAllCoroutines();
         // 끄기
         gameObject.SetActive(false);
         // 풀에 넣음
