@@ -279,13 +279,13 @@ public class BulletSpawner : MonoSingleton<BulletSpawner> {
             for (int j = 0; j < 3; j++) {
                 //해당 각도 (X,Z축)
                 if (j == 0) {
-                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Basic, true);
+                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Nabi, true);
                 }
                 else if (j == 1) {
-                    BulletPoolActiveBezierForward(fireDegree, BulletType.B_Type.Basic);
+                    BulletPoolActiveBezierForward(fireDegree, BulletType.B_Type.Shuriken);
                 }
                 else {
-                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Basic, false);
+                    BulletPoolActiveBezier(fireDegree, BulletType.B_Type.Nabi, false);
                 }
             }
         }
