@@ -4115,7 +4115,6 @@ MonoBehaviour:
   mobFactory: {fileID: 1569871702021182, guid: 7348e77d5c521fd478632fb3c2648f12, type: 2}
   poolSize: 35
   ableCount: 15
-  phase2Flag: 0
 --- !u!4 &720924181
 Transform:
   m_ObjectHideFlags: 0
