@@ -553,6 +553,7 @@ public class Player : MonoBehaviour
     public void MapTeleport()
     {
         transform.position = new Vector3(1000, -10, 0);
+        GunScript.AllBulletCollect(); // 모든 총알 회수
         Camera.main.transform.position = new Vector3(1000, 0, 2);
         Camera.main.GetComponent<PlayerCamera>().enabled = false;
     }
