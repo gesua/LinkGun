@@ -11,9 +11,9 @@ TextureImporter:
     21300008: BulletImage1_4
     21300010: BulletImage1_5
     21300012: BulletImage1_6
-    21300014: BulletImage1_7
-    21300016: BulletImage1_8
-    21300018: BulletImage1_9
+    21300014: TimeBombEffect_3
+    21300016: TimeBombEffect_4
+    21300018: TimeBombEffect_5
     21300020: BulletImage1_10
     21300022: BulletImage1_11
     21300024: BulletImage1_12
@@ -140,7 +140,7 @@ TextureImporter:
     21300266: BulletImage1_133
     21300268: BulletImage1_134
     21300270: BulletImage1_135
-    21300272: BulletImage1_136
+    21300272: TimeBombEffect_2
     21300274: BulletImage1_137
     21300276: BulletImage1_138
     21300278: BulletImage1_139
@@ -299,6 +299,7 @@ TextureImporter:
     21300584: Blink_2
     21300586: Blink_3
     21300588: Blink_4
+    21300590: TimeBombEffect_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -484,7 +485,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletImage1_7
+      name: TimeBombEffect_3
       rect:
         serializedVersion: 2
         x: 127
@@ -498,7 +499,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletImage1_8
+      name: TimeBombEffect_4
       rect:
         serializedVersion: 2
         x: 144
@@ -512,7 +513,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletImage1_9
+      name: TimeBombEffect_5
       rect:
         serializedVersion: 2
         x: 163
@@ -2234,21 +2235,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletImage1_135
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 203
-        width: 12
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: BulletImage1_136
+      name: TimeBombEffect_2
       rect:
         serializedVersion: 2
         x: 16
@@ -4469,6 +4456,20 @@ TextureImporter:
         height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TimeBombEffect_1
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 203
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

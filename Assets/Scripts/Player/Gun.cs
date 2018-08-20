@@ -149,6 +149,11 @@ public class Gun : MonoBehaviour
             case WeaponType.Boomerang:
                 Boomerang();
                 break;
+
+            // 시한폭탄
+            case WeaponType.TimeBomb:
+                TimeBomb();
+                break;
         }
 
         // 무기가 2개 이상일 때
@@ -227,20 +232,34 @@ public class Gun : MonoBehaviour
                 if (IsCooldown == false)
                 {
                     Shoot();
-
-                    // 부메랑 회수 전까진 무기변경 불가
-                    if (NowWeapon._Number == 3)
-                    {
-                        IsReload = true;
-                    }
-                    // 큰 부메랑은 날리면 사라짐
-                    else if (NowWeapon._Number == 4)
+                    
+                    // 큰 부메랑은 날리면 무기 사라짐
+                    if (NowWeapon._Number == 4)
                     {
                         WeaponsList.RemoveAt(WeaponSelectIndex); // 현재 무기 사라짐
                         WeaponSelectIndex--; // 기본 무기가 0이라 0보다 작은 값이 나올 수 없음
                         WeaponChange(); // 무기 변경
                     }
                 }
+            }
+        }
+    }
+    
+    // 시한폭탄
+    void TimeBomb()
+    {
+        // 쿨다운
+        if (IsCooldown)
+        {
+            Cooldown();
+        }
+
+        // 좌클릭
+        if (Input.GetMouseButton(0))
+        {
+            if (IsCooldown == false)
+            {
+                Shoot();
             }
         }
     }
@@ -283,7 +302,7 @@ public class Gun : MonoBehaviour
             tempBullet.GetComponent<BoxCollider>().size = NowWeapon._BulletCollider;
 
             // 위치 잡아줌
-            if (NowWeapon._Number != 4)
+            if (NowWeapon._Number != 4 && NowWeapon._W_Type != WeaponType.TimeBomb)
             {
                 // 일반 총알
                 tempBullet.transform.position = transform.position + transform.forward * 0.5f; // 약간 앞에서 발사
@@ -291,14 +310,20 @@ public class Gun : MonoBehaviour
             else
             {
                 // 큰 부메랑은 플레이어 몸에서 나가게(안 그러면 벽에 끼임)
+                // 시한폭탄도 플레이어 몸에서 나가게
                 tempBullet.transform.position = transform.position;
             }
-            tempBullet.transform.LookAt(Target);
 
-            // x축 회전 없앰
-            Vector3 tempAngle = tempBullet.transform.eulerAngles;
-            tempAngle.x = 0;
-            tempBullet.transform.eulerAngles = tempAngle;
+            // 총알 회전(시한폭탄은 필요없음)
+            if (NowWeapon._W_Type != WeaponType.TimeBomb)
+            {
+                tempBullet.transform.LookAt(Target);
+
+                // x축 회전 없앰
+                Vector3 tempAngle = tempBullet.transform.eulerAngles;
+                tempAngle.x = 0;
+                tempBullet.transform.eulerAngles = tempAngle;
+            }
 
             // 쿨다운 시작
             IsCooldown = true;
@@ -361,6 +386,13 @@ public class Gun : MonoBehaviour
     // 마우스 포인터 바라봄
     void LookTarget()
     {
+        // 시한폭탄은 안 바뀜
+        if(NowWeapon._W_Type == WeaponType.TimeBomb)
+        {
+            transform.eulerAngles = Vector3.zero;
+            return;
+        }
+
         transform.LookAt(Target);
 
         // x축 회전 없앰

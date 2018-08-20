@@ -116,6 +116,9 @@ public class BulletType : MonoBehaviour
 
     void OnEnable()
     {
+        // 누적시간 초기화
+        CurrentTime = 0;
+
         switch (BType)
         {
             case B_Type.Basic: // 기본

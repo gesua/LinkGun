@@ -20,7 +20,8 @@ public class P_Bullet : MonoBehaviour
 
     // 스프라이트
     SpriteRenderer BulletSR; // 스프라이트 그리는거
-    Sprite[] BulletEffect; // 총알 이펙트
+    static Sprite[] BulletEffect; // 총알 이펙트
+    static Sprite[] TimeBombEffect; // 시한폭탄 이펙트
 
     // 부딪혔는지(이펙트와 총알을 구분/부메랑 돌아오는거)
     bool IsHit = false;
@@ -48,11 +49,35 @@ public class P_Bullet : MonoBehaviour
         }
 
         // 총알 이펙트
-        BulletEffect = Resources.LoadAll<Sprite>("Sprites/BulletEffect");
         if (BulletEffect == null)
         {
-            Debug.LogError("BulletEffect 못 찾음");
-            return;
+            BulletEffect = Resources.LoadAll<Sprite>("Sprites/BulletEffect");
+            if (BulletEffect == null)
+            {
+                Debug.LogError("BulletEffect 못 찾음");
+                return;
+            }
+        }
+
+        // 시한폭탄 이펙트
+        if (TimeBombEffect == null)
+        {
+            Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/BulletImage1");
+            TimeBombEffect = new Sprite[5];
+            int count = 0;
+            for (int i = 0; i < sprites.Length; i++)
+            {
+                if (sprites[i].name.Contains("TimeBombEffect"))
+                {
+                    TimeBombEffect[count] = sprites[i];
+                    count++;
+                }
+            }
+            if (TimeBombEffect[TimeBombEffect.Length - 1] == null)
+            {
+                Debug.LogError("TimeBombEffect 끝까지 못 찾음");
+                return;
+            }
         }
 
         PlayerTF = GameObject.Find("Player").transform;
