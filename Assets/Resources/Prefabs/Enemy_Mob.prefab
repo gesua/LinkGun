@@ -175,11 +175,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  MaxHP: 1
+  MaxHP: 5
   CurrHP: 0
   attackContinuousTime: 3
   attackDelayTime: 2.5
-  b_spawnTime: 0.5
+  b_spawnTime: 1
 --- !u!135 &135898471828405850
 SphereCollider:
   m_ObjectHideFlags: 1
