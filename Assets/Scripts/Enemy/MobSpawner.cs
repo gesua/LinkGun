@@ -38,10 +38,12 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
                 if (deactiveList.Count > 0 && deactiveList.Count > poolSize - ableCount) {
                     spawnCurrTime = 0f;
                     //위치지정
-                    GameObject tempMob = MobPoolActive();
-                    tempMob.transform.position = spawnPos[Random.Range(1, spawnPos.Length)].position;
-                    tempMob.SetActive(true);
-
+                    int random = Random.Range(1, spawnPos.Length);
+                    if(spawnPos[Random.Range(1, spawnPos.Length)].GetComponent<MobSpawnPointCheck>().checkPlayer == false) {
+                        GameObject tempMob = MobPoolActive();
+                        tempMob.transform.position = spawnPos[random].position;
+                        tempMob.SetActive(true);
+                    }
                 }
             }
         }
