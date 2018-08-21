@@ -39,7 +39,7 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
                     spawnCurrTime = 0f;
                     //위치지정
                     int random = Random.Range(1, spawnPos.Length);
-                    if(spawnPos[Random.Range(1, spawnPos.Length)].GetComponent<MobSpawnPointCheck>().checkPlayer == false) {
+                    if(spawnPos[random].GetComponent<MobSpawnPointCheck>().checkPlayer == false) {
                         GameObject tempMob = MobPoolActive();
                         tempMob.transform.position = spawnPos[random].position;
                         tempMob.SetActive(true);
