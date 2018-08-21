@@ -28,6 +28,10 @@ public class EnemyMob : MonoBehaviour {
     SpriteRenderer mobSprite;
     Sprite[] sprites;
 
+    //공격범위
+    public float attackRange = 5f;
+    float range;
+
     private void OnEnable() {
         CurrHP = MaxHP; //HP초기화
     }
@@ -47,6 +51,8 @@ public class EnemyMob : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        //공격반경계산
+        range = (target.position - this.gameObject.transform.position).magnitude;
         currTime += Time.deltaTime;//시간계산
         this.transform.rotation = Quaternion.Euler(0, 0, 0); //회전각도를주지않기
         //안튕겨나가게
@@ -68,6 +74,10 @@ public class EnemyMob : MonoBehaviour {
     }
 
     void Attack() {
+        //범위반경반영
+        if (range > attackRange) {
+            currTime = attackContinuousTime + 0.01f;
+        }
         //공격 지속시간 넘기면 이동상태로전환
         if (currTime > attackContinuousTime) {
             attackState = false;
