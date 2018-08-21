@@ -17,6 +17,8 @@ public class MobSpawner : MonoSingleton<MobSpawner> {
     public int ableCount = 15;
     //페이즈2일때는 멈춰줌
     public bool phase2Flag = false;
+    //플레이어 위치받아서 해당위치 아닌곳에 생성
+    public Transform player;
 
     private void Awake() {
         //싱글톤
