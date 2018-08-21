@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ResultManager : MonoSingleton<ResultManager>
 {
@@ -205,6 +206,13 @@ public class ResultManager : MonoSingleton<ResultManager>
         SetDeadSprite();
         }
 
+    }
+
+    private void Update() {
+        //f1누르면 씬 초기화(재시작)
+        if(Input.GetKeyDown(KeyCode.F1)) {
+            SceneManager.LoadScene("Main");
+        }
     }
 
     // 게임 끝
