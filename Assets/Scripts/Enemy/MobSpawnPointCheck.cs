@@ -9,8 +9,7 @@ public class MobSpawnPointCheck : MonoBehaviour {
             checkPlayer = true;
         }
     }
-    private void OnTriggerExit(Collider other) {
-        Debug.Log(other.name);
+    private void OnTriggerExit(Collider other) { 
         if (other.tag.Equals("Player")) {
             checkPlayer = false;
         }
