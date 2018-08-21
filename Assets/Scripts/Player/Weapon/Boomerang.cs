@@ -15,7 +15,7 @@ public class Boomerang : Weapon
 
         Power = 10;
         BulletSpeed = 10f;
-        BulletTime = 1f;
+        BulletTime = 2f;
 
         BulletCollider = new Vector3(0.3f, 1, 0.3f);
         BulletSize = new Vector3(3, 3, 1);
