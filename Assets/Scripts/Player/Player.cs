@@ -187,6 +187,12 @@ public class Player : MonoBehaviour
             Rigid.velocity = Vector3.zero;
         }
 
+        // 갓모드 토글
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            GodMode = !GodMode;
+        }
+
         // 이동
         if (IsBlinked == false && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
         {
