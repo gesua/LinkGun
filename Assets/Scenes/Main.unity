@@ -164,7 +164,7 @@ MonoBehaviour:
   Speed: 3
   BlinkDelayTime: 0.1
   BlinkDistance: 1
-  GodMode: 1
+  GodMode: 0
 --- !u!135 &188521
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4236,7 +4236,6 @@ MonoBehaviour:
   poolSize: 35
   ableCount: 5
   phase2Flag: 0
-  player: {fileID: 0}
 --- !u!4 &720924181
 Transform:
   m_ObjectHideFlags: 0
