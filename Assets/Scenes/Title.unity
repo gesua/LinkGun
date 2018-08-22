@@ -616,7 +616,7 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\uC88C\uD074\uB9AD : \uACF5\uACA9\r / \uC6B0\uD074\uB9AD, \uC2A4\uD398\uC774\uC2A4
-    : \uBE14\uB9C1\uD06C\r /  WASD : \uC774\uB3D9\r\n\uD720, 1~9 : \uBB34\uAE30\uBCC0\uACBD\r
+    : \uBE14\uB9C1\uD06C\r /  WASD : \uC774\uB3D9\r\n\uD720, 1~4 : \uBB34\uAE30\uBCC0\uACBD\r
     / Q : \uD3ED\uD0C4\r / R : \uC7AC\uC7A5\uC804\r"
 --- !u!222 &1886950095
 CanvasRenderer:
