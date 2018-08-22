@@ -211,7 +211,7 @@ public class ResultManager : MonoSingleton<ResultManager>
     private void Update() {
         //f1누르면 씬 초기화(재시작)
         if(Input.GetKeyDown(KeyCode.F1)) {
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("Title");
         }
     }
 
@@ -273,6 +273,10 @@ public class ResultManager : MonoSingleton<ResultManager>
             LoseText.color = new Color(1, 0, 0, (float)i / 256);
             yield return new WaitForSeconds(0.01f);
         }
+
+        // 잠시 후 타이틀로 돌아감
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("Title");
     }
 
     // 승리 이미지 변경
@@ -292,6 +296,10 @@ public class ResultManager : MonoSingleton<ResultManager>
             VictoryImage.color = new Color(1, 1, 1, (float)i / 256);
             yield return new WaitForSeconds(0.01f);
         }
+
+        // 잠시 후 타이틀로 돌아감
+        yield return new WaitForSeconds(5f);
+        SceneManager.LoadScene("Title");
     }
 
     //샌즈 죽음 스프라이트
