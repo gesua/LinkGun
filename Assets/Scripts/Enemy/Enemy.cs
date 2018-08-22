@@ -116,6 +116,10 @@ public class Enemy : MonoBehaviour {
     int count = 0;
 
 
+    //패턴확인위한 변수
+    public bool checkBulletState = false;
+    public int checkBulletStatePat = 10;
+
     void Start() {
         //네비
         agent = gameObject.GetComponent<NavMeshAgent>();
@@ -140,76 +144,89 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (CurrHP <= MaxHP * 0.27 && phase2Flag == false) {
-            StageChange();
-        }
-        if (phase2Flag == true && this.transform.position != new Vector3(1000, -10, 5)) {
-            //위치이동
-            this.transform.position = new Vector3(1000, -10, 5);
-        }
-        //안튕겨나가게
-        if (rigid.velocity != Vector3.zero) {
-            rigid.velocity = Vector3.zero;
-        }
-        //안돌리기
-        this.transform.rotation = Quaternion.Euler(0, 0, 0);
-        //시간재기
-        if (attackState) {
-            //공격중
-            currAtkTime += Time.deltaTime;
-        }
-        else {
-            currAtkDyTime += Time.deltaTime;
-        }
-        //공격상태 이동상태 구분
-        if (currAtkTime > attackContinuousTime) {
-            //공격시간지나서끝남
-            attackState = false;
-            currAtkTime = 0f;
-            //이동상태(0,1)일때 랜덤지정
-            setRandomMove = Random.Range(0, 100);
-            //이동속도초기화
-            agent.speed = moveSpeed;
-            //랜덤패턴1,2시간초기화
-            if (atPat12) {
-                atPat12CurrTime = 0f;
-                atPat12 = false;
+        if (checkBulletState == false) {
+            if (CurrHP <= MaxHP * 0.27 && phase2Flag == false) {
+                StageChange();
             }
-            if(count == 3) {
-                count = 0;
+            if (phase2Flag == true && this.transform.position != new Vector3(1000, -10, 5)) {
+                //위치이동
+                this.transform.position = new Vector3(1000, -10, 5);
             }
-        }
-        if (currAtkDyTime > attackDelayTime) {
-            //공격딜레이(이동) 끝나서 공격전환
-            attackState = true;
-            currAtkDyTime = 0f;
-            //이동패턴1시간초기화
-            currTimeMov1 = 0f;
-            currTimeMov2 = 0f;
-            //네비게이션 밀리는것 없애기
-            agent.speed = 0f;
+            //안튕겨나가게
+            if (rigid.velocity != Vector3.zero) {
+                rigid.velocity = Vector3.zero;
+            }
+            //안돌리기
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+            //시간재기
+            if (attackState) {
+                //공격중
+                currAtkTime += Time.deltaTime;
+            }
+            else {
+                currAtkDyTime += Time.deltaTime;
+            }
+            //공격상태 이동상태 구분
+            if (currAtkTime > attackContinuousTime) {
+                //공격시간지나서끝남
+                attackState = false;
+                currAtkTime = 0f;
+                //이동상태(0,1)일때 랜덤지정
+                setRandomMove = Random.Range(0, 100);
+                //이동속도초기화
+                agent.speed = moveSpeed;
+                //랜덤패턴1,2시간초기화
+                if (atPat12) {
+                    atPat12CurrTime = 0f;
+                    atPat12 = false;
+                }
+                if (count == 3) {
+                    count = 0;
+                }
+            }
+            if (currAtkDyTime > attackDelayTime) {
+                //공격딜레이(이동) 끝나서 공격전환
+                attackState = true;
+                currAtkDyTime = 0f;
+                //이동패턴1시간초기화
+                currTimeMov1 = 0f;
+                currTimeMov2 = 0f;
+                //네비게이션 밀리는것 없애기
+                agent.speed = 0f;
+                agent.velocity = Vector3.zero;
+                //체력이12퍼센트 이하일때 발악패턴 랜덤지정
+                atPatRand = Random.Range(0, 100);
+                if (phase2Flag == true) {
+                    count++;
+                }
+
+            }
+
+            //상태판단
+            switch (attackState) {
+                case true:
+                    SetAttackPattern();
+                    break;
+                case false:
+                    SetMovePattern();
+                    break;
+            }
+
+            //애니메이터
+            PlayAnimator();
+        } else {
+            //안튕겨나가게
+            if (rigid.velocity != Vector3.zero) {
+                rigid.velocity = Vector3.zero;
+            }
+            //안돌리기
+            this.transform.rotation = Quaternion.Euler(0, 0, 0);
+            //멈추기
+            moveSpeed = 0;
             agent.velocity = Vector3.zero;
-            //체력이12퍼센트 이하일때 발악패턴 랜덤지정
-            atPatRand = Random.Range(0, 100);
-            if(phase2Flag == true) {
-                count++;
-            }
-
+      
+            BulletSpawner.Instance.bulletState = checkBulletStatePat;
         }
-
-        //상태판단
-        switch (attackState) {
-            case true:
-                SetAttackPattern();
-                break;
-            case false:
-                SetMovePattern();
-                break;
-        }
-
-        //애니메이터
-        PlayAnimator();
-
     }
 
 
